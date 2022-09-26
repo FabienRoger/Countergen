@@ -36,5 +36,5 @@ epub_show_urls = "footnote"
 
 # -- sphinx
 autoapi_type = "python"
-autoapi_dirs = ["../../src/"]
+autoapi_dirs = ["../../countergen/", "../../countergentorch/"]
 autodoc_typehints = "description"
