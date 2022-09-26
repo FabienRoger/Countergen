@@ -2,7 +2,7 @@ import os
 import sys
 from typing import List
 
-sys.path.insert(0, os.path.abspath("../.."))
+sys.path.insert(os.path.abspath("../../countergen"))
 
 # Configuration file for the Sphinx documentation builder.
 
@@ -22,14 +22,7 @@ extensions = [
     "sphinx.ext.doctest",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
-    "sphinx.ext.intersphinx",
 ]
-
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/3/", None),
-    "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
-}
-intersphinx_disabled_domains = ["std"]
 
 templates_path = ["_templates"]
 
@@ -43,22 +36,4 @@ epub_show_urls = "footnote"
 master_doc = "index"
 
 # -- sphinx
-autodoc_mock_imports = [
-    "jax",
-    "torch",
-    "numpy",
-    "scipy",
-    "sympy",
-    "fancy_einsum",
-    "einops",
-    "flax",
-    "opt_einsum",
-    "transformers",
-    "tqdm",
-    "tabulate",
-]
-
-
-autoapi_type = "python"
-autoapi_dirs = ["../../countergen/", "../../countergentorch/"]
 autodoc_typehints = "description"
