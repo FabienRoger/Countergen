@@ -34,6 +34,8 @@ html_theme = "sphinx_rtd_theme"
 # -- Options for EPUB output
 epub_show_urls = "footnote"
 
+master_doc = "index"
+
 # -- sphinx
 autoapi_type = "python"
 autoapi_dirs = ["../../countergen/", "../../countergentorch/"]
