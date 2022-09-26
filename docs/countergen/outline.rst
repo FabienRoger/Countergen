@@ -7,7 +7,7 @@ Data Augmentation
 First, you produce a list of :py:class:`AugmentedSample`, either by loading an existing one, or using tools the library provides to build you it from raw data, or by creating your own from scratch.
 
 .. autoclass:: countergen.types.AugmentedSample
-   :members:
+   :members: input, outputs, get_variations
 
 Where a :py:class:`Variation` is defined as follows.
 

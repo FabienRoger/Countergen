@@ -66,8 +66,7 @@ class Variation(NamedTuple):
     categories: Tuple[Category, ...]
 
 
-# class AugmentedSample(metaclass=abc.ABCMeta):
-class AugmentedSample:
+class AugmentedSample(metaclass=abc.ABCMeta):
     """Hold different variations of a sample with the same meaning, which should have the same expected outputs."""
 
     @abc.abstractproperty
