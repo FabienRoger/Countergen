@@ -7,11 +7,9 @@ build:
 
 sphinx:
   configuration: docs/conf.py
+  fail_on_warning: true
 
 python:
   install:
     - method: pip
       .
-sphinx:
-  fail_on_warning: true  # Too hard, maybe one day?
-  # fail_on_warning: false
