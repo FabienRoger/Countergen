@@ -43,6 +43,22 @@ epub_show_urls = "footnote"
 master_doc = "index"
 
 # -- sphinx
+autodoc_mock_imports = [
+    "jax",
+    "torch",
+    "numpy",
+    "scipy",
+    "sympy",
+    "fancy_einsum",
+    "einops",
+    "flax",
+    "opt_einsum",
+    "transformers",
+    "tqdm",
+    "tabulate",
+]
+
+
 autoapi_type = "python"
 autoapi_dirs = ["../../countergen/", "../../countergentorch/"]
 autodoc_typehints = "description"
