@@ -6,11 +6,11 @@ To produce the :py:class:`AugmentedSample` on which your model will be evaluated
 A. Loading default augmented datasets
 ---------------------------------------
 
-Create an instance of :py:class:`AugmentedDataset` using this class method:
+Create an instance of :py:class:`AugmentedDataset` by choosing a default dataset (using the ``AugmentedDataset.from_default`` class method).
 
-.. automethod:: countergen.AugmentedDataset.from_default
+.. autoclass:: countergen.AugmentedDataset
 
-The available datasets are the keys of :py:class:`DEFAULT_AUGMENTED_DS_PATHS`.
+You can use one of the available default datasets. Possible names are the keys of :py:class:`DEFAULT_AUGMENTED_DS_PATHS`.
 
 Some defaults that you might find interesting:
 
