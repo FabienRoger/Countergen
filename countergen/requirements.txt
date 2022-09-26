@@ -1,0 +1,7 @@
+attrs>=22
+fire>=0.4
+python-dotenv>=0.21
+tqdm>=4
+matplotlib>=3
+openai>=0.23
+numpy>=1.21

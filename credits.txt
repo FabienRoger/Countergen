@@ -1,0 +1,12 @@
+gender names: nltk
+gender occupation: https://arxiv.org/pdf/1807.11714.pdf
+race: "gender" by Jorg Michae
+
+doublebind: Based on Heilman et al., 2004: Penalties for Success:
+Reactions to Women Who Succeed at Male Gender-Typed Tasks; sent-bias for the exact wording
+
+llmd for it's augmentation technique
+
+INLP & RLACE for their direction finding techniques
+
+https://github.com/Vicomtech/hate-speech-dataset for the hate data

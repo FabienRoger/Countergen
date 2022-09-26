@@ -1,0 +1,7 @@
+attrs>=22
+python-dotenv>=0.21
+torch>=1.11
+tqdm>=4
+transformers>=4
+torchmetrics>=0.9
+countergen==0.3.3

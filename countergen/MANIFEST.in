@@ -1,0 +1,4 @@
+include VERSION
+include requirements.txt
+include py.typed
+recursive-include countergen/data *

@@ -1,0 +1,2 @@
+{"input": "Her name is", "outputs": [" Marry"], "variations": [{"text": "Her name is", "categories": ["female"]}, {"text": "Him name is", "categories": ["male"]}]}
+{"input": "Marry loves", "outputs": [" John"], "variations": [{"text": "Hewe loves", "categories": ["male"]}, {"text": "Marry loves", "categories": ["female"]}]}
