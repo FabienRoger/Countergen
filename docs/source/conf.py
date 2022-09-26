@@ -2,7 +2,7 @@ import os
 import sys
 from typing import List
 
-sys.path.insert(os.path.abspath("../../countergen"))
+sys.path.insert(0, os.path.abspath("../../countergen"))
 
 # Configuration file for the Sphinx documentation builder.
 
