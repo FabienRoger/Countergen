@@ -8,10 +8,10 @@ To use Countergen, first install it using pip:
 
 .. code-block:: console
 
-   (.venv) $ pip install countergen
+   (.venv) $ pip install countergentorch
 
 Augmentating Data
-----------------
+-----------------
 
 To retrieve a list of random ingredients,
 you can use the ``lumache.get_random_ingredients()`` function:

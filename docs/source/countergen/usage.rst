@@ -10,9 +10,5 @@ To use CountergenTorch, first install it using pip:
 
 .. code-block:: console
 
-   (.venv) $ pip install countergentorch
+   (.venv) $ pip install countergen
 
-Augmentating Data
------------------
-
-The goal of this step is to produce a list of ``AugmentedSample``.

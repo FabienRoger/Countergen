@@ -1,4 +1,5 @@
 import abc
+from this import d
 from typing import (
     Callable,
     Generic,
@@ -59,21 +60,29 @@ class Paraphraser(Augmenter):
 
 
 class Variation(NamedTuple):
+    """An input associated with the different categories it belongs to."""
+
     text: Input
     categories: Tuple[Category, ...]
 
 
-class AugmentedSample(metaclass=abc.ABCMeta):
+# class AugmentedSample(metaclass=abc.ABCMeta):
+class AugmentedSample:
+    """Hold different variations of a sample with the same meaning, which should have the same expected outputs."""
+
     @abc.abstractproperty
     def input(self) -> Input:
+        """The original input."""
         ...
 
     @abc.abstractproperty
     def outputs(self) -> Outputs:
+        """The expected outputs."""
         ...
 
     @abc.abstractmethod
     def get_variations(self) -> Sequence[Variation]:
+        """The variations of the original input, which still should procude one of the expected outputs."""
         ...
 
 

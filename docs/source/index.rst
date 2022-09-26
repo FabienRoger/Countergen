@@ -9,7 +9,7 @@ while offering simple ways to add your own data, data augmentation techniques, m
 This project is split in two parts:
 
 * `countergen` is a lightweight Python module which provides the framework for data augmentation and model evaluation. It provides useful default datasets, lightweight augmentation techniques, and evaluation of models available through an API.
-* `countergentorch ` is a Python module which adds methods to easily evaluate PyTorch text generation models as well as text classifiers. It provides tools to analyze model activation and quickly edit model to reduce bias.
+* `countergentorch` is a Python module which adds methods to easily evaluate PyTorch text generation models as well as text classifiers. It provides tools to analyze model activation and quickly edit model to reduce bias.
 
 Check out the :doc:`/countergen/usage` section for further information, including
 how to :ref:`installation` the project.
@@ -22,15 +22,20 @@ Contents
 --------
 
 .. toctree::
-
-   /countergen/usage
+   demos
 
 .. toctree::
+   :maxdepth: 2
    :caption: countergen
 
    /countergen/usage
+   /countergen/outline
+   /countergen/data_augmentation
+   /countergen/model_loading
+   /countergen/model_evaluation
 
 .. toctree::
+   :maxdepth: 2
    :caption: countergentorch
 
-   /countergen/usage
+   /countergentorch/usage
