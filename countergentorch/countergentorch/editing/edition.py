@@ -7,18 +7,23 @@ from attrs import define
 
 
 def get_edit_configs(named_modules: Dict[str, nn.Module], dirs: torch.Tensor, has_leftover: bool = False):
+    """Return the configs where the same projections along dirs is done at the output of each module."""
     return [ReplacementConfig(name, module, dirs, has_leftover) for name, module in named_modules.items()]
 
 
 @define
 class ReplacementConfig:
-    module_name: str
-    old_module: nn.Module
-    dirs: torch.Tensor
+    """Configuration for an edition by projection."""
+
+    module_name: str  #: The name of the module in the original network you wish to replace
+    old_module: nn.Module  #: The module object to replace
+    dirs: torch.Tensor  #: A 2D Float Tensor of shape (n, hidden_dim) listing vectors along which to project
+    #: If True, the output of the module is expected to be (to_proj, sth...) rather than to_proj
     has_leftover: bool = False
 
 
-def edit_model(model: nn.Module, configs: Iterable[ReplacementConfig]):
+def edit_model(model: nn.Module, configs: Iterable[ReplacementConfig]) -> nn.Module:
+    """Return a new module where the replacements described in the config have been done."""
     model = copy.deepcopy(model)
     for config in configs:
         new_module = ProjectionWrapper(config.old_module, config.dirs, config.has_leftover)

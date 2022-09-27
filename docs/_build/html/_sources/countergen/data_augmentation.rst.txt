@@ -1,3 +1,5 @@
+.. _Data Augmentation:
+
 Data Loading and Augmentation
 =============================
 

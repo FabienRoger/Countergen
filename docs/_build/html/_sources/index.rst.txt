@@ -20,6 +20,9 @@ how to :ref:`installation` the project.
 
    This project is under development. Please report issues in the appropriate section of the Github repository.
 
+.. note::
+   This module only works for Python version 3.7 and above
+
 Contents
 --------
 
@@ -31,7 +34,6 @@ Contents
    :caption: countergen
 
    /countergen/usage
-   /countergen/outline
    /countergen/data_augmentation
    /countergen/model_loading
    /countergen/model_evaluation
@@ -41,3 +43,7 @@ Contents
    :caption: countergentorch
 
    /countergentorch/usage
+   /countergentorch/model_loading
+   /countergentorch/internal_bias
+   /countergentorch/directions
+   /countergentorch/editing

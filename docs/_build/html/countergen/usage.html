@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Usage &mdash; Countergen 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -20,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Outline of the evaluation process" href="outline.html" />
+    <link rel="next" title="Data Loading and Augmentation" href="data_augmentation.html" />
     <link rel="prev" title="Demos" href="../demos.html" /> 
 </head>
 
@@ -49,16 +48,29 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#outline-of-the-evaluation-process">Outline of the evaluation process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-augmentation">Data Augmentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#countergen.types.AugmentedSample"><code class="docutils literal notranslate"><span class="pre">AugmentedSample</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#countergen.types.Variation"><code class="docutils literal notranslate"><span class="pre">Variation</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="outline.html">Outline of the evaluation process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-loading">Model Loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-evaluation">Model Evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="data_augmentation.html">Data Loading and Augmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_loading.html">Model loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_loading.html">Model Loading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_evaluation.html">Model evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergentorch</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../countergentorch/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergentorch/model_loading.html">PyTorch Model Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergentorch/internal_bias.html">Measuring Internal Bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergentorch/directions.html">Finding the Relevant Directions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergentorch/editing.html">Editing the Model</a></li>
 </ul>
 
         </div>
@@ -85,23 +97,114 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="usage">
+  <div class="section" id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h1>
-<section id="installation">
+<div class="section" id="installation">
 <span id="id1"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
 <p>To use CountergenTorch, first install it using pip:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(.venv)</span> <span class="gp">$ </span>pip install countergen
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+<div class="section" id="outline-of-the-evaluation-process">
+<h2>Outline of the evaluation process<a class="headerlink" href="#outline-of-the-evaluation-process" title="Permalink to this heading"></a></h2>
+<div class="section" id="data-augmentation">
+<h3>Data Augmentation<a class="headerlink" href="#data-augmentation" title="Permalink to this heading"></a></h3>
+<p>First, you produce a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AugmentedSample</span></code>, either by loading an existing one, or using tools the library provides to build you it from raw data, or by creating your own from scratch.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="countergen.types.AugmentedSample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.types.</span></span><span class="sig-name descname"><span class="pre">AugmentedSample</span></span><a class="headerlink" href="#countergen.types.AugmentedSample" title="Permalink to this definition"></a></dt>
+<dd><p>Hold different variations of a sample with the same meaning, which should have the same expected outputs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="countergen.types.AugmentedSample.get_variations">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_variations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#countergen.types.AugmentedSample.get_variations" title="Permalink to this definition"></a></dt>
+<dd><p>The variations of the original input, which still should procude one of the expected outputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><em>Sequence</em></a>[<a class="reference internal" href="#countergen.types.Variation" title="countergen.types.Variation"><em>Variation</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="countergen.types.AugmentedSample.input">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><a class="headerlink" href="#countergen.types.AugmentedSample.input" title="Permalink to this definition"></a></dt>
+<dd><p>The original input.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="countergen.types.AugmentedSample.outputs">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">outputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#countergen.types.AugmentedSample.outputs" title="Permalink to this definition"></a></dt>
+<dd><p>The expected outputs.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>Where a <code class="xref py py-class docutils literal notranslate"><span class="pre">Variation</span></code> is defined as follows.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="countergen.types.Variation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.types.</span></span><span class="sig-name descname"><span class="pre">Variation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categories</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.types.Variation" title="Permalink to this definition"></a></dt>
+<dd><p>An input associated with the different categories it belongs to.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>categories</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><em>Tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>...</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="countergen.types.Variation.text">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">text</span></span><a class="headerlink" href="#countergen.types.Variation.text" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="countergen.types.Variation.categories">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">categories</span></span><a class="headerlink" href="#countergen.types.Variation.categories" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="model-loading">
+<h3>Model Loading<a class="headerlink" href="#model-loading" title="Permalink to this heading"></a></h3>
+<p>Second, you load your model and turn it into a <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code>, which is just a callable that returns the performance of a model given an input and expected outputs.</p>
+</div>
+<div class="section" id="model-evaluation">
+<h3>Model Evaluation<a class="headerlink" href="#model-evaluation" title="Permalink to this heading"></a></h3>
+<p>Third, you pass your list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AugmentedSample</span></code> and your <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code> into the following function:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggregator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AveragePerformancePerCategory(use_geometric_mean=False)</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="#countergen.types.AugmentedSample" title="countergen.types.AugmentedSample"><em>AugmentedSample</em></a><em>]</em>) – </p></li>
+<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – </p></li>
+<li><p><strong>aggregator</strong> (<a class="reference internal" href="model_evaluation.html#countergen.types.StatsAggregator" title="countergen.types.StatsAggregator"><em>StatsAggregator</em></a><em>[</em><em>T</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><em>T</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>By default, it will return the average performance on each kind of data. You can specify other ways to aggregate the performance on each variation by passing another <code class="xref py py-class docutils literal notranslate"><span class="pre">StatsAggregator</span></code>.</p>
+<p>Alternatively, if you just want to print or save the results, directly <code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate_and_print()</span></code> or <code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate_and_save()</span></code></p>
+<p>And that’s it! <code class="docutils literal notranslate"><span class="pre">countergen</span></code> and <code class="docutils literal notranslate"><span class="pre">countergentorch</span></code> provide powerful ways to generate variations, load models easily, and edit them to decrease performance gaps between different categories. Click on <em>Next</em> to know more.</p>
+</div>
+</div>
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../demos.html" class="btn btn-neutral float-left" title="Demos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="outline.html" class="btn btn-neutral float-right" title="Outline of the evaluation process" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="data_augmentation.html" class="btn btn-neutral float-right" title="Data Loading and Augmentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -16,7 +16,9 @@ from tqdm import tqdm  # type: ignore
 
 
 def inlp(ds: ActivationsDataset, n_dim: int = 8, n_training_iters: int = 400) -> torch.Tensor:
-    """Compute directions using INLP."""
+    """Compute directions using INLP.
+
+    INLP by Ravfogel, 2020: see https://aclanthology.org/2020.acl-main.647/"""
     working_ds = ds
 
     tot_n_dims = ds.x_data.shape[-1]
@@ -48,7 +50,16 @@ def inlp(ds: ActivationsDataset, n_dim: int = 8, n_training_iters: int = 400) ->
 
 
 def bottlenecked_mlp_span(ds: ActivationsDataset, n_dim: int = 8, n_training_iters: int = 400) -> torch.Tensor:
-    """Compute directions using the directions used by a bottlenecked MLP."""
+    """Compute directions using the directions used by a bottlenecked MLP.
+
+    The MLP is composed as follows:
+    A linear layer d -> n_dim
+    A linear layer n_dim -> 64
+    An ReLU
+    A linear layer -> # categories
+
+    The first linear layer tells us which dimensions in the activations matter the most.
+    """
     tot_n_dims = ds.x_data.shape[-1]
     output_dims: int = torch.max(ds.y_data).item() + 1  # type: ignore
     model = get_bottlenecked_mlp(tot_n_dims, output_dims, bottleneck_dim=n_dim)
@@ -99,6 +110,8 @@ def rlace(
     :param optimizer_params_predictor: theta's optimizer's params (as a dict)
     :param eval_clf_params: the evaluation classifier params (as a dict)
     :param num_clfs_in_eval: the number of classifier trained for evaluation (change to 1 for large dataset / high dimensionality)
+
+    RLACE by Ravfogel, 2022: see https://arxiv.org/pdf/2201.12091.pdf
 
     Adapted from https://github.com/shauli-ravfogel/rlace-icml/blob/2d9b6d03f65416172b4a2ca7f6da10e374002e5f/rlace.py
     """
@@ -202,7 +215,7 @@ def rlace(
     optimizer_P = optimizer_class([P], **optimizer_params_P)
 
     maj = get_majority_acc(y_np)
-    pbar = tqdm(range(out_iters), total=out_iters, ascii=True) 
+    pbar = tqdm(range(out_iters), total=out_iters, ascii=True)
     count_examples = 0
     best_P, best_score, best_loss = None, 1, -1
 

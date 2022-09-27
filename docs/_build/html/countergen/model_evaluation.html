@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Model evaluation &mdash; Countergen 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -21,7 +20,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Usage" href="../countergentorch/usage.html" />
-    <link rel="prev" title="Model loading" href="model_loading.html" /> 
+    <link rel="prev" title="Model Loading" href="model_loading.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,9 +47,8 @@
 <p class="caption" role="heading"><span class="caption-text">countergen</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="outline.html">Outline of the evaluation process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_augmentation.html">Data Loading and Augmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_loading.html">Model loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_loading.html">Model Loading</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Model evaluation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#aggregator-selection">Aggregator Selection</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.types.StatsAggregator"><code class="docutils literal notranslate"><span class="pre">StatsAggregator</span></code></a></li>
@@ -70,6 +68,10 @@
 <p class="caption" role="heading"><span class="caption-text">countergentorch</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../countergentorch/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergentorch/model_loading.html">PyTorch Model Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergentorch/internal_bias.html">Measuring Internal Bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergentorch/directions.html">Finding the Relevant Directions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergentorch/editing.html">Editing the Model</a></li>
 </ul>
 
         </div>
@@ -96,9 +98,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="model-evaluation">
+  <div class="section" id="model-evaluation">
 <h1>Model evaluation<a class="headerlink" href="#model-evaluation" title="Permalink to this heading"></a></h1>
-<section id="aggregator-selection">
+<div class="section" id="aggregator-selection">
 <h2>Aggregator Selection<a class="headerlink" href="#aggregator-selection" title="Permalink to this heading"></a></h2>
 <p>To make sense of the performances of the model on every sample, you need to aggregate them.</p>
 <p>This operation is performed by an object that inherit from the following abstract class.</p>
@@ -122,8 +124,8 @@
 <dd><p>Compute performance mean and the 2 sigma uncertainty over mean for each category.</p>
 </dd></dl>
 
-</section>
-<section id="id1">
+</div>
+<div class="section" id="id1">
 <h2>Model Evaluation<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
 <p>Once you have your model evaluator, your augmented samples, and you have chosen how to aggregate the performances, simply call the evalute function!</p>
 <dl class="py function">
@@ -132,7 +134,7 @@
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="outline.html#countergen.types.AugmentedSample" title="countergen.types.AugmentedSample"><em>AugmentedSample</em></a><em>]</em>) – </p></li>
+<li><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="usage.html#countergen.types.AugmentedSample" title="countergen.types.AugmentedSample"><em>AugmentedSample</em></a><em>]</em>) – </p></li>
 <li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – </p></li>
 <li><p><strong>aggregator</strong> (<a class="reference internal" href="#countergen.types.StatsAggregator" title="countergen.types.StatsAggregator"><em>StatsAggregator</em></a><em>[</em><em>T</em><em>]</em>) – </p></li>
 </ul>
@@ -150,7 +152,7 @@
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="outline.html#countergen.types.AugmentedSample" title="countergen.types.AugmentedSample"><em>AugmentedSample</em></a><em>]</em>) – </p></li>
+<li><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="usage.html#countergen.types.AugmentedSample" title="countergen.types.AugmentedSample"><em>AugmentedSample</em></a><em>]</em>) – </p></li>
 <li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – </p></li>
 <li><p><strong>aggregator</strong> (<a class="reference internal" href="#countergen.types.StatsAggregator" title="countergen.types.StatsAggregator"><em>StatsAggregator</em></a><em>[</em><em>T</em><em>]</em>) – </p></li>
 </ul>
@@ -164,7 +166,7 @@
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="outline.html#countergen.types.AugmentedSample" title="countergen.types.AugmentedSample"><em>AugmentedSample</em></a><em>]</em>) – </p></li>
+<li><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="usage.html#countergen.types.AugmentedSample" title="countergen.types.AugmentedSample"><em>AugmentedSample</em></a><em>]</em>) – </p></li>
 <li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – </p></li>
 <li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
 <li><p><strong>aggregator</strong> (<a class="reference internal" href="#countergen.types.StatsAggregator" title="countergen.types.StatsAggregator"><em>StatsAggregator</em></a><em>[</em><em>T</em><em>]</em>) – </p></li>
@@ -174,14 +176,14 @@
 </dl>
 </dd></dl>
 
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="model_loading.html" class="btn btn-neutral float-left" title="Model loading" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model_loading.html" class="btn btn-neutral float-left" title="Model Loading" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../countergentorch/usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

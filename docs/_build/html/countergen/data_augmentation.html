@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Data Loading and Augmentation &mdash; Countergen 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -20,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Model loading" href="model_loading.html" />
-    <link rel="prev" title="Outline of the evaluation process" href="outline.html" /> 
+    <link rel="next" title="Model Loading" href="model_loading.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,7 +47,6 @@
 <p class="caption" role="heading"><span class="caption-text">countergen</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="outline.html">Outline of the evaluation process</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Data Loading and Augmentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#a-loading-default-augmented-datasets">A. Loading default augmented datasets</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.AugmentedDataset"><code class="docutils literal notranslate"><span class="pre">AugmentedDataset</span></code></a></li>
@@ -78,12 +76,16 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="model_loading.html">Model loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_loading.html">Model Loading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_evaluation.html">Model evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergentorch</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../countergentorch/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergentorch/model_loading.html">PyTorch Model Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergentorch/internal_bias.html">Measuring Internal Bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergentorch/directions.html">Finding the Relevant Directions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergentorch/editing.html">Editing the Model</a></li>
 </ul>
 
         </div>
@@ -110,10 +112,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="data-loading-and-augmentation">
-<h1>Data Loading and Augmentation<a class="headerlink" href="#data-loading-and-augmentation" title="Permalink to this heading"></a></h1>
+  <div class="section" id="data-loading-and-augmentation">
+<span id="data-augmentation"></span><h1>Data Loading and Augmentation<a class="headerlink" href="#data-loading-and-augmentation" title="Permalink to this heading"></a></h1>
 <p>To produce the <code class="xref py py-class docutils literal notranslate"><span class="pre">AugmentedSample</span></code> on which your model will be evaluated, you have two options.</p>
-<section id="a-loading-default-augmented-datasets">
+<div class="section" id="a-loading-default-augmented-datasets">
 <h2>A. Loading default augmented datasets<a class="headerlink" href="#a-loading-default-augmented-datasets" title="Permalink to this heading"></a></h2>
 <p>Create an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">AugmentedDataset</span></code> by choosing a default dataset (using the <code class="docutils literal notranslate"><span class="pre">AugmentedDataset.from_default</span></code> class method).</p>
 <dl class="py class">
@@ -132,10 +134,10 @@
 <li><p>“doublebind-heilman-paraphrased” is composed of the double bind experiment questions (by Heilman), augmented through paraphrasing using Instruct GPT (and manually reviewed). Variations are done along the original axis of variation: male vs female.</p></li>
 <li><p>“hate-aug-muslim” is composed of hatefull and not hatefull comments. Instruct GPT was used to write variations of this comment where the comment was rewritten to be about Muslims or not about Muslims (this is a variation of LLMD).</p></li>
 </ul>
-</section>
-<section id="b-loading-your-data-and-augmenting-it">
+</div>
+<div class="section" id="b-loading-your-data-and-augmenting-it">
 <h2>B. Loading your data and augmenting it<a class="headerlink" href="#b-loading-your-data-and-augmenting-it" title="Permalink to this heading"></a></h2>
-<section id="data-loading">
+<div class="section" id="data-loading">
 <h3>Data Loading<a class="headerlink" href="#data-loading" title="Permalink to this heading"></a></h3>
 <p>First, you need to load samples.</p>
 <dl class="py class">
@@ -162,8 +164,8 @@
 </dl>
 </dd></dl>
 
-</section>
-<section id="data-augmentation-the-augmenter-class">
+</div>
+<div class="section" id="data-augmentation-the-augmenter-class">
 <h3>Data Augmentation : The Augmenter class<a class="headerlink" href="#data-augmentation-the-augmenter-class" title="Permalink to this heading"></a></h3>
 <p>Then, you will create variations of your data belonging to different categories. The object which allows you to do that is an <code class="xref py py-class docutils literal notranslate"><span class="pre">Augmenter</span></code>: it can transform inputs to any of its target categories.</p>
 <dl class="py class">
@@ -197,8 +199,8 @@ Return an number of variations that can be exponential in the number of augmente
 </dl>
 </dd></dl>
 
-</section>
-<section id="the-two-default-augmenters">
+</div>
+<div class="section" id="the-two-default-augmenters">
 <h3>The two default Augmenters<a class="headerlink" href="#the-two-default-augmenters" title="Permalink to this heading"></a></h3>
 <p>If you a fast and cheap method, use <code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleAugmenter</span></code>:, which does word level substitution between two categories by following rules defined in a json file.</p>
 <dl class="py function">
@@ -241,8 +243,8 @@ Return an number of variations that can be exponential in the number of augmente
 </dl>
 </dd></dl>
 
-</section>
-<section id="paraphrasing">
+</div>
+<div class="section" id="paraphrasing">
 <h3>Paraphrasing<a class="headerlink" href="#paraphrasing" title="Permalink to this heading"></a></h3>
 <p>If your dataset is too small, you can make it grow by using a paraphraser, which is just a special type of Augmenter which doesn’t have any output category and is special-cased in <code class="xref py py-func docutils literal notranslate"><span class="pre">generate_all_variations()</span></code>.</p>
 <p>One way to do paraphrasing is to use a langue model, and this is already implemented here:</p>
@@ -263,16 +265,16 @@ Return an number of variations that can be exponential in the number of augmente
 </dl>
 </dd></dl>
 
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="outline.html" class="btn btn-neutral float-left" title="Outline of the evaluation process" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="model_loading.html" class="btn btn-neutral float-right" title="Model loading" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model_loading.html" class="btn btn-neutral float-right" title="Model Loading" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

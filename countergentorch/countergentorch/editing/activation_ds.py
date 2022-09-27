@@ -10,11 +10,14 @@ from countergen.types import AugmentedSample, Category
 
 @define
 class ActivationsDataset(torch.utils.data.Dataset):
-    x_data: torch.Tensor  # dtype: float32
-    y_data: torch.Tensor  # dtype: long
+    x_data: torch.Tensor  #: 2D float32 tensor of shape (samples, hidden_dimension)
+    y_data: torch.Tensor  #: 1D long tensor of shape (samples,) where one number is one category
 
     @classmethod
     def from_augmented_samples(cls, samples: Iterable[AugmentedSample], model: nn.Module, modules: Iterable[nn.Module]):
+        """Compute the activations of the model on the variations of the samples at the output of the given modules.
+
+        The modules are assumed to have outputs of the same shape"""
         activations_dict = get_corresponding_activations(samples, model, modules)
         return ActivationsDataset.from_activations_dict(activations_dict)
 
@@ -42,11 +45,13 @@ class ActivationsDataset(torch.utils.data.Dataset):
         return ActivationsDataset(torch.cat(x_data_l).to(device), torch.cat(y_data_l).to(device))
 
     def project(self, dir: torch.Tensor):
+        """Return a new dataset where activations have been projected along the dir vector."""
         dir_norm = (dir / torch.linalg.norm(dir)).to(self.x_data.device)
         new_x_data = self.x_data - torch.outer((self.x_data @ dir_norm), dir_norm)
         return ActivationsDataset(new_x_data, self.y_data)
 
     def project_(self, dir: torch.Tensor):
+        """Modify activations by projecteding them along the dir vector."""
         dir_norm = (dir / torch.linalg.norm(dir)).to(self.x_data.device)
         self.x_data -= torch.outer((self.x_data @ dir_norm), dir_norm)
 

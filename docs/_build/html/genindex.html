@@ -45,14 +45,17 @@
 <p class="caption" role="heading"><span class="caption-text">countergen</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="countergen/usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="countergen/outline.html">Outline of the evaluation process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergen/data_augmentation.html">Data Loading and Augmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="countergen/model_loading.html">Model loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergen/model_loading.html">Model Loading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergen/model_evaluation.html">Model evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergentorch</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="countergentorch/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergentorch/model_loading.html">PyTorch Model Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergentorch/internal_bias.html">Measuring Internal Bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergentorch/directions.html">Finding the Relevant Directions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergentorch/editing.html">Editing the Model</a></li>
 </ul>
 
         </div>
@@ -83,14 +86,18 @@
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#V"><strong>V</strong></a>
@@ -105,7 +112,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="countergen/outline.html#countergen.types.AugmentedSample">AugmentedSample (class in countergen.types)</a>
+      <li><a href="countergen/usage.html#countergen.types.AugmentedSample">AugmentedSample (class in countergen.types)</a>
 </li>
       <li><a href="countergen/data_augmentation.html#countergen.types.Augmenter">Augmenter (class in countergen.types)</a>
 </li>
@@ -114,14 +121,22 @@
   </ul></td>
 </tr></table>
 
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="countergentorch/directions.html#countergentorch.bottlenecked_mlp_span">bottlenecked_mlp_span() (in module countergentorch)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="countergen/outline.html#countergen.types.Variation.categories">categories (countergen.types.Variation property)</a>
+      <li><a href="countergen/usage.html#countergen.types.Variation.categories">categories (countergen.types.Variation property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="countergen/model_loading.html#countergen.types.ModelEvaluator">countergen.types.ModelEvaluator (built-in variable)</a>, <a href="countergen/outline.html#countergen.types.ModelEvaluator">[1]</a>
+      <li><a href="countergen/model_loading.html#countergen.types.ModelEvaluator">countergen.types.ModelEvaluator (built-in variable)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -132,11 +147,17 @@
       <li><a href="countergen/data_augmentation.html#countergen.Dataset">Dataset (class in countergen)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="countergentorch/editing.html#countergentorch.ReplacementConfig.dirs">dirs (countergentorch.ReplacementConfig attribute)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="countergentorch/editing.html#countergentorch.edit_model">edit_model() (in module countergentorch)</a>
+</li>
       <li><a href="countergen/model_evaluation.html#countergen.evaluate">evaluate() (in module countergen)</a>
 </li>
   </ul></td>
@@ -153,11 +174,31 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="countergen/data_augmentation.html#countergen.generate_all_variations">generate_all_variations() (in module countergen)</a>
 </li>
+      <li><a href="countergentorch/internal_bias.html#countergentorch.editing.activation_utils.get_activations">get_activations() (in module countergentorch.editing.activation_utils)</a>
+</li>
+      <li><a href="countergentorch/model_loading.html#countergentorch.get_classification_model_evaluator">get_classification_model_evaluator() (in module countergentorch)</a>
+</li>
+      <li><a href="countergentorch/model_loading.html#countergentorch.get_classification_pipline_evaluator">get_classification_pipline_evaluator() (in module countergentorch)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="countergen/model_loading.html#countergen.get_generative_model_evaluator">get_generative_model_evaluator() (in module countergen)</a>
+      <li><a href="countergentorch/editing.html#countergentorch.get_edit_configs">get_edit_configs() (in module countergentorch)</a>
 </li>
-      <li><a href="countergen/outline.html#countergen.types.AugmentedSample.get_variations">get_variations() (countergen.types.AugmentedSample method)</a>
+      <li><a href="countergen/model_loading.html#countergen.get_generative_model_evaluator">get_generative_model_evaluator() (in module countergen)</a>
+
+      <ul>
+        <li><a href="countergentorch/model_loading.html#countergentorch.get_generative_model_evaluator">(in module countergentorch)</a>
+</li>
+      </ul></li>
+      <li><a href="countergen/usage.html#countergen.types.AugmentedSample.get_variations">get_variations() (countergen.types.AugmentedSample method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="countergentorch/editing.html#countergentorch.ReplacementConfig.has_leftover">has_leftover (countergentorch.ReplacementConfig attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -165,7 +206,11 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="countergen/outline.html#countergen.types.AugmentedSample.input">input (countergen.types.AugmentedSample property)</a>
+      <li><a href="countergentorch/directions.html#countergentorch.inlp">inlp() (in module countergentorch)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="countergen/usage.html#countergen.types.AugmentedSample.input">input (countergen.types.AugmentedSample property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -182,10 +227,22 @@
   </ul></td>
 </tr></table>
 
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="countergentorch/editing.html#countergentorch.ReplacementConfig.module_name">module_name (countergentorch.ReplacementConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="countergen/outline.html#countergen.types.AugmentedSample.outputs">outputs (countergen.types.AugmentedSample property)</a>
+      <li><a href="countergentorch/editing.html#countergentorch.ReplacementConfig.old_module">old_module (countergentorch.ReplacementConfig attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="countergen/usage.html#countergen.types.AugmentedSample.outputs">outputs (countergen.types.AugmentedSample property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -194,6 +251,22 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="countergen/model_evaluation.html#countergen.aggregators.PerformanceStatsPerCategory">PerformanceStatsPerCategory (class in countergen.aggregators)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="countergentorch/model_loading.html#countergentorch.pt_to_generative_model">pt_to_generative_model() (in module countergentorch)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="countergentorch/editing.html#countergentorch.ReplacementConfig">ReplacementConfig (class in countergentorch)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="countergentorch/directions.html#countergentorch.rlace">rlace() (in module countergentorch)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -215,7 +288,7 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="countergen/outline.html#countergen.types.Variation.text">text (countergen.types.Variation property)</a>
+      <li><a href="countergen/usage.html#countergen.types.Variation.text">text (countergen.types.Variation property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -223,7 +296,7 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="countergen/outline.html#countergen.types.Variation">Variation (class in countergen.types)</a>
+      <li><a href="countergen/usage.html#countergen.types.Variation">Variation (class in countergen.types)</a>
 </li>
   </ul></td>
 </tr></table>

@@ -1,4 +1,6 @@
-Model loading
+.. _Model Loading:
+
+Model Loading
 =============
 
 What is a ModelEvaluator

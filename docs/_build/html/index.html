@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Welcome to Countergen’s documentation! &mdash; Countergen 0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -47,14 +46,17 @@
 <p class="caption" role="heading"><span class="caption-text">countergen</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="countergen/usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="countergen/outline.html">Outline of the evaluation process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergen/data_augmentation.html">Data Loading and Augmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="countergen/model_loading.html">Model loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergen/model_loading.html">Model Loading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergen/model_evaluation.html">Model evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergentorch</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="countergentorch/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergentorch/model_loading.html">PyTorch Model Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergentorch/internal_bias.html">Measuring Internal Bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergentorch/directions.html">Finding the Relevant Directions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergentorch/editing.html">Editing the Model</a></li>
 </ul>
 
         </div>
@@ -81,7 +83,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="welcome-to-countergen-s-documentation">
+  <div class="section" id="welcome-to-countergen-s-documentation">
 <h1>Welcome to Countergen’s documentation!<a class="headerlink" href="#welcome-to-countergen-s-documentation" title="Permalink to this heading"></a></h1>
 <p><strong>Countergen</strong> is a framework for generating counterfactual datasets,
 evaluating NLP models on the variations and editing models to reduce unwanted bias.
@@ -99,7 +101,11 @@ how to <a class="reference internal" href="countergen/usage.html#installation"><
 <p class="admonition-title">Note</p>
 <p>This project is under development. Please report issues in the appropriate section of the Github repository.</p>
 </div>
-<section id="contents">
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This module only works for Python version 3.7 and above</p>
+</div>
+<div class="section" id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
@@ -111,12 +117,7 @@ how to <a class="reference internal" href="countergen/usage.html#installation"><
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="countergen/usage.html">Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="countergen/usage.html#installation">Installation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="countergen/outline.html">Outline of the evaluation process</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="countergen/outline.html#data-augmentation">Data Augmentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="countergen/outline.html#model-loading">Model Loading</a></li>
-<li class="toctree-l2"><a class="reference internal" href="countergen/outline.html#model-evaluation">Model Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergen/usage.html#outline-of-the-evaluation-process">Outline of the evaluation process</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="countergen/data_augmentation.html">Data Loading and Augmentation</a><ul>
@@ -124,7 +125,7 @@ how to <a class="reference internal" href="countergen/usage.html#installation"><
 <li class="toctree-l2"><a class="reference internal" href="countergen/data_augmentation.html#b-loading-your-data-and-augmenting-it">B. Loading your data and augmenting it</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="countergen/model_loading.html">Model loading</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="countergen/model_loading.html">Model Loading</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="countergen/model_loading.html#what-is-a-modelevaluator">What is a ModelEvaluator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="countergen/model_loading.html#create-modelevaluator-from-an-api">Create ModelEvaluator from an API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="countergen/model_loading.html#create-modelevaluator-from-a-local-model">Create ModelEvaluator from a local model</a></li>
@@ -142,13 +143,36 @@ how to <a class="reference internal" href="countergen/usage.html#installation"><
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="countergentorch/usage.html">Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="countergentorch/usage.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="countergentorch/usage.html#augmentating-data">Augmentating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergentorch/usage.html#outline-of-the-editing-process">Outline of the editing process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="countergentorch/model_loading.html">PyTorch Model Loading</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="countergentorch/model_loading.html#countergentorch.pt_to_generative_model"><code class="docutils literal notranslate"><span class="pre">pt_to_generative_model()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergentorch/model_loading.html#countergentorch.get_generative_model_evaluator"><code class="docutils literal notranslate"><span class="pre">get_generative_model_evaluator()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergentorch/model_loading.html#countergentorch.get_classification_model_evaluator"><code class="docutils literal notranslate"><span class="pre">get_classification_model_evaluator()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergentorch/model_loading.html#countergentorch.get_classification_pipline_evaluator"><code class="docutils literal notranslate"><span class="pre">get_classification_pipline_evaluator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="countergentorch/internal_bias.html">Measuring Internal Bias</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="countergentorch/internal_bias.html#countergentorch.editing.activation_utils.get_activations"><code class="docutils literal notranslate"><span class="pre">get_activations()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="countergentorch/directions.html">Finding the Relevant Directions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="countergentorch/directions.html#countergentorch.inlp"><code class="docutils literal notranslate"><span class="pre">inlp()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergentorch/directions.html#countergentorch.rlace"><code class="docutils literal notranslate"><span class="pre">rlace()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergentorch/directions.html#countergentorch.bottlenecked_mlp_span"><code class="docutils literal notranslate"><span class="pre">bottlenecked_mlp_span()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="countergentorch/editing.html">Editing the Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="countergentorch/editing.html#countergentorch.ReplacementConfig"><code class="docutils literal notranslate"><span class="pre">ReplacementConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergentorch/editing.html#countergentorch.get_edit_configs"><code class="docutils literal notranslate"><span class="pre">get_edit_configs()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergentorch/editing.html#countergentorch.edit_model"><code class="docutils literal notranslate"><span class="pre">edit_model()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
