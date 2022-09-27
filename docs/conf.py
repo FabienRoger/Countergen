@@ -39,3 +39,17 @@ epub_show_urls = "footnote"
 # autoapi_type = "python"
 # autoapi_dirs = ["../countergen/", "../countergentorch/"]
 autodoc_typehints = "description"
+
+# Fix default arg expansion https://stackoverflow.com/questions/29257961/sphinx-documentation-how-to-disable-default-argument-expansion
+import re
+
+
+def remove_default_value_when_too_long(app, what, name, obj, options, signature: str, return_annotation):
+    if signature:
+        terms = signature[1:-1].split("'")
+        signature = "({})".format("'".join([t if len(t) < 150 else "..." for t in terms]))
+    return (signature, return_annotation)
+
+
+def setup(app):
+    print(app.connect("autodoc-process-signature", remove_default_value_when_too_long))

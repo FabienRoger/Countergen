@@ -54,7 +54,28 @@
 <li class="toctree-l3"><a class="reference internal" href="#countergen.AugmentedDataset"><code class="docutils literal notranslate"><span class="pre">AugmentedDataset</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#b-loading-your-datasets-and-using-your-data">B. Loading your datasets and using your data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#b-loading-your-data-and-augmenting-it">B. Loading your data and augmenting it</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-loading">Data Loading</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#countergen.Sample"><code class="docutils literal notranslate"><span class="pre">Sample</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#countergen.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#data-loading-the-augmenter-class">Data Loading : The Augmenter class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#countergen.types.Augmenter"><code class="docutils literal notranslate"><span class="pre">Augmenter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#countergen.generate_all_variations"><code class="docutils literal notranslate"><span class="pre">generate_all_variations()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#the-two-default-augmenters">The two default Augmenters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#countergen.SimpleAugmenter"><code class="docutils literal notranslate"><span class="pre">SimpleAugmenter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#countergen.LlmdAugmenter"><code class="docutils literal notranslate"><span class="pre">LlmdAugmenter()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#paraphrasing">Paraphrasing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#countergen.LlmParaphraser"><code class="docutils literal notranslate"><span class="pre">LlmParaphraser()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="model_loading.html">Model loading</a></li>
@@ -91,7 +112,7 @@
              
   <section id="data-loading-and-augmentation">
 <h1>Data Loading and Augmentation<a class="headerlink" href="#data-loading-and-augmentation" title="Permalink to this heading"></a></h1>
-<p>To produce the <code class="xref py py-class docutils literal notranslate"><span class="pre">AugmentedSample</span></code> on which your model will be evaluated, you have three options.</p>
+<p>To produce the <code class="xref py py-class docutils literal notranslate"><span class="pre">AugmentedSample</span></code> on which your model will be evaluated, you have two options.</p>
 <section id="a-loading-default-augmented-datasets">
 <h2>A. Loading default augmented datasets<a class="headerlink" href="#a-loading-default-augmented-datasets" title="Permalink to this heading"></a></h2>
 <p>Create an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">AugmentedDataset</span></code> by choosing a default dataset (using the <code class="docutils literal notranslate"><span class="pre">AugmentedDataset.from_default</span></code> class method).</p>
@@ -112,8 +133,136 @@
 <li><p>“hate-aug-muslim” is composed of hatefull and not hatefull comments. Instruct GPT was used to write variations of this comment where the comment was rewritten to be about Muslims or not about Muslims (this is a variation of LLMD).</p></li>
 </ul>
 </section>
-<section id="b-loading-your-datasets-and-using-your-data">
-<h2>B. Loading your datasets and using your data<a class="headerlink" href="#b-loading-your-datasets-and-using-your-data" title="Permalink to this heading"></a></h2>
+<section id="b-loading-your-data-and-augmenting-it">
+<h2>B. Loading your data and augmenting it<a class="headerlink" href="#b-loading-your-data-and-augmenting-it" title="Permalink to this heading"></a></h2>
+<section id="data-loading">
+<h3>Data Loading<a class="headerlink" href="#data-loading" title="Permalink to this heading"></a></h3>
+<p>First, you need to load samples.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="countergen.Sample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">Sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.Sample" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>outputs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p>This can be done by using on of the utils of the <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code> class.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="countergen.Dataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.Dataset" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference internal" href="#countergen.Sample" title="countergen.augmentation.data_augmentation.Sample"><em>Sample</em></a><em>]</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="data-loading-the-augmenter-class">
+<h3>Data Loading : The Augmenter class<a class="headerlink" href="#data-loading-the-augmenter-class" title="Permalink to this heading"></a></h3>
+<p>Then, you will create variations of your data belonging to different categories. The object which allows you to do that is an <code class="xref py py-class docutils literal notranslate"><span class="pre">Augmenter</span></code>: it can transform inputs to any of its target categories.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="countergen.types.Augmenter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.types.</span></span><span class="sig-name descname"><span class="pre">Augmenter</span></span><a class="headerlink" href="#countergen.types.Augmenter" title="Permalink to this definition"></a></dt>
+<dd><p>Objects that can transform an input to another input from a target category.</p>
+<p>Also include objects which can do paraphrase.</p>
+</dd></dl>
+
+<p>For instance, for an <code class="xref py py-class docutils literal notranslate"><span class="pre">Augmenter</span></code>: that can convert to categories “male” and “female”, applying the <code class="docutils literal notranslate"><span class="pre">transform</span></code> function to “She left the store” with a target category of “male” should output “He left the store”, and if the target category is “female”, it should return the sentence unchanged.</p>
+<p>You can use your <code class="xref py py-class docutils literal notranslate"><span class="pre">Augmenter</span></code>: by calling the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.augment()</span></code>: method, or by calling directly <code class="xref py py-func docutils literal notranslate"><span class="pre">generate_all_variations()</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="countergen.generate_all_variations">
+<span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">generate_all_variations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">augmenters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.generate_all_variations" title="Permalink to this definition"></a></dt>
+<dd><p>Apply each augmenter to each sample of the dataset for each available target category.</p>
+<p>It first replaces samples with the transformed samples through the first augmenter,
+then replaces these with samples transformed through the second augmenter, and so on.
+Return an number of variations that can be exponential in the number of augmenters.</p>
+<p>Remove duplicates.</p>
+<p>If an augmenter is a paraphrase, keep the original input too.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>augmenters</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="#countergen.types.Augmenter" title="countergen.types.Augmenter"><em>Augmenter</em></a><em>]</em>) – </p></li>
+<li><p><strong>ds</strong> (<a class="reference internal" href="#countergen.Dataset" title="countergen.augmentation.data_augmentation.Dataset"><em>Dataset</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#countergen.AugmentedDataset" title="countergen.augmentation.data_augmentation.AugmentedDataset"><em>AugmentedDataset</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="the-two-default-augmenters">
+<h3>The two default Augmenters<a class="headerlink" href="#the-two-default-augmenters" title="Permalink to this heading"></a></h3>
+<p>If you a fast and cheap method, use <code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleAugmenter</span></code>:, which does word level substitution between two categories by following rules defined in a json file.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="countergen.SimpleAugmenter">
+<span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">SimpleAugmenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correspondance_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'([A-Za-zÀ-ÖØ-öø-ÿ]+\\-[A-Za-zÀ-ÖØ-öø-ÿ]+)|[A-Za-zÀ-ÖØ-öø-ÿ]+'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.SimpleAugmenter" title="Permalink to this definition"></a></dt>
+<dd><p>Objects that can transform an input to another input from a target category.</p>
+<p>Also include objects which can do paraphrase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>categories</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><em>Tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – </p></li>
+<li><p><strong>correspondance_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.DefaultDict" title="(in Python v3.10)"><em>DefaultDict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>word_regex</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>If you a more flexible and powerful method, use <code class="xref py py-class docutils literal notranslate"><span class="pre">LlmdAugmenter</span></code>:, which uses a language model to generating variations. This technique has already been used in the context of Counterfactual dataset generation and is called LLMD. You will need to set <code class="xref py py-data docutils literal notranslate"><span class="pre">countergen.config.OPENAI_API_KEY</span></code>: to your API key to use it (or set the <code class="docutils literal notranslate"><span class="pre">OPENAI_API_KEY</span></code> environment variable).</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="countergen.LlmdAugmenter">
+<span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">LlmdAugmenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">categories_instructions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt_template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'...'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'text-davinci-002'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.LlmdAugmenter" title="Permalink to this definition"></a></dt>
+<dd><p>Objects that can transform an input to another input from a target category.</p>
+<p>Also include objects which can do paraphrase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>categories_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – </p></li>
+<li><p><strong>prompt_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>engine</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="paraphrasing">
+<h3>Paraphrasing<a class="headerlink" href="#paraphrasing" title="Permalink to this heading"></a></h3>
+<p>If your dataset is too small, you can make it grow by using a paraphraser, which is just a special type of Augmenter which doesn’t have any output category and is special-cased in <code class="xref py py-func docutils literal notranslate"><span class="pre">generate_all_variations()</span></code>.</p>
+<p>One way to do paraphrasing is to use a langue model, and this is already implemented here:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="countergen.LlmParaphraser">
+<span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">LlmParaphraser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt_template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'...'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'text-davinci-002'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.LlmParaphraser" title="Permalink to this definition"></a></dt>
+<dd><p>Objects that can transform an input to another input with the same meaning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompt_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>engine</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 </section>
 </section>
 

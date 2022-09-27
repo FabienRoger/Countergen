@@ -39,4 +39,4 @@ Alternatively, if you just want to print or save the results, directly call on o
 
 .. autofunction:: countergen.evaluate_and_save
 
-And that's it! ``countergen`` and ``countergentorch`` provides to generate variations, load models easily, and edit them to decrease performance gaps between different categories. Click on *Next* to know more.
+And that's it! ``countergen`` and ``countergentorch`` provide powerful ways to generate variations, load models easily, and edit them to decrease performance gaps between different categories. Click on *Next* to know more.

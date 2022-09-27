@@ -1,8 +1,10 @@
 from countergen.augmentation.data_augmentation import (
+    Sample,
     AugmentedDataset,
     Dataset,
     DEFAULT_DS_PATHS,
     DEFAULT_AUGMENTED_DS_PATHS,
+    generate_all_variations,
 )
 from countergen.augmentation.llmd_augmenter import LlmdAugmenter
 from countergen.augmentation.paraphraser import LlmParaphraser

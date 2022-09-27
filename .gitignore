@@ -2,8 +2,8 @@
 .env
 
 # Local tests
-tests_saves
-my_data
+tests_saves/
+my_data/
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,jupyternotebooks

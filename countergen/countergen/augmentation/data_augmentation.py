@@ -150,6 +150,16 @@ def generate_paraphrase(variation: Variation, augmenter: Paraphraser) -> List[Va
 
 
 def generate_all_variations(augmenters: Iterable[Augmenter], ds: Dataset) -> AugmentedDataset:
+    """Apply each augmenter to each sample of the dataset for each available target category.
+
+    It first replaces samples with the transformed samples through the first augmenter,
+    then replaces these with samples transformed through the second augmenter, and so on.
+    Return an number of variations that can be exponential in the number of augmenters.
+
+    Remove duplicates.
+
+    If an augmenter is a paraphrase, keep the original input too."""
+
     augmented_samples = []
     for sample in maybe_tqdm(ds.samples, VERBOSE >= 2):
         variations = [Variation(sample.input, ())]
