@@ -87,6 +87,7 @@
 evaluating NLP models on the variations and editing models to reduce unwanted bias.
 It offers simple ways to generate counterfactual datasets using state-of-the-art techniques,
 while offering simple ways to add your own data, data augmentation techniques, models, and evaluation metrics.</p>
+<p>The project is free and open source. The code can be found here: <a class="reference external" href="https://github.com/FabienRoger/Countergen">https://github.com/FabienRoger/Countergen</a>.</p>
 <p>This project is split in two parts:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">countergen</span></code> is a lightweight Python module which provides the framework for data augmentation and model evaluation. It provides useful default datasets, lightweight augmentation techniques, and evaluation of models available through an API.</p></li>
@@ -96,7 +97,7 @@ while offering simple ways to add your own data, data augmentation techniques, m
 how to <a class="reference internal" href="countergen/usage.html#installation"><span class="std std-ref">Installation</span></a> the project.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This project is under active development.</p>
+<p>This project is under development. Please report issues in the appropriate section of the Github repository.</p>
 </div>
 <section id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this heading"></a></h2>
@@ -123,11 +124,15 @@ how to <a class="reference internal" href="countergen/usage.html#installation"><
 <li class="toctree-l2"><a class="reference internal" href="countergen/data_augmentation.html#b-loading-your-data-and-augmenting-it">B. Loading your data and augmenting it</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="countergen/model_loading.html">Model loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergen/model_loading.html">Model loading</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="countergen/model_loading.html#what-is-a-modelevaluator">What is a ModelEvaluator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergen/model_loading.html#create-modelevaluator-from-an-api">Create ModelEvaluator from an API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergen/model_loading.html#create-modelevaluator-from-a-local-model">Create ModelEvaluator from a local model</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="countergen/model_evaluation.html">Model evaluation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="countergen/model_evaluation.html#aggregator-selection">Aggregator Selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="countergen/model_evaluation.html#id1">Model Evaluation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="countergen/model_evaluation.html#results-of-the-evaluation">Results of the Evaluation</a></li>
 </ul>
 </li>
 </ul>

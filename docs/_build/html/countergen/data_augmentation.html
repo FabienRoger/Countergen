@@ -60,7 +60,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#countergen.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#data-loading-the-augmenter-class">Data Loading : The Augmenter class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-augmentation-the-augmenter-class">Data Augmentation : The Augmenter class</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#countergen.types.Augmenter"><code class="docutils literal notranslate"><span class="pre">Augmenter</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#countergen.generate_all_variations"><code class="docutils literal notranslate"><span class="pre">generate_all_variations()</span></code></a></li>
 </ul>
@@ -163,8 +163,8 @@
 </dd></dl>
 
 </section>
-<section id="data-loading-the-augmenter-class">
-<h3>Data Loading : The Augmenter class<a class="headerlink" href="#data-loading-the-augmenter-class" title="Permalink to this heading"></a></h3>
+<section id="data-augmentation-the-augmenter-class">
+<h3>Data Augmentation : The Augmenter class<a class="headerlink" href="#data-augmentation-the-augmenter-class" title="Permalink to this heading"></a></h3>
 <p>Then, you will create variations of your data belonging to different categories. The object which allows you to do that is an <code class="xref py py-class docutils literal notranslate"><span class="pre">Augmenter</span></code>: it can transform inputs to any of its target categories.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="countergen.types.Augmenter">
@@ -204,8 +204,8 @@ Return an number of variations that can be exponential in the number of augmente
 <dl class="py function">
 <dt class="sig sig-object py" id="countergen.SimpleAugmenter">
 <span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">SimpleAugmenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correspondance_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'([A-Za-zÀ-ÖØ-öø-ÿ]+\\-[A-Za-zÀ-ÖØ-öø-ÿ]+)|[A-Za-zÀ-ÖØ-öø-ÿ]+'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.SimpleAugmenter" title="Permalink to this definition"></a></dt>
-<dd><p>Objects that can transform an input to another input from a target category.</p>
-<p>Also include objects which can do paraphrase.</p>
+<dd><p>Augmenter that does word substituion between its two categories.</p>
+<p>“words” are defined by the word_regex expression.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -224,8 +224,9 @@ Return an number of variations that can be exponential in the number of augmente
 <dl class="py function">
 <dt class="sig sig-object py" id="countergen.LlmdAugmenter">
 <span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">LlmdAugmenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">categories_instructions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt_template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'...'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'text-davinci-002'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.LlmdAugmenter" title="Permalink to this definition"></a></dt>
-<dd><p>Objects that can transform an input to another input from a target category.</p>
-<p>Also include objects which can do paraphrase.</p>
+<dd><p>Augmenter that does word substituion between its two categories.</p>
+<p>“words” are defined by the word_regex expression.</p>
+<p>From Fryer 2022, <a class="reference external" href="https://aclanthology.org/2022.woah-1.20.pdf">https://aclanthology.org/2022.woah-1.20.pdf</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

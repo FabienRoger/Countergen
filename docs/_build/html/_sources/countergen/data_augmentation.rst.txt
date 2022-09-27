@@ -33,7 +33,7 @@ This can be done by using on of the utils of the :py:class:`Dataset` class.
 .. autoclass:: countergen.Dataset
    :undoc-members:
 
-Data Loading : The Augmenter class
+Data Augmentation : The Augmenter class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Then, you will create variations of your data belonging to different categories. The object which allows you to do that is an :py:class:`Augmenter`: it can transform inputs to any of its target categories.

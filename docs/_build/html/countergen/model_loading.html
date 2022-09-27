@@ -50,7 +50,19 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="outline.html">Outline of the evaluation process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_augmentation.html">Data Loading and Augmentation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Model loading</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Model loading</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-a-modelevaluator">What is a ModelEvaluator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#countergen.types.ModelEvaluator"><code class="docutils literal notranslate"><span class="pre">countergen.types.ModelEvaluator</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#create-modelevaluator-from-an-api">Create ModelEvaluator from an API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#countergen.api_to_generative_model"><code class="docutils literal notranslate"><span class="pre">api_to_generative_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#countergen.get_generative_model_evaluator"><code class="docutils literal notranslate"><span class="pre">get_generative_model_evaluator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#create-modelevaluator-from-a-local-model">Create ModelEvaluator from a local model</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="model_evaluation.html">Model evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergentorch</span></p>
@@ -84,7 +96,67 @@
              
   <section id="model-loading">
 <h1>Model loading<a class="headerlink" href="#model-loading" title="Permalink to this heading"></a></h1>
+<section id="what-is-a-modelevaluator">
+<h2>What is a ModelEvaluator<a class="headerlink" href="#what-is-a-modelevaluator" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">countergen</span></code> module is agnostic towards what the model is or does. All it needs is a <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code></p>
+<dl class="py data">
+<dt class="sig sig-object py" id="countergen.types.ModelEvaluator">
+<span class="sig-prename descclassname"><span class="pre">countergen.types.</span></span><span class="sig-name descname"><span class="pre">ModelEvaluator</span></span><a class="headerlink" href="#countergen.types.ModelEvaluator" title="Permalink to this definition"></a></dt>
+<dd><p>Callable that returns the performance of a model given an input and expected outputs.</p>
+</dd></dl>
+
 <p>The performance is usually a float between zero and one, where one is better, but you can use whichever output you want as long as it is supported by the <code class="xref py py-data docutils literal notranslate"><span class="pre">StatsAggregator</span></code> you are using.</p>
+<p>It usually is created by plugging a model, which outputs a prediction, into an evaluator, which measure how well the prediction matches the expected outputs.</p>
+</section>
+<section id="create-modelevaluator-from-an-api">
+<h2>Create ModelEvaluator from an API<a class="headerlink" href="#create-modelevaluator-from-an-api" title="Permalink to this heading"></a></h2>
+<p>To create a <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code> using the OpenAI API (or any API compatible with the <code class="docutils literal notranslate"><span class="pre">openai</span></code> module), first declare:</p>
+<ul class="simple">
+<li><p><code class="xref py py-data docutils literal notranslate"><span class="pre">countergen.config.OPENAI_API_KEY</span></code>: to your API key (or set the <code class="docutils literal notranslate"><span class="pre">OPENAI_API_KEY</span></code> environment variable).</p></li>
+<li><p><code class="xref py py-data docutils literal notranslate"><span class="pre">countergen.config.OPENAI_API_BASE</span></code>: to your the URL of the API you want to use (or set the <code class="docutils literal notranslate"><span class="pre">OPENAI_API_BASE</span></code> environment variable). Defaults to the OpenAI API URL.</p></li>
+</ul>
+<p>Then create a generative model using the following function:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="countergen.api_to_generative_model">
+<span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">api_to_generative_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">openai_engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'text-ada-001'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.api_to_generative_model" title="Permalink to this definition"></a></dt>
+<dd><p>Make a GenerativeModel that uses the openai api.</p>
+<p>The resulting GenerativeModel takes as input an input text and possibles outputes,
+and returns the log probabilities of each tokens of each expected output.</p>
+<p>The GenerativeModel costs ~ len(input) * (sum of len(ouput)) tokens per call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>openai_engine</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a>[[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><em>Sequence</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><em>Sequence</em></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Finally, use this generative model to create the model evaluator:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="countergen.get_generative_model_evaluator">
+<span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">get_generative_model_evaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'probability'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.get_generative_model_evaluator" title="Permalink to this definition"></a></dt>
+<dd><p>Return the ModelEvaluator corresponding to the model &amp; the metric.</p>
+<p>Available metrics: probability &amp; perplexity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>metric</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a>[[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]], <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="create-modelevaluator-from-a-local-model">
+<h2>Create ModelEvaluator from a local model<a class="headerlink" href="#create-modelevaluator-from-a-local-model" title="Permalink to this heading"></a></h2>
+<p>See <code class="docutils literal notranslate"><span class="pre">countergentorch</span></code> which contains utilities to build <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code> from PyTorch generative and classification models.</p>
+</section>
 </section>
 
 
