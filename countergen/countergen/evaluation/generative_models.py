@@ -16,6 +16,9 @@ GenerativeModel = Callable[[Input, Outputs], Sequence[Sequence[LogProbs]]]
 def api_to_generative_model(openai_engine: str = "text-ada-001") -> GenerativeModel:
     """Make a GenerativeModel that uses the openai api.
 
+    The resulting GenerativeModel takes as input an input text and possibles outputes,
+    and returns the log probabilities of each tokens of each expected output.
+
     The GenerativeModel costs ~ len(input) * (sum of len(ouput)) tokens per call."""
 
     def gen_model(inp: Input, out: Outputs) -> List[List[float]]:

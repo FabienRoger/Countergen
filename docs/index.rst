@@ -6,6 +6,8 @@ evaluating NLP models on the variations and editing models to reduce unwanted bi
 It offers simple ways to generate counterfactual datasets using state-of-the-art techniques,
 while offering simple ways to add your own data, data augmentation techniques, models, and evaluation metrics.
 
+The project is free and open source. The code can be found here: https://github.com/FabienRoger/Countergen.
+
 This project is split in two parts:
 
 * ``countergen`` is a lightweight Python module which provides the framework for data augmentation and model evaluation. It provides useful default datasets, lightweight augmentation techniques, and evaluation of models available through an API.
@@ -16,7 +18,7 @@ how to :ref:`installation` the project.
 
 .. note::
 
-   This project is under active development.
+   This project is under development. Please report issues in the appropriate section of the Github repository.
 
 Contents
 --------

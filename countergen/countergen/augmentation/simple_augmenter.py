@@ -44,6 +44,10 @@ DEFAULT_TRANSFORMATIONS = [
 
 @define
 class SimpleAugmenter(Augmenter):
+    """Augmenter that does word substituion between its two categories.
+
+    "words" are defined by the word_regex expression."""
+
     categories: Tuple[Category, Category]
     correspondance_dict: CorrespondanceDict
     word_regex: str = r"([A-Za-zÀ-ÖØ-öø-ÿ]+\-[A-Za-zÀ-ÖØ-öø-ÿ]+)|[A-Za-zÀ-ÖØ-öø-ÿ]+"

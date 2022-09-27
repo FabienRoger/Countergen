@@ -11,6 +11,8 @@ from countergen.tools.math_utils import geometric_mean, mean
 
 @define
 class AveragePerformancePerCategory(StatsAggregator):
+    """Compute the average performance for each category."""
+
     use_geometric_mean: bool = False
 
     def __call__(self, performances: Results) -> Mapping[Category, float]:
@@ -56,7 +58,7 @@ class Stats:
 
 @define
 class PerformanceStatsPerCategory(StatsAggregator):
-    """Compute mean and uncertainty over mean."""
+    """Compute performance mean and the 2 sigma uncertainty over mean for each category."""
 
     def __call__(self, performances: Results) -> Mapping[Category, Stats]:
         performances_per_category: DefaultDict[Category, List[Performance]] = defaultdict(lambda: [])

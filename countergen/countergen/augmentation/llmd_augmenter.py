@@ -36,6 +36,12 @@ DEFAULT_PROMPT = """0: Here is some text: {When the doctor asked Linda to take t
 
 @define
 class LlmdAugmenter(Augmenter):
+    """Augmenter that does word substituion between its two categories.
+
+    "words" are defined by the word_regex expression.
+
+    From Fryer 2022, https://aclanthology.org/2022.woah-1.20.pdf"""
+
     categories_instructions: Dict[Category, str]
     prompt_template: str = DEFAULT_PROMPT
     engine: str = "text-davinci-002"

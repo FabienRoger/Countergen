@@ -22,7 +22,7 @@ Second, you load your model and turn it into a :py:data:`ModelEvaluator`.
 
 .. data:: countergen.types.ModelEvaluator
 
-    Callable that returns the performance of a model given an input and expected outputs.
+   Callable that returns the performance of a model given an input and expected outputs.
 
 Model Evaluation
 -----------------
@@ -30,13 +30,10 @@ Model Evaluation
 Third, you pass your list of :py:class:`AugmentedSample` and your :py:data:`ModelEvaluator` into the following function:
 
 .. autofunction:: countergen.evaluate
+   :noindex:
 
 By default, it will return the average performance on each kind of data. You can specify other ways to aggregate the performance on each variation by passing another :py:class:`StatsAggregator`.
 
-Alternatively, if you just want to print or save the results, directly call on of the following:
-
-.. autofunction:: countergen.evaluate_and_print
-
-.. autofunction:: countergen.evaluate_and_save
+Alternatively, if you just want to print or save the results, directly :py:func:`evaluate_and_print` or :py:func:`evaluate_and_save`
 
 And that's it! ``countergen`` and ``countergentorch`` provide powerful ways to generate variations, load models easily, and edit them to decrease performance gaps between different categories. Click on *Next* to know more.
