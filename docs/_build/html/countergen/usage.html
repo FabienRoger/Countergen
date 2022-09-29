@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Usage &mdash; Countergen 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -97,18 +98,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="usage">
+  <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h1>
-<div class="section" id="installation">
+<section id="installation">
 <span id="id1"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
 <p>To use CountergenTorch, first install it using pip:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(.venv)</span> <span class="gp">$ </span>pip install countergen
 </pre></div>
 </div>
-</div>
-<div class="section" id="outline-of-the-evaluation-process">
+</section>
+<section id="outline-of-the-evaluation-process">
 <h2>Outline of the evaluation process<a class="headerlink" href="#outline-of-the-evaluation-process" title="Permalink to this heading"></a></h2>
-<div class="section" id="data-augmentation">
+<section id="data-augmentation">
 <h3>Data Augmentation<a class="headerlink" href="#data-augmentation" title="Permalink to this heading"></a></h3>
 <p>First, you produce a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AugmentedSample</span></code>, either by loading an existing one, or using tools the library provides to build you it from raw data, or by creating your own from scratch.</p>
 <dl class="py class">
@@ -167,12 +168,12 @@
 
 </dd></dl>
 
-</div>
-<div class="section" id="model-loading">
+</section>
+<section id="model-loading">
 <h3>Model Loading<a class="headerlink" href="#model-loading" title="Permalink to this heading"></a></h3>
 <p>Second, you load your model and turn it into a <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code>, which is just a callable that returns the performance of a model given an input and expected outputs.</p>
-</div>
-<div class="section" id="model-evaluation">
+</section>
+<section id="model-evaluation">
 <h3>Model Evaluation<a class="headerlink" href="#model-evaluation" title="Permalink to this heading"></a></h3>
 <p>Third, you pass your list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AugmentedSample</span></code> and your <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code> into the following function:</p>
 <dl class="py function">
@@ -195,9 +196,9 @@
 <p>By default, it will return the average performance on each kind of data. You can specify other ways to aggregate the performance on each variation by passing another <code class="xref py py-class docutils literal notranslate"><span class="pre">StatsAggregator</span></code>.</p>
 <p>Alternatively, if you just want to print or save the results, directly <code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate_and_print()</span></code> or <code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate_and_save()</span></code></p>
 <p>And that’s it! <code class="docutils literal notranslate"><span class="pre">countergen</span></code> and <code class="docutils literal notranslate"><span class="pre">countergentorch</span></code> provide powerful ways to generate variations, load models easily, and edit them to decrease performance gaps between different categories. Click on <em>Next</em> to know more.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

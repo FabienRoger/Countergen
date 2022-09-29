@@ -33,7 +33,7 @@ First, you need to load samples.
 This can be done by using on of the utils of the :py:class:`Dataset` class.
 
 .. autoclass:: countergen.Dataset
-   :undoc-members:
+   :members:
 
 Data Augmentation : The Augmenter class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,11 +54,13 @@ The two default Augmenters
 
 If you a fast and cheap method, use :py:class:`SimpleAugmenter`:, which does word level substitution between two categories by following rules defined in a json file.
 
-.. autofunction:: countergen.SimpleAugmenter
+.. autoclass:: countergen.SimpleAugmenter
+   :members:
 
 If you a more flexible and powerful method, use :py:class:`LlmdAugmenter`:, which uses a language model to generating variations. This technique has already been used in the context of Counterfactual dataset generation and is called LLMD. You will need to set :py:data:`countergen.config.OPENAI_API_KEY`: to your API key to use it (or set the ``OPENAI_API_KEY`` environment variable).
 
-.. autofunction:: countergen.LlmdAugmenter
+.. autoclass:: countergen.LlmdAugmenter
+   :members:
 
 Paraphrasing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -67,4 +69,4 @@ If your dataset is too small, you can make it grow by using a paraphraser, which
 
 One way to do paraphrasing is to use a langue model, and this is already implemented here:
 
-.. autofunction:: countergen.LlmParaphraser
+.. autoclass:: countergen.LlmParaphraser

@@ -54,6 +54,7 @@ class SimpleAugmenter(Augmenter):
 
     @classmethod
     def from_default(cls, name: str = "gender") -> "SimpleAugmenter":
+        """Load one of the defaults datasets from "DEFAULT_CONVERTERS_PATHS"."""
         if name not in DEFAULT_CONVERTERS_PATHS:
             raise ValueError(
                 f"""Default name '{name}' is not a default simple augmenter. Choose one in {list(DEFAULT_CONVERTERS_PATHS.keys())}"""
@@ -69,17 +70,14 @@ class SimpleAugmenter(Augmenter):
         """Create the SimpleAugmenter corresponding to the substitution rules defined in a json file.
         The json file should be of the following form:
         {
-            "categories": ["<CATA>","<CATB>"],
-            "correspondances": [
-                {
-                    "<CATA>": ["<WA1>", "<WA2>", ...],
-                    "<CATB>": ["<WB1>", "<WB2>", ...]
-                },
-                ...]
+        "categories": ["<CATA>","<CATB>"],
+        "correspondances": [
+        {"<CATA>": ["<WA1>", "<WA2>", ...],"<CATB>": ["<WB1>", "<WB2>", ...]},
+        ...]
         }
         where <CATA> and <CATB> are the two categories, and <WA...> can be replaced by <WB...>
-        to go from category <CATA> to category <CATB>.
-        """
+        to go from category <CATA> to category <CATB>."""
+
         with Path(path).open("r", encoding="utf-8") as f:
             json_dict = json.loads(f.read())
             return SimpleAugmenter.from_ds(ConversionDataset.from_json(json_dict), transformations)

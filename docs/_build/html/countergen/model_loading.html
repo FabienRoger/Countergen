@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Model Loading &mdash; Countergen 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -96,9 +97,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="model-loading">
+  <section id="model-loading">
 <span id="id1"></span><h1>Model Loading<a class="headerlink" href="#model-loading" title="Permalink to this heading"></a></h1>
-<div class="section" id="what-is-a-modelevaluator">
+<section id="what-is-a-modelevaluator">
 <h2>What is a ModelEvaluator<a class="headerlink" href="#what-is-a-modelevaluator" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">countergen</span></code> module is agnostic towards what the model is or does. All it needs is a <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code></p>
 <dl class="py data">
@@ -109,8 +110,8 @@
 
 <p>The performance is usually a float between zero and one, where one is better, but you can use whichever output you want as long as it is supported by the <code class="xref py py-data docutils literal notranslate"><span class="pre">StatsAggregator</span></code> you are using.</p>
 <p>It usually is created by plugging a model, which outputs a prediction, into an evaluator, which measure how well the prediction matches the expected outputs.</p>
-</div>
-<div class="section" id="create-modelevaluator-from-an-api">
+</section>
+<section id="create-modelevaluator-from-an-api">
 <h2>Create ModelEvaluator from an API<a class="headerlink" href="#create-modelevaluator-from-an-api" title="Permalink to this heading"></a></h2>
 <p>To create a <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code> using the OpenAI API (or any API compatible with the <code class="docutils literal notranslate"><span class="pre">openai</span></code> module), first declare:</p>
 <ul class="simple">
@@ -154,12 +155,12 @@ and returns the log probabilities of each tokens of each expected output.</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="create-modelevaluator-from-a-local-model">
+</section>
+<section id="create-modelevaluator-from-a-local-model">
 <h2>Create ModelEvaluator from a local model<a class="headerlink" href="#create-modelevaluator-from-a-local-model" title="Permalink to this heading"></a></h2>
 <p>See <code class="docutils literal notranslate"><span class="pre">countergentorch</span></code> which contains utilities to build <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code> from PyTorch generative and classification models.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

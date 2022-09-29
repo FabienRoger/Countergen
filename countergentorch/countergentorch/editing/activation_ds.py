@@ -10,6 +10,8 @@ from countergen.types import AugmentedSample, Category
 
 @define
 class ActivationsDataset(torch.utils.data.Dataset):
+    """Dataset of activations with utilities to compute activations and project them."""
+
     x_data: torch.Tensor  #: 2D float32 tensor of shape (samples, hidden_dimension)
     y_data: torch.Tensor  #: 1D long tensor of shape (samples,) where one number is one category
 

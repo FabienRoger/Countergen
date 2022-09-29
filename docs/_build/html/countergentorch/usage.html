@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Usage &mdash; Countergen 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -94,18 +95,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="usage">
+  <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h1>
-<div class="section" id="installation">
+<section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
 <p>To use Countergen, first install it using pip:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(.venv)</span> <span class="gp">$ </span>pip install countergentorch
 </pre></div>
 </div>
-</div>
-<div class="section" id="outline-of-the-editing-process">
+</section>
+<section id="outline-of-the-editing-process">
 <h2>Outline of the editing process<a class="headerlink" href="#outline-of-the-editing-process" title="Permalink to this heading"></a></h2>
-<div class="section" id="pytorch-model-loading">
+<section id="pytorch-model-loading">
 <h3>PyTorch Model Loading<a class="headerlink" href="#pytorch-model-loading" title="Permalink to this heading"></a></h3>
 <p>To be able to edit the models, you need to have the model stored locally because the most common APIs don’t allow users to have access to internal activations and don’t let you edit the weights.</p>
 <p>This library provides tools to evalute and edit PyTorch models. First, load your PyTorch module. Then, you will be able to evalute it by turning it into a <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code> using one of the following:</p>
@@ -113,13 +114,13 @@
 <li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">pt_to_generative_model()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">get_generative_model_evaluator()</span></code> to evalute generative models</p></li>
 <li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">get_classification_model_evaluator()</span></code> to evalute classification models</p></li>
 </ul>
-</div>
-<div class="section" id="measuring-internal-bias">
+</section>
+<section id="measuring-internal-bias">
 <h3>Measuring Internal Bias<a class="headerlink" href="#measuring-internal-bias" title="Permalink to this heading"></a></h3>
 <p>Then, to know where to do the editing, you need to know what’s different in the inner workings of the model between different categories.</p>
 <p>Once you have generated variations of your data using <code class="docutils literal notranslate"><span class="pre">countergen</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ActivationsDataset</span></code> provides some utilities to measure the inner activations of the model, and gives you a PyTorch dataset of (activations, category) pairs. You can also do that manually using other utilities if you want a more fine grained measurements.</p>
-</div>
-<div class="section" id="finding-the-relevant-directions">
+</section>
+<section id="finding-the-relevant-directions">
 <h3>Finding the Relevant Directions<a class="headerlink" href="#finding-the-relevant-directions" title="Permalink to this heading"></a></h3>
 <p>Based on those measurements, you want to extract the relevant places where the model stores differences between the categories.</p>
 <p>A natural way to do so is to find “features”: linear combinations of neurons which have been found to often capture the human understandable concepts we care about. We provide three methods to allow you to find the directions most relevant to the concept that’s different between one category and another, which all have some advantages and disadvantages:</p>
@@ -129,14 +130,14 @@
 <li><p>Span of an MLP classifier.</p></li>
 </ul>
 <p>More details about each methods can be found in the <a class="reference internal" href="directions.html#finding-the-relevant-directions"><span class="std std-ref">relevant section</span></a>:.</p>
-</div>
-<div class="section" id="editing-the-model">
+</section>
+<section id="editing-the-model">
 <h3>Editing the Model<a class="headerlink" href="#editing-the-model" title="Permalink to this heading"></a></h3>
 <p>Once you have compute the relevant directions, you can easily produce a modification configuration using <code class="xref py py-func docutils literal notranslate"><span class="pre">get_edit_configs()</span></code> and edit the model using <code class="xref py py-func docutils literal notranslate"><span class="pre">edit_model()</span></code>, which will give you a new model that projects activations during the forward pass to remove most of the distinction your model makes between the differents categories of data you want your model to treat as equals.</p>
 <p>And that’s it! Now you can evaluate your model again by using <code class="docutils literal notranslate"><span class="pre">countergen</span></code>, and export your model as you would export any PyTorch model.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

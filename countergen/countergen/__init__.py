@@ -6,7 +6,7 @@ from countergen.augmentation.data_augmentation import (
     DEFAULT_AUGMENTED_DS_PATHS,
     generate_all_variations,
 )
-from countergen.augmentation.llmd_augmenter import LlmdAugmenter
+from countergen.augmentation.llmd_augmenter import LlmdAugmenter, DEFAULT_AUGMENTERS
 from countergen.augmentation.paraphraser import LlmParaphraser
 from countergen.augmentation.simple_augmenter import SimpleAugmenter, DEFAULT_CONVERTERS_PATHS
 from countergen.evaluation import aggregators
