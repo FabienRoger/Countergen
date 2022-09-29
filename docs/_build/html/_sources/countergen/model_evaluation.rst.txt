@@ -1,4 +1,4 @@
-Model evaluation
+Model Evaluation
 ================
 
 Aggregator Selection

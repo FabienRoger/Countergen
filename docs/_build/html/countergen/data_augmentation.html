@@ -81,7 +81,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="model_loading.html">Model Loading</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_evaluation.html">Model evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_evaluation.html">Model Evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergentorch</span></p>
 <ul>
@@ -222,6 +222,31 @@ where you have at least one accepted output per input.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.types.</span></span><span class="sig-name descname"><span class="pre">Augmenter</span></span><a class="headerlink" href="#countergen.types.Augmenter" title="Permalink to this definition"></a></dt>
 <dd><p>Objects that can transform an input to another input from a target category.</p>
 <p>Also include objects which can do paraphrase.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="countergen.types.Augmenter.categories">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">categories</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#countergen.types.Augmenter.categories" title="Permalink to this definition"></a></dt>
+<dd><p>Categories the augmenter can output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="countergen.types.Augmenter.transform">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.types.Augmenter.transform" title="Permalink to this definition"></a></dt>
+<dd><p>Transform the input to make it a member of the target category.</p>
+<p>Return the input unchanged if the input is already a member of the target category or if
+the transformation is not applicable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inp</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>to</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <p>For instance, for an <code class="xref py py-class docutils literal notranslate"><span class="pre">Augmenter</span></code>: that can convert to categories “male” and “female”, applying the <code class="docutils literal notranslate"><span class="pre">transform</span></code> function to “She left the store” with a target category of “male” should output “He left the store”, and if the target category is “female”, it should return the sentence unchanged.</p>
