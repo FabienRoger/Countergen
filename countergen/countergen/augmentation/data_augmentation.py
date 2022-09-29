@@ -35,7 +35,7 @@ class Sample:
     outputs: Outputs = []
 
     @classmethod
-    def from_json_dict(cls, json_dict):
+    def from_json_dict(cls, json_dict) -> "Sample":
         outputs = json_dict["outputs"] if "outputs" in json_dict else []
         return Sample(json_dict["input"], outputs)
 
@@ -56,11 +56,11 @@ class SampleWithVariations(Sample, AugmentedSample):
         return self.outputs
 
     @classmethod
-    def from_sample(cls, s: Sample, variations: List[Variation] = []):
+    def from_sample(cls, s: Sample, variations: List[Variation] = []) -> "SampleWithVariations":
         return SampleWithVariations(s.input, s.outputs, variations)
 
     @classmethod
-    def from_json_dict(cls, json_dict):
+    def from_json_dict(cls, json_dict) -> "SampleWithVariations":
         outputs = json_dict["outputs"] if "outputs" in json_dict else []
         variations = [Variation(v["text"], tuple(v["categories"])) for v in json_dict["variations"]]
         return SampleWithVariations(json_dict["input"], outputs, variations)
@@ -77,7 +77,8 @@ class Dataset:
     samples: List[Sample]
 
     @classmethod
-    def from_default(cls, name: str = "doublebind"):
+    def from_default(cls, name: str = "doublebind") -> "Dataset":
+        """Load one of the defaults datasets from "DEFAULT_DS_PATHS"."""
         if name not in DEFAULT_DS_PATHS:
             raise ValueError(
                 f"""Default name '{name}' is not a default dataset. Choose one in {list(DEFAULT_DS_PATHS.keys())}"""
@@ -85,7 +86,12 @@ class Dataset:
         return Dataset.from_jsonl(DEFAULT_DS_PATHS[name])
 
     @classmethod
-    def from_jsonl(cls, path: str):
+    def from_jsonl(cls, path: str) -> "Dataset":
+        """Load a dataset from a jsonl file.
+
+        Expected format of each line:
+        {"input": "<INP>", "outputs": ["<OUT1>", "<OUT2>", ...]}
+        where you have at least one accepted output per input."""
         with Path(path).open("r", encoding="utf-8") as f:
             data = [json.loads(line) for line in f]
             samples = []
@@ -102,7 +108,7 @@ class AugmentedDataset:
     samples: List[SampleWithVariations]
 
     @classmethod
-    def from_default(cls, name: str = "doublebind-heilman"):
+    def from_default(cls, name: str = "doublebind-heilman") -> "AugmentedDataset":
         if name not in DEFAULT_AUGMENTED_DS_PATHS:
             raise ValueError(
                 f"Default name '{name}' is not a default augmented dataset. Choose one in {list(DEFAULT_AUGMENTED_DS_PATHS.keys())}"
@@ -110,7 +116,7 @@ class AugmentedDataset:
         return AugmentedDataset.from_jsonl(DEFAULT_AUGMENTED_DS_PATHS[name])
 
     @classmethod
-    def from_jsonl(cls, path: str):
+    def from_jsonl(cls, path: str) -> "AugmentedDataset":
         with Path(path).open("r", encoding="utf-8") as f:
             data = [json.loads(line) for line in f]
             samples = []

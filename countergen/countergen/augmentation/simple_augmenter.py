@@ -23,7 +23,7 @@ class ConversionDataset:
     correspondances: List[Tuple[List[str], List[str]]]
 
     @classmethod
-    def from_json(cls, json_dict: OrderedDict):
+    def from_json(cls, json_dict: OrderedDict) -> "ConversionDataset":
         categories = tuple(json_dict["categories"])
         correspondances_maps = json_dict["correspondances"]
         cat_0, cat_1 = categories
@@ -53,7 +53,7 @@ class SimpleAugmenter(Augmenter):
     word_regex: str = r"([A-Za-zÀ-ÖØ-öø-ÿ]+\-[A-Za-zÀ-ÖØ-öø-ÿ]+)|[A-Za-zÀ-ÖØ-öø-ÿ]+"
 
     @classmethod
-    def from_default(cls, name: str = "gender"):
+    def from_default(cls, name: str = "gender") -> "SimpleAugmenter":
         if name not in DEFAULT_CONVERTERS_PATHS:
             raise ValueError(
                 f"""Default name '{name}' is not a default simple augmenter. Choose one in {list(DEFAULT_CONVERTERS_PATHS.keys())}"""
@@ -65,7 +65,7 @@ class SimpleAugmenter(Augmenter):
         cls,
         path: str,
         transformations: Iterable[Transformation] = DEFAULT_TRANSFORMATIONS,
-    ):
+    ) -> "SimpleAugmenter":
         """Create the SimpleAugmenter corresponding to the substitution rules defined in a json file.
         The json file should be of the following form:
         {
@@ -89,7 +89,7 @@ class SimpleAugmenter(Augmenter):
         cls,
         ds: ConversionDataset,
         transformations: Iterable[Transformation] = DEFAULT_TRANSFORMATIONS,
-    ):
+    ) -> "SimpleAugmenter":
         correspondance_dict: CorrespondanceDict = {}
         for c in ds.categories:
             correspondance_dict[c] = defaultdict(lambda: [])

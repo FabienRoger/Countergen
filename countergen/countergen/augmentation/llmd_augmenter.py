@@ -47,7 +47,7 @@ class LlmdAugmenter(Augmenter):
     engine: str = "text-davinci-002"
 
     @classmethod
-    def from_default(cls, name: str):
+    def from_default(cls, name: str) -> "LlmdAugmenter":
         if name not in DEFAULT_AUGMENTERS:
             raise ValueError(f"{name} not a valid default augmenter. Choose one in {set(DEFAULT_AUGMENTERS.keys())}")
         return LlmdAugmenter(DEFAULT_AUGMENTERS[name])

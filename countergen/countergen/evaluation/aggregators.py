@@ -49,7 +49,7 @@ class Stats:
     uncertainty_2sig: float
 
     @classmethod
-    def from_seq(cls, s: Sequence[float]):
+    def from_seq(cls, s: Sequence[float]) -> "Stats":
         assert s, "empty seq"
         a = np.array(s)
         uncertainty_2sig = 2 * a.std() / np.sqrt(len(s))
