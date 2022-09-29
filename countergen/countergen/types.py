@@ -92,7 +92,7 @@ Aggregate = TypeVar("Aggregate")
 
 
 class StatsAggregator(Generic[Aggregate], metaclass=abc.ABCMeta):
-    """Objects that can aggregate, save, load and display the performances of models.
+    """Objects that can aggregate, and optionally save, load and display the performances of models.
 
     The aggregate can be of any type."""
 
@@ -101,20 +101,17 @@ class StatsAggregator(Generic[Aggregate], metaclass=abc.ABCMeta):
         """Return an aggregate of the performances."""
         ...
 
-    @abc.abstractmethod
     def save_aggregation(self, aggregate: Aggregate, file: Optional[TextIO] = None):
         """Save the aggregate to a file."""
-        ...
+        raise NotImplementedError(f"{__class__.__name__} can't save aggregates.")
 
-    @abc.abstractmethod
     def load_aggregation(self, file: TextIO) -> Aggregate:
         """Load the aggregate from a file."""
-        ...
+        raise NotImplementedError(f"{__class__.__name__} can't load aggregates.")
 
-    @abc.abstractmethod
     def display(self, aggregates: Mapping[str, Aggregate]):
         """Display and compare the aggregates of different models/datasets.
 
         The keys of the aggregates map should be a short description of what differs between
         the aggregates (model names if models are different, dataset names if the data changes, ...)"""
-        ...
+        print(aggregates)

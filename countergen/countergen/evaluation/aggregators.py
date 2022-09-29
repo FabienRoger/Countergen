@@ -125,6 +125,3 @@ class AverageDifference(StatsAggregator):
     def load_aggregation(self, file: TextIO) -> float:
         lines = file.readlines()
         return float(lines[1])
-
-    def display(self, aggregates: Mapping[str, float]):
-        raise NotImplementedError()
