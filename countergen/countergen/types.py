@@ -98,7 +98,11 @@ class StatsAggregator(Generic[Aggregate], metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def __call__(self, performances: Results) -> Aggregate:
-        """Return an aggregate of the performances."""
+        """Return an aggregate of the performances.
+
+        The performances is a list of the results for each sample:
+        for each sample, the performance and the categories of each variations
+        are given."""
         ...
 
     def save_aggregation(self, aggregate: Aggregate, file: Optional[TextIO] = None):
