@@ -41,7 +41,7 @@ Data Augmentation : The Augmenter class
 Then, you will create variations of your data belonging to different categories. The object which allows you to do that is an :py:class:`Augmenter`: it can transform inputs to any of its target categories.
 
 .. autoclass:: countergen.types.Augmenter
-   :undoc-members:
+   :members:
 
 For instance, for an :py:class:`Augmenter`: that can convert to categories "male" and "female", applying the ``transform`` function to "She left the store" with a target category of "male" should output "He left the store", and if the target category is "female", it should return the sentence unchanged.
 
