@@ -6,7 +6,7 @@ from typing import Any, Iterable, List, Mapping, NamedTuple, Optional, Sequence,
 
 from attrs import define
 
-from countergen.config import VERBOSE
+import countergen.config
 from countergen.augmentation.simple_augmenter import SimpleAugmenter
 from countergen.types import AugmentedSample, Category, Augmenter, Input, Outputs, Paraphraser, Variation
 from countergen.tools.utils import all_same, maybe_tqdm
@@ -168,7 +168,9 @@ def generate_all_variations(augmenters: Iterable[Augmenter], ds: Dataset) -> Aug
     If an augmenter is a paraphrase, keep the original input too."""
 
     augmented_samples = []
-    for sample in maybe_tqdm(ds.samples, VERBOSE >= 2):
+
+    print(countergen.config.VERBOSE)
+    for sample in maybe_tqdm(ds.samples, countergen.config.VERBOSE >= 2):
         variations = [Variation(sample.input, ())]
         for augmenter in augmenters:
             new_variations = []
