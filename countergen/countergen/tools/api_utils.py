@@ -1,6 +1,5 @@
 from typing import Dict, Optional
 from attrs import define
-from countergen.config import DEFAULT_API_BASE_URL
 
 
 @define
@@ -8,7 +7,7 @@ class ApiConfig:
     """Hold API key and API URL"""
 
     key: Optional[str] = None
-    base_url: str = DEFAULT_API_BASE_URL
+    base_url: Optional[str] = None
 
     def get_config(self) -> Dict[str, str]:
         """Return the argument the openai module needs."""
@@ -17,6 +16,11 @@ class ApiConfig:
             raise RuntimeError(
                 "Please provide openai key to use its api! Use `countergen.config.apiconfig.key = YOUR_KEY`"
             )
+        if self.base_url is None:
+            raise RuntimeError(
+                "Please provide openai base url to use its api! Use `countergen.config.apiconfig.base_url = BASE_URL`"
+            )
+
         return {
             "api_key": self.key,
             "api_base": self.base_url,

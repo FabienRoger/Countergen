@@ -1,5 +1,4 @@
 import abc
-from this import d
 from typing import (
     Callable,
     Generic,
@@ -13,6 +12,9 @@ from typing import (
     List,
     Tuple,
 )
+
+from attrs import define
+from countergen.tools.utils import FromAndToJson
 
 Input = str  # The input to an NLP mode
 Outputs = List[str]  # The different acceptable outputs of the NLP, string label or number, but in string format
@@ -59,7 +61,8 @@ class Paraphraser(Augmenter):
         return ()
 
 
-class Variation(NamedTuple):
+@define
+class Variation(FromAndToJson):
     """An input associated with the different categories it belongs to."""
 
     text: Input

@@ -2,7 +2,7 @@ import json
 from collections import defaultdict
 from pathlib import Path
 from random import choice
-from typing import Callable, DefaultDict, Dict, Iterable, List, Mapping, OrderedDict, Sequence, Tuple
+from typing import Any, Callable, DefaultDict, Dict, Iterable, List, Mapping, Sequence, Tuple
 
 import re
 from attrs import define
@@ -23,7 +23,7 @@ class ConversionDataset:
     correspondances: List[Tuple[List[str], List[str]]]
 
     @classmethod
-    def from_json(cls, json_dict: OrderedDict) -> "ConversionDataset":
+    def from_json(cls, json_dict: Mapping[str, Any]) -> "ConversionDataset":
         categories = tuple(json_dict["categories"])
         correspondances_maps = json_dict["correspondances"]
         cat_0, cat_1 = categories
@@ -79,7 +79,7 @@ class SimpleAugmenter(Augmenter):
         to go from category <CATA> to category <CATB>."""
 
         with Path(path).open("r", encoding="utf-8") as f:
-            json_dict = json.loads(f.read())
+            json_dict: Mapping[str, Any] = json.loads(f.read())
             return SimpleAugmenter.from_ds(ConversionDataset.from_json(json_dict), transformations)
 
     @classmethod

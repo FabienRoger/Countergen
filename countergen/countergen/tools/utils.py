@@ -1,11 +1,11 @@
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Callable, Dict, Iterable, Mapping, Optional, Sequence, TypeVar, Tuple
+from typing import Any, Callable, Dict, Iterable, Mapping, Optional, Sequence, Tuple, TypeVar
 
-from tqdm import tqdm  # type: ignore
-import openai
-
+import cattrs
 import countergen.config
+import openai
+from tqdm import tqdm  # type: ignore
 
 T = TypeVar("T")
 
@@ -35,3 +35,16 @@ def estimate_paraphrase_length(text: str):
     average_token_length = 3
     safety_margin = 50
     return len(text) // average_token_length + safety_margin
+
+
+class FromAndToJson:
+    """Add a from_json_dict & to_json_dict functions.
+
+    The class is expected to be created using @attrs.define."""
+
+    @classmethod
+    def from_json_dict(cls, json_dict: Mapping[str, Any]):
+        return cattrs.structure(json_dict, cls)
+
+    def to_json_dict(self) -> Mapping[str, Any]:
+        return cattrs.unstructure(self, self.__class__)

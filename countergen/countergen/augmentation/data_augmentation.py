@@ -1,16 +1,15 @@
 import json
 from ast import Or
-from collections import OrderedDict
 from pathlib import Path
 from typing import Any, Iterable, List, Mapping, NamedTuple, Optional, Sequence, Union, cast
 
-from attrs import define
-
+import cattrs
 import countergen.config
+from attrs import define
 from countergen.augmentation.simple_augmenter import SimpleAugmenter
-from countergen.types import AugmentedSample, Category, Augmenter, Input, Outputs, Paraphraser, Variation
-from countergen.tools.utils import all_same, maybe_tqdm
 from countergen.config import MODULE_PATH
+from countergen.tools.utils import FromAndToJson, all_same, maybe_tqdm
+from countergen.types import AugmentedSample, Augmenter, Category, Input, Outputs, Paraphraser, Variation
 
 DEFAULT_DS_PATHS: Mapping[str, str] = {
     "doublebind-heilman": f"{MODULE_PATH}/data/datasets/doublebind-heilman.jsonl",
@@ -30,17 +29,9 @@ DEFAULT_AUGMENTED_DS_PATHS: Mapping[str, str] = {
 
 
 @define
-class Sample:
+class Sample(FromAndToJson):
     input: Input
     outputs: Outputs = []
-
-    @classmethod
-    def from_json_dict(cls, json_dict) -> "Sample":
-        outputs = json_dict["outputs"] if "outputs" in json_dict else []
-        return Sample(json_dict["input"], outputs)
-
-    def to_json_dict(self) -> OrderedDict:
-        return OrderedDict({"input": self.input, "outputs": self.outputs})
 
 
 @define
@@ -58,18 +49,6 @@ class SampleWithVariations(Sample, AugmentedSample):
     @classmethod
     def from_sample(cls, s: Sample, variations: List[Variation] = []) -> "SampleWithVariations":
         return SampleWithVariations(s.input, s.outputs, variations)
-
-    @classmethod
-    def from_json_dict(cls, json_dict) -> "SampleWithVariations":
-        outputs = json_dict["outputs"] if "outputs" in json_dict else []
-        variations = [Variation(v["text"], tuple(v["categories"])) for v in json_dict["variations"]]
-        return SampleWithVariations(json_dict["input"], outputs, variations)
-
-    def to_json_dict(self) -> OrderedDict:
-        d: OrderedDict[str, Any] = OrderedDict({"input": self.input})
-        d["outputs"] = self.outputs
-        d["variations"] = [{"text": text, "categories": list(categories)} for text, categories in self.variations]
-        return d
 
 
 @define
@@ -136,9 +115,8 @@ def generate_variations(variation: Variation, augmenter: Augmenter) -> List[Vari
     if isinstance(augmenter, Paraphraser):
         return generate_paraphrase(variation, cast(Paraphraser, augmenter))
 
-    text, old_categories = variation
     new_variations = [
-        Variation(augmenter.transform(text, category), old_categories + (category,))
+        Variation(augmenter.transform(variation.text, category), variation.categories + (category,))
         for category in augmenter.categories
     ]
     if not all_same([v.text for v in new_variations]):
@@ -148,12 +126,11 @@ def generate_variations(variation: Variation, augmenter: Augmenter) -> List[Vari
 
 
 def generate_paraphrase(variation: Variation, augmenter: Paraphraser) -> List[Variation]:
-    text, old_categories = variation
-    new_text = augmenter.transform(text)
-    if new_text == text:
+    new_text = augmenter.transform(variation.text)
+    if new_text == variation.text:
         return [variation]
     else:
-        return [variation, Variation(new_text, old_categories)]
+        return [variation, Variation(new_text, variation.categories)]
 
 
 def generate_all_variations(augmenters: Iterable[Augmenter], ds: Dataset) -> AugmentedDataset:
