@@ -20,7 +20,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Model evaluation" href="model_evaluation.html" />
+    <link rel="next" title="Model Evaluation" href="model_evaluation.html" />
     <link rel="prev" title="Data Loading and Augmentation" href="data_augmentation.html" /> 
 </head>
 
@@ -57,12 +57,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#create-modelevaluator-from-an-api">Create ModelEvaluator from an API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.api_to_generative_model"><code class="docutils literal notranslate"><span class="pre">api_to_generative_model()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.get_generative_model_evaluator"><code class="docutils literal notranslate"><span class="pre">get_generative_model_evaluator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#countergen.tools.api_utils.ApiConfig"><code class="docutils literal notranslate"><span class="pre">ApiConfig</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#create-modelevaluator-from-a-local-model">Create ModelEvaluator from a local model</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="model_evaluation.html">Model evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_evaluation.html">Model Evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergentorch</span></p>
 <ul>
@@ -115,20 +116,23 @@
 <h2>Create ModelEvaluator from an API<a class="headerlink" href="#create-modelevaluator-from-an-api" title="Permalink to this heading"></a></h2>
 <p>To create a <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code> using the OpenAI API (or any API compatible with the <code class="docutils literal notranslate"><span class="pre">openai</span></code> module), first declare:</p>
 <ul class="simple">
-<li><p><code class="xref py py-data docutils literal notranslate"><span class="pre">countergen.config.OPENAI_API_KEY</span></code>: to your API key (or set the <code class="docutils literal notranslate"><span class="pre">OPENAI_API_KEY</span></code> environment variable).</p></li>
-<li><p><code class="xref py py-data docutils literal notranslate"><span class="pre">countergen.config.OPENAI_API_BASE</span></code>: to your the URL of the API you want to use (or set the <code class="docutils literal notranslate"><span class="pre">OPENAI_API_BASE</span></code> environment variable). Defaults to the OpenAI API URL.</p></li>
+<li><p><code class="xref py py-data docutils literal notranslate"><span class="pre">countergen.config.apiconfig.key</span></code>: to your API key (or set the <code class="docutils literal notranslate"><span class="pre">OPENAI_API_KEY</span></code> environment variable).</p></li>
+<li><p><code class="xref py py-data docutils literal notranslate"><span class="pre">countergen.config.apiconfig.base_url</span></code>: to your the URL of the API you want to use (or set the <code class="docutils literal notranslate"><span class="pre">OPENAI_API_BASE_URL</span></code> environment variable). Defaults to the OpenAI API URL.</p></li>
 </ul>
 <p>Then create a generative model using the following function:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="countergen.api_to_generative_model">
-<span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">api_to_generative_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">openai_engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'text-ada-001'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.api_to_generative_model" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">api_to_generative_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">openai_engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'text-ada-001'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apiconfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.api_to_generative_model" title="Permalink to this definition"></a></dt>
 <dd><p>Make a GenerativeModel that uses the openai api.</p>
 <p>The resulting GenerativeModel takes as input an input text and possibles outputes,
 and returns the log probabilities of each tokens of each expected output.</p>
 <p>The GenerativeModel costs ~ len(input) * (sum of len(ouput)) tokens per call.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>openai_engine</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>openai_engine</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>apiconfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference internal" href="#countergen.tools.api_utils.ApiConfig" title="countergen.tools.api_utils.ApiConfig"><em>ApiConfig</em></a><em>]</em>) – </p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a>[[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><em>Sequence</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><em>Sequence</em></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>]]]</p>
@@ -155,6 +159,21 @@ and returns the log probabilities of each tokens of each expected output.</p>
 </dl>
 </dd></dl>
 
+<p>Note: instead of declaring global API configurations, you can also pass a <code class="xref py py-class docutils literal notranslate"><span class="pre">ApiConfig</span></code>: object:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="countergen.tools.api_utils.ApiConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.tools.api_utils.</span></span><span class="sig-name descname"><span class="pre">ApiConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.tools.api_utils.ApiConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Hold API key and API URL</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – </p></li>
+<li><p><strong>base_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="create-modelevaluator-from-a-local-model">
 <h2>Create ModelEvaluator from a local model<a class="headerlink" href="#create-modelevaluator-from-a-local-model" title="Permalink to this heading"></a></h2>
@@ -167,7 +186,7 @@ and returns the log probabilities of each tokens of each expected output.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="data_augmentation.html" class="btn btn-neutral float-left" title="Data Loading and Augmentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="model_evaluation.html" class="btn btn-neutral float-right" title="Model evaluation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="model_evaluation.html" class="btn btn-neutral float-right" title="Model Evaluation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
