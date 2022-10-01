@@ -32,6 +32,10 @@ Finally, use this generative model to create the model evaluator:
 
 .. autofunction:: countergen.get_generative_model_evaluator
 
+Note: instead of declaring global API configurations, you can also pass a :py:class:`ApiConfig`: object:
+
+.. autoclass:: countergen.tools.api_utils.ApiConfig
+
 Create ModelEvaluator from a local model
 ------------------------------------------
 

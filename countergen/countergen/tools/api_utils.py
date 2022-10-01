@@ -1,9 +1,10 @@
 from typing import Dict, Optional
 from attrs import define
+from countergen.tools.utils import FromAndToJson
 
 
 @define
-class ApiConfig:
+class ApiConfig(FromAndToJson):
     """Hold API key and API URL"""
 
     key: Optional[str] = None
