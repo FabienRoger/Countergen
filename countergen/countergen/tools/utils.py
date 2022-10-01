@@ -21,6 +21,8 @@ def other(t: Tuple[T, T], x: T) -> T:
 
 
 def all_same(l: Sequence[Any]) -> bool:
+    if not l:
+        return True
     return all(x == l[0] for x in l[1:])
 
 

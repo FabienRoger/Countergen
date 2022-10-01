@@ -5,7 +5,10 @@
 tests_saves/
 my_data/
 
-# Docs build
+# IDE
+.vscode
+
+# build
 _build
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks

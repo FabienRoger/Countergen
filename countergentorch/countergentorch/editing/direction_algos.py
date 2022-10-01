@@ -8,7 +8,7 @@ import torch
 import countergen.config
 from countergentorch.editing.activation_ds import ActivationsDataset
 from countergentorch.editing.models import fit_model, get_bottlenecked_linear, get_bottlenecked_mlp
-from countergentorch.tools.math_utils import orthonormalize
+from countergentorch.tools.math_utils import project
 from countergen.tools.utils import maybe_tqdm
 from torch.optim import SGD
 from torchmetrics import HingeLoss
@@ -33,9 +33,8 @@ def inlp(ds: ActivationsDataset, n_dim: int = 8, n_training_iters: int = 400) ->
         dir = model[0].weight.detach()[0]
 
         if dirs:
-            dir = orthonormalize(dir, torch.stack(dirs))
-        else:
-            dir = dir / torch.linalg.norm(dir)
+            dir = project(dir, torch.stack(dirs))
+        dir = dir / torch.linalg.norm(dir)
 
         if i == 0:
             working_ds = working_ds.project(dir)
