@@ -25,7 +25,7 @@ def api_to_generative_model(
     The GenerativeModel costs ~ len(input) * (sum of len(ouput)) tokens per call."""
 
     def gen_model(inp: Input, out: Outputs) -> List[List[float]]:
-        apiconfig = apiconfig or countergen.config.apiconfig
+        apiconfig_ = apiconfig or countergen.config.apiconfig
 
         correct_log_probs_list = []
         for o in out:
@@ -36,7 +36,7 @@ def api_to_generative_model(
                 stream=False,
                 echo=True,
                 logprobs=5,
-                **apiconfig.get_config(),
+                **apiconfig_.get_config(),
             )["choices"][0]
 
             token_logprobs = completion["logprobs"]["token_logprobs"]
