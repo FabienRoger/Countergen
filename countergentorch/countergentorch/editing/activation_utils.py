@@ -2,7 +2,6 @@ from collections import defaultdict
 from typing import Callable, Dict, Iterable, List, Mapping, Optional
 
 import torch
-from countergen.tools.utils import unwrap_or
 from countergen.types import AugmentedSample, Category
 from countergentorch.tools.utils import get_gpt_tokenizer
 from torch import nn
@@ -11,14 +10,14 @@ from transformers import BatchEncoding, GPT2LMHeadModel
 
 def get_mlp_modules(model: GPT2LMHeadModel, layer_numbers: Optional[List[int]]) -> Dict[str, nn.Module]:
     model_transformer: nn.ModuleList = model.transformer.h  # type: ignore
-    layer_numbers_ = unwrap_or(layer_numbers, list(range(len(model_transformer))))
+    layer_numbers_ = layer_numbers or list(range(len(model_transformer)))
     names = [f"transformer.h.{n}.mlp" for n in layer_numbers_]
     return {name: model.get_submodule(name) for name in names}  # type: ignore
 
 
 def get_res_modules(model: GPT2LMHeadModel, layer_numbers: Optional[List[int]]) -> Dict[str, nn.Module]:
     model_transformer: nn.ModuleList = model.transformer.h  # type: ignore
-    layer_numbers_ = unwrap_or(layer_numbers, list(range(len(model_transformer))))
+    layer_numbers_ = layer_numbers or list(range(len(model_transformer)))
     names = [f"transformer.h.{n}" for n in layer_numbers_]
     return {name: model.get_submodule(name) for name in names}  # type: ignore
 

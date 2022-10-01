@@ -20,10 +20,6 @@ def other(t: Tuple[T, T], x: T) -> T:
     return t[0]
 
 
-def unwrap_or(maybe: Optional[T], default: T) -> T:
-    return default if maybe is None else maybe
-
-
 def all_same(l: Sequence[Any]) -> bool:
     return all(x == l[0] for x in l[1:])
 

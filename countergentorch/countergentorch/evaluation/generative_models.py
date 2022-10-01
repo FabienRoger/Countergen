@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING, Callable, Sequence, List, Optional, Tuple
 
 import torch
 from countergen.tools.math_utils import perplexity
-from countergen.tools.utils import unwrap_or
 from countergentorch.tools.utils import concat_dicts, get_device, get_gpt_tokenizer, remove_last_tok
 from countergen.types import Input, ModelEvaluator, Outputs, Performance
 from transformers import BatchEncoding, GPT2LMHeadModel, GPT2Tokenizer
@@ -23,7 +22,7 @@ def pt_to_generative_model(model: torch.nn.Module, device: Optional[str] = None)
     and return something that has a "logits" attribute."""
 
     tokenizer = get_gpt_tokenizer()
-    device = unwrap_or(device, get_device())
+    device = device or get_device()
     model = model.to(device)
 
     def gen_model(inp: Input, out: Outputs) -> List[List[float]]:

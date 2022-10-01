@@ -9,7 +9,7 @@ import countergen.config
 from countergentorch.editing.activation_ds import ActivationsDataset
 from countergentorch.editing.models import fit_model, get_bottlenecked_linear, get_bottlenecked_mlp
 from countergentorch.tools.math_utils import orthonormalize
-from countergen.tools.utils import maybe_tqdm, unwrap_or
+from countergen.tools.utils import maybe_tqdm
 from torch.optim import SGD
 from torchmetrics import HingeLoss
 from tqdm import tqdm  # type: ignore
@@ -194,7 +194,7 @@ def rlace(
     y_torch = ds.y_data.to(device)
     X_np = X_torch.numpy()
     y_np = y_torch.numpy()
-    dev_ds_ = unwrap_or(dev_ds, ds)
+    dev_ds_ = dev_ds or ds
     X_dev_np = dev_ds_.x_data.numpy()
     y_dev_np = dev_ds_.y_data.numpy()
 

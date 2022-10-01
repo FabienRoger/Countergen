@@ -1,7 +1,6 @@
 from typing import Dict, Optional
 from attrs import define
 from countergen.config import DEFAULT_API_BASE_URL
-from countergen.tools.utils import unwrap_or
 
 
 @define

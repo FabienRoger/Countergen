@@ -1,5 +1,5 @@
 import pathlib
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages  # type: ignore
 
 """
 To upload the package, run

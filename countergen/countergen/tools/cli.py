@@ -40,7 +40,7 @@ def _augment(load_path: str, save_path: str, *augmenters_desc: str):
     augmenters: List[Augmenter] = []
     for c_str in augmenters_desc:
         if c_str.endswith(".json"):
-            augmenter = SimpleAugmenter.from_json(c_str)
+            augmenter: Augmenter = SimpleAugmenter.from_json(c_str)
         elif c_str in DEFAULT_CONVERTERS_PATHS:
             augmenter = SimpleAugmenter.from_default(c_str)
         elif c_str == "paraphrase":

@@ -107,11 +107,11 @@ class StatsAggregator(Generic[Aggregate], metaclass=abc.ABCMeta):
 
     def save_aggregation(self, aggregate: Aggregate, file: Optional[TextIO] = None):
         """Save the aggregate to a file."""
-        raise NotImplementedError(f"{__class__.__name__} can't save aggregates.")
+        raise NotImplementedError(f"{self.__class__.__name__} can't save aggregates.")
 
     def load_aggregation(self, file: TextIO) -> Aggregate:
         """Load the aggregate from a file."""
-        raise NotImplementedError(f"{__class__.__name__} can't load aggregates.")
+        raise NotImplementedError(f"{self.__class__.__name__} can't load aggregates.")
 
     def display(self, aggregates: Mapping[str, Aggregate]):
         """Display and compare the aggregates of different models/datasets.
