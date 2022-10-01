@@ -169,8 +169,8 @@ def generate_all_variations(augmenters: Iterable[Augmenter], ds: Dataset) -> Aug
 
     augmented_samples = []
 
-    print(countergen.config.VERBOSE)
-    for sample in maybe_tqdm(ds.samples, countergen.config.VERBOSE >= 2):
+    print(countergen.config.verbose)
+    for sample in maybe_tqdm(ds.samples, countergen.config.verbose >= 2):
         variations = [Variation(sample.input, ())]
         for augmenter in augmenters:
             new_variations = []

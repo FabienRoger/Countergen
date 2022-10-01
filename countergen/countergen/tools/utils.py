@@ -39,21 +39,3 @@ def estimate_paraphrase_length(text: str):
     average_token_length = 3
     safety_margin = 50
     return len(text) // average_token_length + safety_margin
-
-
-def set_and_check_oai_key(key: Optional[str] = None, base: Optional[str] = None):
-    """Set the key (and the base) of the openai api.
-
-    If not explictely passed, takes arguments from the config.
-
-    Checks that the key is not None."""
-
-    key = unwrap_or(key, countergen.config.OPENAI_API_KEY)
-    base = unwrap_or(base, countergen.config.OPENAI_API_BASE)
-
-    if key is None:
-        raise RuntimeError(
-            "Please provide openai key to use its api! Use `countergen.config.OPENAI_API_KEY = YOUR_KEY`"
-        )
-    openai.api_key = key
-    openai.api_base = base

@@ -1,13 +1,15 @@
 # From Fryer, 2022 https://aclanthology.org/2022.woah-1.20.pdf
 # Adapted to be usable with InstructGPT
 #%%
-from typing import Dict, Tuple
+from typing import Dict, Optional, Tuple
+import countergen
+from countergen.tools.api_utils import ApiConfig
 
 import openai
 from attrs import define
-from countergen.config import OPENAI_API_KEY
-from countergen.tools.utils import estimate_paraphrase_length, set_and_check_oai_key
+from countergen.tools.utils import estimate_paraphrase_length
 from countergen.types import Augmenter, Category, Input
+import countergen.config
 
 DEFAULT_AUGMENTERS = {
     "gender": {
@@ -45,6 +47,7 @@ class LlmdAugmenter(Augmenter):
     categories_instructions: Dict[Category, str]
     prompt_template: str = DEFAULT_PROMPT
     engine: str = "text-davinci-002"
+    apiconfig: Optional[ApiConfig] = None
 
     @classmethod
     def from_default(cls, name: str) -> "LlmdAugmenter":
@@ -58,7 +61,7 @@ class LlmdAugmenter(Augmenter):
         return tuple(self.categories_instructions.keys())
 
     def transform(self, inp: Input, to: Category) -> Input:
-        set_and_check_oai_key()
+        apiconfig = self.apiconfig or countergen.config.apiconfig
 
         instruction = self.categories_instructions[to]
         prompt = self.prompt_template.replace("__input__", inp).replace("__instruction__", instruction)
@@ -70,6 +73,7 @@ class LlmdAugmenter(Augmenter):
             temperature=1,
             top_p=0.7,  # LLM-D has top_k=40, but not available
             stream=False,
+            **apiconfig.get_config(),
         )["choices"][0]["text"]
 
         return completion.split("}")[0]

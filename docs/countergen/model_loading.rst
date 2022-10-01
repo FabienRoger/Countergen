@@ -21,8 +21,8 @@ Create ModelEvaluator from an API
 
 To create a :py:data:`ModelEvaluator` using the OpenAI API (or any API compatible with the ``openai`` module), first declare:
 
-* :py:data:`countergen.config.OPENAI_API_KEY`: to your API key (or set the ``OPENAI_API_KEY`` environment variable).
-* :py:data:`countergen.config.OPENAI_API_BASE`: to your the URL of the API you want to use (or set the ``OPENAI_API_BASE`` environment variable). Defaults to the OpenAI API URL.
+* :py:data:`countergen.config.apiconfig.key`: to your API key (or set the ``OPENAI_API_KEY`` environment variable).
+* :py:data:`countergen.config.apiconfig.base_url`: to your the URL of the API you want to use (or set the ``OPENAI_API_BASE_URL`` environment variable). Defaults to the OpenAI API URL.
 
 Then create a generative model using the following function:
 

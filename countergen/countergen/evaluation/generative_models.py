@@ -1,8 +1,9 @@
 from math import exp
-from typing import TYPE_CHECKING, Callable, Sequence, List, Optional, Tuple
+from typing import TYPE_CHECKING, Callable, List, Optional, Sequence, Tuple
 
+import countergen.config
 import openai
-from countergen.tools.utils import set_and_check_oai_key
+from countergen.tools.api_utils import ApiConfig
 from countergen.types import Input, ModelEvaluator, Outputs, Performance
 
 metrics = ["perplexity", "probability"]
@@ -13,7 +14,9 @@ LogProbs = float
 GenerativeModel = Callable[[Input, Outputs], Sequence[Sequence[LogProbs]]]
 
 
-def api_to_generative_model(openai_engine: str = "text-ada-001") -> GenerativeModel:
+def api_to_generative_model(
+    openai_engine: str = "text-ada-001", apiconfig: Optional[ApiConfig] = None
+) -> GenerativeModel:
     """Make a GenerativeModel that uses the openai api.
 
     The resulting GenerativeModel takes as input an input text and possibles outputes,
@@ -22,8 +25,7 @@ def api_to_generative_model(openai_engine: str = "text-ada-001") -> GenerativeMo
     The GenerativeModel costs ~ len(input) * (sum of len(ouput)) tokens per call."""
 
     def gen_model(inp: Input, out: Outputs) -> List[List[float]]:
-
-        set_and_check_oai_key()
+        apiconfig = apiconfig or countergen.config.apiconfig
 
         correct_log_probs_list = []
         for o in out:
@@ -34,6 +36,7 @@ def api_to_generative_model(openai_engine: str = "text-ada-001") -> GenerativeMo
                 stream=False,
                 echo=True,
                 logprobs=5,
+                **apiconfig.get_config(),
             )["choices"][0]
 
             token_logprobs = completion["logprobs"]["token_logprobs"]

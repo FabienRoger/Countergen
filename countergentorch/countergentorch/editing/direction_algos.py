@@ -25,7 +25,7 @@ def inlp(ds: ActivationsDataset, n_dim: int = 8, n_training_iters: int = 400) ->
     output_dims: int = torch.max(ds.y_data).item() + 1  # type:ignore
     dirs: List[torch.Tensor] = []
 
-    g = maybe_tqdm(range(n_dim), countergen.config.VERBOSE >= 1)
+    g = maybe_tqdm(range(n_dim), countergen.config.verbose >= 1)
     for i in g:
         model = get_bottlenecked_linear(tot_n_dims, output_dims)
         last_epoch_perf = fit_model(model, ds, n_training_iters, loss_fn=HingeLoss())
@@ -44,7 +44,7 @@ def inlp(ds: ActivationsDataset, n_dim: int = 8, n_training_iters: int = 400) ->
 
         dirs.append(dir)
 
-        if countergen.config.VERBOSE >= 1:
+        if countergen.config.verbose >= 1:
             g.set_postfix(**last_epoch_perf)  # type:ignore
     return torch.stack(dirs)
 
@@ -64,7 +64,7 @@ def bottlenecked_mlp_span(ds: ActivationsDataset, n_dim: int = 8, n_training_ite
     output_dims: int = torch.max(ds.y_data).item() + 1  # type: ignore
     model = get_bottlenecked_mlp(tot_n_dims, output_dims, bottleneck_dim=n_dim)
     last_epoch_perf = fit_model(model, ds, n_training_iters, loss_fn=HingeLoss())
-    if countergen.config.VERBOSE >= 2:
+    if countergen.config.verbose >= 2:
         print(str(last_epoch_perf))
 
     return model[0].weight.detach()

@@ -20,7 +20,7 @@ T = TypeVar("T")
 
 def compute_performances(samples: Iterable[AugmentedSample], model: ModelEvaluator) -> Results:
     performances = []
-    for sample in maybe_tqdm(samples, countergen.config.VERBOSE >= 2):
+    for sample in maybe_tqdm(samples, countergen.config.verbose >= 2):
         performance = [
             (model(variation.text, sample.outputs), variation.categories) for variation in sample.get_variations()
         ]

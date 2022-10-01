@@ -1,6 +1,5 @@
 from functools import lru_cache
-from typing import (Any, Callable, Dict, Iterable, Mapping, Optional, Sequence,
-                    Tuple, TypeVar)
+from typing import Any, Callable, Dict, Iterable, Mapping, Optional, Sequence, Tuple, TypeVar
 
 import torch
 from transformers import GPT2Tokenizer

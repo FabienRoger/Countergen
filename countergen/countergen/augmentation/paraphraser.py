@@ -1,11 +1,11 @@
-from typing import Dict, Tuple
+from typing import Dict, Optional, Tuple
+from countergen.tools.api_utils import ApiConfig
 
 import openai
 from attrs import define
-from countergen.config import OPENAI_API_KEY
-from countergen.tools.utils import estimate_paraphrase_length, set_and_check_oai_key
+from countergen.tools.utils import estimate_paraphrase_length
 from countergen.types import Augmenter, Category, Input, Paraphraser
-
+import countergen.config
 
 # Examples from https://www.pragnakalp.com/intent-classification-paraphrasing-examples-using-gpt-3/
 DEFAULT_TEMPLATE = """Paraphrase the original passage.
@@ -30,9 +30,10 @@ Paraphrase: {"""
 class LlmParaphraser(Paraphraser):
     prompt_template: str = DEFAULT_TEMPLATE
     engine: str = "text-davinci-002"
+    apiconfig: Optional[ApiConfig] = None
 
     def transform(self, inp: Input, to: Category = "") -> Input:
-        set_and_check_oai_key()
+        apiconfig = self.apiconfig or countergen.config.apiconfig
 
         prompt = self.prompt_template.replace("__input__", inp)
 
@@ -43,6 +44,7 @@ class LlmParaphraser(Paraphraser):
             temperature=1,
             top_p=0.7,  # LLM-D has top_k=40, but not available
             stream=False,
+            **apiconfig.get_config(),
         )["choices"][0]["text"]
 
         return completion.split("}")[0]

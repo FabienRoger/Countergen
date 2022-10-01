@@ -6,6 +6,7 @@ from countergen.types import Input, ModelEvaluator, Outputs, Performance
 from torch import nn
 from transformers import Pipeline
 
+
 def get_classification_pipline_evaluator(pipeline: Pipeline) -> ModelEvaluator:
     """Returns a function which evaluate the pipeline on a (input,output) pair.
 
@@ -20,7 +21,7 @@ def get_classification_pipline_evaluator(pipeline: Pipeline) -> ModelEvaluator:
         if "label" not in pred:
             raise ValueError(f"pipeline shoud ouput a dict containing a label field but pred={pred}")
         perf = 1.0 if true_label == pred["label"] else 0.0
-        if countergen.config.VERBOSE >= 4:
+        if countergen.config.verbose >= 4:
             print(f"inp={inp} true_label={true_label} pred={pred} perf={perf}")
         return perf
 
@@ -54,7 +55,7 @@ def get_classification_model_evaluator(
         elif metric == "correct_prob":
             correct_id = labels.index(true_label)
             perf = torch.softmax(pred_logits, dim=-1)[correct_id].item()
-        if countergen.config.VERBOSE >= 4:
+        if countergen.config.verbose >= 4:
             print(f"inp={inp} true_label={true_label} pred={pred} perf={perf}")
         return perf
 

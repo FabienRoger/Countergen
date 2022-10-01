@@ -57,7 +57,7 @@ If you a fast and cheap method, use :py:class:`SimpleAugmenter`:, which does wor
 .. autoclass:: countergen.SimpleAugmenter
    :members:
 
-If you a more flexible and powerful method, use :py:class:`LlmdAugmenter`:, which uses a language model to generating variations. This technique has already been used in the context of Counterfactual dataset generation and is called LLMD. You will need to set :py:data:`countergen.config.OPENAI_API_KEY`: to your API key to use it (or set the ``OPENAI_API_KEY`` environment variable).
+If you a more flexible and powerful method, use :py:class:`LlmdAugmenter`:, which uses a language model to generating variations. This technique has already been used in the context of Counterfactual dataset generation and is called LLMD. You will need to set :py:data:`countergen.config.apiconfig.key`: to your API key to use it (or set the ``OPENAI_API_KEY`` environment variable).
 
 .. autoclass:: countergen.LlmdAugmenter
    :members:
