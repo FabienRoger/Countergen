@@ -8,7 +8,7 @@ import torch
 import countergen.config
 from countergentorch.editing.activation_ds import ActivationsDataset
 from countergentorch.editing.models import fit_model, get_bottlenecked_linear, get_bottlenecked_mlp
-from countergentorch.tools.math_utils import project
+from countergentorch.tools.math_utils import project, orthonormalize
 from countergen.tools.utils import maybe_tqdm
 from torch.optim import SGD
 from torchmetrics import HingeLoss
@@ -66,7 +66,7 @@ def bottlenecked_mlp_span(ds: ActivationsDataset, n_dim: int = 8, n_training_ite
     if countergen.config.verbose >= 2:
         print(str(last_epoch_perf))
 
-    return model[0].weight.detach()
+    return orthonormalize(model[0].weight.detach())
 
 
 def rlace(

@@ -29,14 +29,10 @@ def get_corresponding_activations(
 
     tokenizer = get_gpt_tokenizer()
 
-    # Works both when there is and when there isn't leftovers (for y tensor, or y pair of tensors)
-    # Because we pass samples one at a time...
-    operation = lambda x: x[0].reshape((-1, x[0].shape[-1]))
-
     activations_by_cat = defaultdict(lambda: [])
     for sample in samples:
         for variations in sample.get_variations():
-            acts = get_activations(tokenizer(variations.text, return_tensors="pt"), model, modules, operation)
+            acts = get_activations(tokenizer(variations.text, return_tensors="pt"), model, modules)
             for cat in variations.categories:
                 activations_by_cat[cat].append(acts)
     return activations_by_cat
@@ -52,7 +48,9 @@ def get_activations(
     activations: Dict[nn.Module, torch.Tensor] = {}
 
     def hook_fn(module, inp, out):
-        activations[module] = operation(out.detach())
+        out_ = out[0] if isinstance(out, tuple) else out
+
+        activations[module] = operation(out_.detach())
 
     for module in modules:
         handles.append(module.register_forward_hook(hook_fn))
