@@ -14,6 +14,8 @@ from countergen.types import AugmentedSample, Augmenter, Category, Input, Output
 DEFAULT_DS_PATHS: Mapping[str, str] = {
     "doublebind-heilman": f"{MODULE_PATH}/data/datasets/doublebind-heilman.jsonl",
     "doublebind": f"{MODULE_PATH}/data/datasets/doublebind.jsonl",
+    "male-stereotypes": f"{MODULE_PATH}/data/datasets/male-stereotypes.jsonl",
+    "female-stereotypes": f"{MODULE_PATH}/data/datasets/female-stereotypes.jsonl",
     "tiny-test": f"{MODULE_PATH}/data/datasets/tiny-test.jsonl",
     "twitter-sentiment": f"{MODULE_PATH}/data/datasets/twitter-sentiment.jsonl",
     "hate": f"{MODULE_PATH}/data/datasets/hate-test.jsonl",
