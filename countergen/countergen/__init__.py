@@ -11,7 +11,7 @@ from countergen.augmentation.llmd_augmenter import LlmdAugmenter, DEFAULT_AUGMEN
 from countergen.augmentation.paraphraser import LlmParaphraser
 from countergen.augmentation.simple_augmenter import SimpleAugmenter, DEFAULT_CONVERTERS_PATHS
 from countergen.evaluation import aggregators
-from countergen.evaluation.evaluation import evaluate, evaluate_and_print, evaluate_and_save
+from countergen.evaluation.evaluation import evaluate, evaluate_and_print, evaluate_and_save, compute_performances
 from countergen.evaluation.generative_models import api_to_generative_model, get_generative_model_evaluator
 from countergen.tools.cli import run
 import countergen.types

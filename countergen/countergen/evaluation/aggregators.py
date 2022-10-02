@@ -1,11 +1,11 @@
 from collections import defaultdict
-from typing import Any, DefaultDict, Iterable, List, Mapping, Optional, Sequence, TextIO, TypeVar
+from typing import Any, DefaultDict, Iterable, List, Mapping, Optional, Sequence, TextIO, Tuple, TypeVar
 
 import numpy as np
 from attrs import define
 
 from countergen.tools.plot_utils import plot_mutli_bars
-from countergen.types import AugmentedSample, Category, Performance, Results, StatsAggregator
+from countergen.types import AugmentedSample, Category, Input, Performance, Results, StatsAggregator
 from countergen.tools.math_utils import geometric_mean, mean
 
 
@@ -125,3 +125,52 @@ class AverageDifference(StatsAggregator):
     def load_aggregation(self, file: TextIO) -> float:
         lines = file.readlines()
         return float(lines[1])
+
+
+OutlierData = Tuple[Input, Tuple[Category, ...], Performance]
+
+
+@define
+class OutliersAggregator(StatsAggregator):
+    """Return the variations with the biggest (relative) performance gap."""
+
+    aug_samples: Iterable[AugmentedSample]  #: Contains data about the inputs used
+    top_k: int = 5
+    use_relative_performance: bool = True
+    espilon: float = 1e-10
+
+    def __call__(self, performances: Results) -> List[Tuple[OutlierData, OutlierData]]:
+        possibles_outliers: List[Tuple[OutlierData, OutlierData, float]] = []
+        for aug_sample, variations_perf in zip(self.aug_samples, performances):
+            outliers_data = list(
+                zip(
+                    [v.text for v in aug_sample.get_variations()],
+                    [cats for _, cats in variations_perf],
+                    [perf for perf, _ in variations_perf],
+                )
+            )
+            sorted_outliers = sorted(outliers_data, key=lambda t: t[2])
+            small_outlier = sorted_outliers[0]
+            big_outlier = sorted_outliers[-1]
+            possibles_outliers.append((small_outlier, big_outlier, self.gap(small_outlier, big_outlier)))
+
+        best_outliers = sorted(possibles_outliers, key=lambda t: t[2], reverse=True)
+        return [(small, big) for small, big, gap in best_outliers][: self.top_k]
+
+    def display(self, aggregates: Mapping[str, List[Tuple[OutlierData, OutlierData]]]):
+        for model_name, aggregate in aggregates.items():
+            print(f"Biggest performance gaps for {model_name}:")
+            for (inp1, cats1, perf1), (inp2, cats2, perf2) in aggregate:
+                print(f"Performance={perf1:.6f} on input in categories {cats1}: {inp1}")
+                print(f"Performance={perf2:.6f} on input in categories {cats2}: {inp2}\n")
+            print("-----\n\n")
+
+    def gap(self, small_perf: float, big_perf: float):
+        delta = big_perf - small_perf
+        if not self.use_relative_performance:
+            return delta
+
+        if small_perf < 0:
+            raise ValueError("Can't use relative performance when performance is negative.")
+
+        return delta / (big_perf + self.espilon) if self.use_relative_performance else delta

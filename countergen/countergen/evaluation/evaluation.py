@@ -19,6 +19,9 @@ T = TypeVar("T")
 
 
 def compute_performances(samples: Iterable[AugmentedSample], model: ModelEvaluator) -> Results:
+    """Compute and return the performance of each variation in each sample.
+
+    Preserves the order in which samples and variations are given."""
     performances = []
     for sample in maybe_tqdm(samples, countergen.config.verbose >= 2):
         performance = [
@@ -33,6 +36,7 @@ def evaluate(
     model: ModelEvaluator,
     aggregator: StatsAggregator[T] = PerformanceStatsPerCategory(),
 ) -> T:
+    """Return the aggregate of the performance of each variation in each sample."""
     return aggregator(compute_performances(samples, model))
 
 
