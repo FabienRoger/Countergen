@@ -7,6 +7,7 @@ from attrs import define
 from countergen.tools.plot_utils import plot_mutli_bars
 from countergen.types import AugmentedSample, Category, Input, Performance, Results, StatsAggregator, Outputs
 from countergen.tools.math_utils import geometric_mean, mean
+from countergen.tools.utils import FromAndToJson
 
 
 @define
@@ -44,9 +45,17 @@ class AveragePerformancePerCategory(StatsAggregator):
 
 
 @define
-class Stats:
+class Stats(FromAndToJson):
     mean: float
     uncertainty_2sig: float
+
+    def __str__(self) -> str:
+        return f"{self.mean:.6f} +- {self.uncertainty_2sig:.6f}"
+
+    @classmethod
+    def from_str(cls, s: str) -> "Stats":
+        m, u = s.split(" +- ")
+        return Stats(float(m), float(u))
 
     @classmethod
     def from_seq(cls, s: Sequence[float]) -> "Stats":
@@ -73,15 +82,14 @@ class PerformanceStatsPerCategory(StatsAggregator):
     def save_aggregation(self, aggregate: Mapping[Category, Stats], file: Optional[TextIO] = None):
         print("Average performance per category:", file=file)
         for c, perf in aggregate.items():
-            print(f"{c}: {perf.mean:.6f} +- {perf.uncertainty_2sig:.6f}", file=file)
+            print(f"{c}: {perf}", file=file)
 
     def load_aggregation(self, file: TextIO) -> Mapping[Category, Stats]:
         lines = file.readlines()
         r = {}
         for l in lines[1:]:
             c, p = l.split(": ")
-            m, u = p.split(" +- ")
-            r[c] = Stats(float(m), float(u))
+            r[c] = Stats.from_str(p)
         return r
 
     def display(self, aggregates: Mapping[str, Mapping[Category, Stats]]):
@@ -97,34 +105,34 @@ class PerformanceStatsPerCategory(StatsAggregator):
 
 
 @define
-class AverageDifference(StatsAggregator):
-    positive_category: Category
-    negative_category: Category
-    relative_difference: bool = False
+class DifferenceStats(StatsAggregator):
+    category1: Category
+    category2: Category
+    relative_difference: bool = False  #: If True, return how much cat2er the cat2 category is on average
 
-    def __call__(self, performances: Results) -> float:
+    def __call__(self, performances: Results) -> Stats:
         differences = []
         for sample_perfs in performances:
-            positive_perfs = [perf for perf, categories in sample_perfs if self.positive_category in categories]
-            negative_perfs = [perf for perf, categories in sample_perfs if self.negative_category in categories]
-            if positive_perfs and negative_perfs:
-                diff = mean(positive_perfs) - mean(negative_perfs)
+            cat1_perfs = [perf for perf, categories in sample_perfs if self.category1 in categories]
+            cat2_perfs = [perf for perf, categories in sample_perfs if self.category2 in categories]
+            if cat1_perfs and cat2_perfs:
+                diff = mean(cat1_perfs) - mean(cat2_perfs)
                 if self.relative_difference:
-                    diff /= mean(positive_perfs)
+                    diff /= max(mean(cat1_perfs), mean(cat2_perfs))
                 differences.append(diff)
-        return mean(differences)
+        return Stats.from_seq(differences)
 
-    def save_aggregation(self, aggregate: float, file: Optional[TextIO] = None):
+    def save_aggregation(self, aggregate: Stats, file: Optional[TextIO] = None):
         relative = "relative " if self.relative_difference else ""
         print(
-            f"The {relative}performance between category {self.positive_category} and category {self.negative_category}:",
+            f"The {relative}performance between category {self.category1} and category {self.category2}:",
             file=file,
         )
-        print(f"{aggregate:.6f}", file=file)
+        print(f"{aggregate}", file=file)
 
     def load_aggregation(self, file: TextIO) -> float:
         lines = file.readlines()
-        return float(lines[1])
+        return Stats.from_str(lines[1])
 
 
 OutlierData = Tuple[Input, Outputs, Tuple[Category, ...], Performance]
