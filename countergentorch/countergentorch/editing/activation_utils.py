@@ -35,9 +35,9 @@ def get_corresponding_activations(
 
     activations_by_cat = defaultdict(lambda: [])
     for sample in samples:
-        for inp, categories in sample.get_variations():
-            acts = get_activations(tokenizer(inp, return_tensors="pt"), model, modules, operation)
-            for cat in categories:
+        for variations in sample.get_variations():
+            acts = get_activations(tokenizer(variations.text, return_tensors="pt"), model, modules, operation)
+            for cat in variations.categories:
                 activations_by_cat[cat].append(acts)
     return activations_by_cat
 

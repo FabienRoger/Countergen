@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-verbose = int(os.environ.get("CDG_VERBOSE", "0"))
+verbose = int(os.environ.get("CDG_VERBOSE", "2"))
 
 MODULE_PATH = str(Path(__file__).parent)  # To load internal data
 
