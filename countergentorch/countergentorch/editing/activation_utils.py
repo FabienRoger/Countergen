@@ -29,10 +29,12 @@ def get_corresponding_activations(
 
     tokenizer = get_gpt_tokenizer()
 
+    operation = lambda t: t.reshape((-1, t.shape[-1]))
+
     activations_by_cat = defaultdict(lambda: [])
     for sample in samples:
         for variations in sample.get_variations():
-            acts = get_activations(tokenizer(variations.text, return_tensors="pt"), model, modules)
+            acts = get_activations(tokenizer(variations.text, return_tensors="pt"), model, modules, operation)
             for cat in variations.categories:
                 activations_by_cat[cat].append(acts)
     return activations_by_cat

@@ -50,14 +50,14 @@ class ProjectionWrapper(nn.Module):
         ):
             raise ValueError("Directions should be orthonrmal")
 
-    def forward(self, x: torch.Tensor):
-        y = self.wrapped_module(x)
+    def forward(self, *args, **kwargs):
+        y = self.wrapped_module(*args, **kwargs)
 
         if self.has_leftover:
-            hidden_states, leftover = y
+            hidden_states, *leftover = y
         else:
             hidden_states = y
 
         hidden_states -= torch.einsum("b n h, m h, m k -> b n k", hidden_states, self.dirs, self.dirs)
 
-        return (hidden_states, leftover) if self.has_leftover else hidden_states
+        return (hidden_states, *leftover) if self.has_leftover else hidden_states
