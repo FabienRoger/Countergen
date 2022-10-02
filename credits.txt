@@ -10,3 +10,5 @@ llmd for it's augmentation technique
 INLP & RLACE for their direction finding techniques
 
 https://github.com/Vicomtech/hate-speech-dataset for the hate data
+
+Stereotypes from https://arxiv.org/abs/2004.09456, filtered for gender stereotypes where the gender is absent from the output
