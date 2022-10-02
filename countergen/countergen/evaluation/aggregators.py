@@ -30,7 +30,7 @@ class AveragePerformancePerCategory(StatsAggregator):
     def save_aggregation(self, aggregate: Mapping[Category, float], file: Optional[TextIO] = None):
         print("Average performance per category:", file=file)
         for c, perf in aggregate.items():
-            print(f"{c}: {perf:.6f}", file=file)
+            print(f"{c}: {perf:.3e}", file=file)
 
     def load_aggregation(self, file: TextIO) -> Mapping[Category, float]:
         lines = file.readlines()
@@ -50,7 +50,7 @@ class Stats(FromAndToJson):
     uncertainty_2sig: float
 
     def __str__(self) -> str:
-        return f"{self.mean:.6f} +- {self.uncertainty_2sig:.6f}"
+        return f"{self.mean:.3e} +- {self.uncertainty_2sig:.3e}"
 
     @classmethod
     def from_str(cls, s: str) -> "Stats":
@@ -150,6 +150,8 @@ class OutliersAggregator(StatsAggregator):
     def __call__(self, performances: Results) -> List[Tuple[OutlierData, OutlierData]]:
         possibles_outliers: List[Tuple[OutlierData, OutlierData, float]] = []
         for aug_sample, variations_perf in zip(self.aug_samples, performances):
+            if len(variations_perf) < 2:
+                continue
             outliers_data = list(
                 zip(
                     [v.text for v in aug_sample.get_variations()],
@@ -170,8 +172,8 @@ class OutliersAggregator(StatsAggregator):
         for model_name, aggregate in aggregates.items():
             print(f"Biggest performance gaps for {model_name}:\n")
             for (inp1, outs1, cats1, perf1), (inp2, outs2, cats2, perf2) in aggregate:
-                print(f"Performance={perf1:.6f} on input in categories {cats1}: {inp1} -> {outs1}")
-                print(f"Performance={perf2:.6f} on input in categories {cats2}: {inp2} -> {outs2}\n")
+                print(f"Performance={perf1:.3e} on input in categories {cats1}: {inp1} -> {outs1}")
+                print(f"Performance={perf2:.3e} on input in categories {cats2}: {inp2} -> {outs2}\n")
             print("-----\n")
 
     def gap(self, small_perf: float, big_perf: float):
