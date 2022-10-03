@@ -47,7 +47,7 @@ class ProjectionWrapper(nn.Module):
         self.has_leftover = has_leftover
 
         if not torch.allclose(
-            torch.eye(self.dirs.shape[0]).to(dirs.device), torch.einsum("m k, n k -> m n", dirs, dirs), atol=1e-6
+            torch.eye(self.dirs.shape[0]).to(dirs.device), torch.einsum("m k, n k -> m n", dirs, dirs), atol=1e-4
         ):
             raise ValueError("Directions should be orthonrmal")
 

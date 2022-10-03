@@ -45,7 +45,8 @@ def inlp(ds: ActivationsDataset, n_dim: int = 8, n_training_iters: int = 400) ->
 
         if countergen.config.verbose >= 1:
             g.set_postfix(**last_epoch_perf)  # type:ignore
-    return torch.stack(dirs)
+    dirs_t = torch.stack(dirs)
+    return orthonormalize(dirs_t)  # Should already be, but increase precision
 
 
 def bottlenecked_mlp_span(ds: ActivationsDataset, n_dim: int = 8, n_training_iters: int = 400) -> torch.Tensor:

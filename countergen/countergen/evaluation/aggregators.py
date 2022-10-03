@@ -145,7 +145,7 @@ class OutliersAggregator(StatsAggregator):
     aug_samples: Iterable[AugmentedSample]  #: Contains data about the inputs used
     top_k: int = 5
     use_relative_performance: bool = True
-    espilon: float = 1e-10
+    epsilon: float = 1e-10
 
     def __call__(self, performances: Results) -> List[Tuple[OutlierData, OutlierData]]:
         possibles_outliers: List[Tuple[OutlierData, OutlierData, float]] = []
@@ -184,4 +184,4 @@ class OutliersAggregator(StatsAggregator):
         if small_perf < 0:
             raise ValueError("Can't use relative performance when performance is negative.")
 
-        return delta / (big_perf + self.espilon) if self.use_relative_performance else delta
+        return delta / (big_perf + self.epsilon) if self.use_relative_performance else delta
