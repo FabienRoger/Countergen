@@ -7,6 +7,8 @@ from countergentorch.editing.activation_utils import get_corresponding_activatio
 
 from countergen.types import AugmentedSample, Category
 
+from countergentorch.tools.math_utils import project
+
 
 @define
 class ActivationsDataset(torch.utils.data.Dataset):
@@ -49,13 +51,13 @@ class ActivationsDataset(torch.utils.data.Dataset):
     def project(self, dir: torch.Tensor):
         """Return a new dataset where activations have been projected along the dir vector."""
         dir_norm = (dir / torch.linalg.norm(dir)).to(self.x_data.device)
-        new_x_data = self.x_data - torch.outer((self.x_data @ dir_norm), dir_norm)
+        new_x_data = project(self.x_data, dir_norm[None, :])
         return ActivationsDataset(new_x_data, self.y_data)
 
     def project_(self, dir: torch.Tensor):
         """Modify activations by projecteding them along the dir vector."""
         dir_norm = (dir / torch.linalg.norm(dir)).to(self.x_data.device)
-        self.x_data -= torch.outer((self.x_data @ dir_norm), dir_norm)
+        self.x_data = project(self.x_data, dir_norm[None, :])
 
     def __len__(self):
         return len(self.x_data)

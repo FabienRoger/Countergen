@@ -1,5 +1,6 @@
 import copy
 from typing import Dict, Iterable, List
+from countergentorch.tools.math_utils import project
 from transformers import GPT2Model
 from torch import nn
 import torch
@@ -58,6 +59,7 @@ class ProjectionWrapper(nn.Module):
         else:
             hidden_states = y
 
-        hidden_states -= torch.einsum("b n h, m h, m k -> b n k", hidden_states, self.dirs, self.dirs)
+        # hidden_states -= torch.einsum("b n h, m h, m k -> b n k", hidden_states, self.dirs, self.dirs)
+        hidden_states = project(hidden_states, self.dirs)
 
         return (hidden_states, *leftover) if self.has_leftover else hidden_states
