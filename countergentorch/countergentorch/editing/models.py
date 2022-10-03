@@ -1,4 +1,4 @@
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Optional, Tuple
 import torch
 from torch import nn
 
@@ -26,11 +26,13 @@ def fit_model(
     loss_fn: nn.Module = nn.CrossEntropyLoss(),
     adam_kwargs: Dict[str, Any] = {"lr": 1e-4},
     dataloader_kwargs: Dict[str, Any] = {"batch_size": 256, "shuffle": True},
+    print_pbar: Optional[bool] = None,
 ) -> Dict[str, float]:
     optimizer = torch.optim.Adam(model.parameters(), **adam_kwargs)
     dataloader = torch.utils.data.DataLoader(ds, **dataloader_kwargs)
 
-    tepoch = maybe_tqdm(range(max_iters), countergen.config.verbose >= 3)
+    print_pbar = print_pbar or countergen.config.verbose >= 3
+    tepoch = maybe_tqdm(range(max_iters), print_pbar)
 
     for _ in tepoch:
         epoch_loss = 0.0
@@ -51,7 +53,7 @@ def fit_model(
                 n_correct += (preds == y).sum().item()
                 n_tot += len(preds)
 
-        if countergen.config.verbose >= 3:
+        if print_pbar >= 3:
             tepoch.set_postfix(loss=epoch_loss, accuracy=n_correct / n_tot)  # type:ignore
 
     return {"loss": epoch_loss, "accuracy": n_correct / n_tot}

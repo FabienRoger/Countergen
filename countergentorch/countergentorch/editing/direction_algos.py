@@ -62,9 +62,7 @@ def bottlenecked_mlp_span(ds: ActivationsDataset, n_dim: int = 8, n_training_ite
     tot_n_dims = ds.x_data.shape[-1]
     output_dims: int = torch.max(ds.y_data).item() + 1  # type: ignore
     model = get_bottlenecked_mlp(tot_n_dims, output_dims, bottleneck_dim=n_dim)
-    last_epoch_perf = fit_model(model, ds, n_training_iters, loss_fn=HingeLoss())
-    if countergen.config.verbose >= 2:
-        print(str(last_epoch_perf))
+    fit_model(model, ds, n_training_iters, loss_fn=HingeLoss(), print_pbar=countergen.config.verbose >= 1)
 
     return orthonormalize(model[0].weight.detach())
 
