@@ -53,14 +53,17 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Model Evaluation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#aggregator-selection">Aggregator Selection</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.types.StatsAggregator"><code class="docutils literal notranslate"><span class="pre">StatsAggregator</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.AveragePerformancePerCategory"><code class="docutils literal notranslate"><span class="pre">AveragePerformancePerCategory</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.PerformanceStatsPerCategory"><code class="docutils literal notranslate"><span class="pre">PerformanceStatsPerCategory</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.DifferenceStats"><code class="docutils literal notranslate"><span class="pre">DifferenceStats</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.OutliersAggregator"><code class="docutils literal notranslate"><span class="pre">OutliersAggregator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.AveragePerformancePerCategory"><code class="docutils literal notranslate"><span class="pre">AveragePerformancePerCategory</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">Model Evaluation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.evaluate_and_print"><code class="docutils literal notranslate"><span class="pre">evaluate_and_print()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.evaluate_and_save"><code class="docutils literal notranslate"><span class="pre">evaluate_and_save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#countergen.compute_performances"><code class="docutils literal notranslate"><span class="pre">compute_performances()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -114,15 +117,29 @@
 
 <p><code class="docutils literal notranslate"><span class="pre">countergen</span></code> provides a few useful defaults, and the most useful ones are probably the following:</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="countergen.aggregators.AveragePerformancePerCategory">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.aggregators.</span></span><span class="sig-name descname"><span class="pre">AveragePerformancePerCategory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_geometric_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.aggregators.AveragePerformancePerCategory" title="Permalink to this definition"></a></dt>
-<dd><p>Compute the average performance for each category.</p>
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="countergen.aggregators.PerformanceStatsPerCategory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.aggregators.</span></span><span class="sig-name descname"><span class="pre">PerformanceStatsPerCategory</span></span><a class="headerlink" href="#countergen.aggregators.PerformanceStatsPerCategory" title="Permalink to this definition"></a></dt>
 <dd><p>Compute performance mean and the 2 sigma uncertainty over mean for each category.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="countergen.aggregators.DifferenceStats">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.aggregators.</span></span><span class="sig-name descname"><span class="pre">DifferenceStats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_difference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.aggregators.DifferenceStats" title="Permalink to this definition"></a></dt>
+<dd><p>Compute performance mean and the 2 sigma uncertainty (relative) difference of the performance in each samples.</p>
+<p>Return a positive mean if category1 has higher performance that category2, and a negative one otherwise.</p>
+<p>If a sample has mutliple variations of the same category, compute the mean performance of the category.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="countergen.aggregators.OutliersAggregator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.aggregators.</span></span><span class="sig-name descname"><span class="pre">OutliersAggregator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aug_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_relative_performance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.aggregators.OutliersAggregator" title="Permalink to this definition"></a></dt>
+<dd><p>Return the variations with the biggest (relative) performance gap.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="countergen.aggregators.AveragePerformancePerCategory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.aggregators.</span></span><span class="sig-name descname"><span class="pre">AveragePerformancePerCategory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_geometric_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.aggregators.AveragePerformancePerCategory" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the average performance for each category.</p>
 </dd></dl>
 
 </section>
@@ -174,6 +191,25 @@
 <li><p><strong>aggregator</strong> (<a class="reference internal" href="#countergen.types.StatsAggregator" title="countergen.types.StatsAggregator"><em>StatsAggregator</em></a><em>[</em><em>T</em><em>]</em>) – </p></li>
 <li><p><strong>also_print</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p>If you want to use multiple aggregators, first compute the results using <code class="xref py py-func docutils literal notranslate"><span class="pre">compute_performances()</span></code>, and then call each aggregator on the result</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="countergen.compute_performances">
+<span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">compute_performances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.compute_performances" title="Permalink to this definition"></a></dt>
+<dd><p>Compute and return the performance of each variation in each sample.</p>
+<p>Preserves the order in which samples and variations are given.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="usage.html#countergen.types.AugmentedSample" title="countergen.types.AugmentedSample"><em>AugmentedSample</em></a><em>]</em>) – </p></li>
+<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><em>Tuple</em></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><em>Tuple</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, …]]]]</p>
 </dd>
 </dl>
 </dd></dl>

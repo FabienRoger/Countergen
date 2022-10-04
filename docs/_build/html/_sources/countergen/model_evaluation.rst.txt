@@ -12,9 +12,13 @@ This operation is performed by an object that inherit from the following abstrac
 
 ``countergen`` provides a few useful defaults, and the most useful ones are probably the following:
 
-.. autoclass:: countergen.aggregators.AveragePerformancePerCategory
-
 .. autoclass:: countergen.aggregators.PerformanceStatsPerCategory
+
+.. autoclass:: countergen.aggregators.DifferenceStats
+
+.. autoclass:: countergen.aggregators.OutliersAggregator
+
+.. autoclass:: countergen.aggregators.AveragePerformancePerCategory
 
 Model Evaluation
 ---------------------------------
@@ -28,3 +32,7 @@ You can print or save the results using the :py:meth:`StatsAggregator.save_aggre
 .. autofunction:: countergen.evaluate_and_print
 
 .. autofunction:: countergen.evaluate_and_save
+
+If you want to use multiple aggregators, first compute the results using :py:func:`compute_performances`, and then call each aggregator on the result
+
+.. autofunction:: countergen.compute_performances
