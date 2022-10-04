@@ -106,9 +106,15 @@ class PerformanceStatsPerCategory(StatsAggregator):
 
 @define
 class DifferenceStats(StatsAggregator):
+    """Compute performance mean and the 2 sigma uncertainty (relative) difference of the performance in each samples.
+
+    Return a positive mean if category1 has higher performance that category2, and a negative one otherwise.
+
+    If a sample has mutliple variations of the same category, compute the mean performance of the category."""
+
     category1: Category
     category2: Category
-    relative_difference: bool = False  #: If True, return how much cat2er the cat2 category is on average
+    relative_difference: bool = True
 
     def __call__(self, performances: Results) -> Stats:
         differences = []
