@@ -70,3 +70,28 @@ If your dataset is too small, you can make it grow by using a paraphraser, which
 One way to do paraphrasing is to use a langue model, and this is already implemented here:
 
 .. autoclass:: countergen.LlmParaphraser
+
+Example of Augmenter
+~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to generate variations different from the ones available by defaults, you can easily do so by creating a class inheriting from :py:class:`Augmenter`.
+
+Here is a simple example of an Augmenter which replaces zip codes
+
+>>> class ZipCodeAugmenter(Augmenter):
+>>>     def __init__(self) -> None:
+>>>         self.categories = [f"zipcode_starts_with:{i}" for i in range(10)]
+>>> 
+>>>     def transform(self, inp: Input, to: Category) -> Input:
+>>>         # Find the zip codes
+>>>         zip_code_positions = find_zipcode_positions(inp)
+>>>         characters = [c for c in inp]
+>>>         # The "to" category is of the form zipcode_starts_with:<NUMBER>
+>>>         # Because the target category is always chosen to be a member of self.category
+>>>         zipcode_starts_with, zipcode_start = to.split(":")
+>>>         # Replace the zip coddes
+>>>         for position in zip_code_positions:
+>>>             characters[position] = zipcode_start
+>>>         return "".join(characters)
+
+*Note: this will create ten variations on each sample. If you want to create variations with a random subset of each zipcode, you can implement a "categories" property method which returns a random subsets of zipcodes.*

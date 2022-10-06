@@ -76,6 +76,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#countergen.LlmParaphraser"><code class="docutils literal notranslate"><span class="pre">LlmParaphraser</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#example-of-augmenter">Example of Augmenter</a></li>
 </ul>
 </li>
 </ul>
@@ -429,6 +430,29 @@ the transformation is not applicable.</p>
 </dl>
 </dd></dl>
 
+</section>
+<section id="example-of-augmenter">
+<h3>Example of Augmenter<a class="headerlink" href="#example-of-augmenter" title="Permalink to this heading"></a></h3>
+<p>If you want to generate variations different from the ones available by defaults, you can easily do so by creating a class inheriting from <code class="xref py py-class docutils literal notranslate"><span class="pre">Augmenter</span></code>.</p>
+<p>Here is a simple example of an Augmenter which replaces zip codes</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">ZipCodeAugmenter</span><span class="p">(</span><span class="n">Augmenter</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;zipcode_starts_with:</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">:</span> <span class="n">Input</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Category</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Input</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="c1"># Find the zip codes</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">zip_code_positions</span> <span class="o">=</span> <span class="n">find_zipcode_positions</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">characters</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">inp</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="c1"># The &quot;to&quot; category is of the form zipcode_starts_with:&lt;NUMBER&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="c1"># Because the target category is always chosen to be a member of self.category</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">zipcode_starts_with</span><span class="p">,</span> <span class="n">zipcode_start</span> <span class="o">=</span> <span class="n">to</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="c1"># Replace the zip coddes</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="k">for</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">zip_code_positions</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>            <span class="n">characters</span><span class="p">[</span><span class="n">position</span><span class="p">]</span> <span class="o">=</span> <span class="n">zipcode_start</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">characters</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>Note: this will create ten variations on each sample. If you want to create variations with a random subset of each zipcode, you can implement a “categories” property method which returns a random subsets of zipcodes.</em></p>
 </section>
 </section>
 </section>
