@@ -48,7 +48,7 @@ def api_to_generative_model(
             n_toks = len(token_offsets)
             start_of_output = max([i for i in range(n_toks) if token_offsets[i] <= len(inp)])
 
-            correct_log_probs_list.append(token_logprobs[start_of_output:])
+            correct_log_probs_list.append(token_logprobs[start_of_output:-1])
         return correct_log_probs_list
 
     return gen_model
