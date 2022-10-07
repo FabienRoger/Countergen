@@ -12,8 +12,10 @@ from countergen.tools.utils import FromAndToJson, all_same, maybe_tqdm
 from countergen.types import AugmentedSample, Augmenter, Category, Input, Outputs, Paraphraser, Sample, Variation
 
 DEFAULT_DS_PATHS: Mapping[str, str] = {
-    "doublebind-heilman": f"{MODULE_PATH}/data/datasets/doublebind-heilman.jsonl",
-    "doublebind": f"{MODULE_PATH}/data/datasets/doublebind.jsonl",
+    "doublebind-negative-1token": f"{MODULE_PATH}/data/datasets/doublebind-negative-1token.jsonl",
+    "doublebind-negative": f"{MODULE_PATH}/data/datasets/doublebind-negative.jsonl",
+    "doublebind-positive-1token": f"{MODULE_PATH}/data/datasets/doublebind-positive-1token.jsonl",
+    "doublebind-positive": f"{MODULE_PATH}/data/datasets/doublebind-positive.jsonl",
     "male-stereotypes": f"{MODULE_PATH}/data/datasets/male-stereotypes.jsonl",
     "female-stereotypes": f"{MODULE_PATH}/data/datasets/female-stereotypes.jsonl",
     "tiny-test": f"{MODULE_PATH}/data/datasets/tiny-test.jsonl",
@@ -52,7 +54,7 @@ class Dataset:
     samples: List[Sample]
 
     @classmethod
-    def from_default(cls, name: str = "doublebind") -> "Dataset":
+    def from_default(cls, name: str) -> "Dataset":
         """Load one of the defaults datasets from "DEFAULT_DS_PATHS"."""
         if name not in DEFAULT_DS_PATHS:
             raise ValueError(
@@ -83,7 +85,7 @@ class AugmentedDataset:
     samples: List[SimpleAugmentedSample]
 
     @classmethod
-    def from_default(cls, name: str = "doublebind-heilman") -> "AugmentedDataset":
+    def from_default(cls, name: str) -> "AugmentedDataset":
         """Load one of the defaults datasets from "DEFAULT_AUGMENTED_DS_PATHS"."""
         if name not in DEFAULT_AUGMENTED_DS_PATHS:
             raise ValueError(
