@@ -1,4 +1,4 @@
-Demos
+Demo
 =====
 
 Here is a demo of the library:
