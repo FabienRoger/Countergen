@@ -9,7 +9,7 @@ from attrs import define
 from countergen.augmentation.simple_augmenter import SimpleAugmenter
 from countergen.config import MODULE_PATH
 from countergen.tools.utils import FromAndToJson, all_same, maybe_tqdm
-from countergen.types import AugmentedSample, Augmenter, Category, Input, Outputs, Paraphraser, Variation
+from countergen.types import AugmentedSample, Augmenter, Category, Input, Outputs, Paraphraser, Sample, Variation
 
 DEFAULT_DS_PATHS: Mapping[str, str] = {
     "doublebind-heilman": f"{MODULE_PATH}/data/datasets/doublebind-heilman.jsonl",
@@ -31,13 +31,7 @@ DEFAULT_AUGMENTED_DS_PATHS: Mapping[str, str] = {
 
 
 @define
-class Sample(FromAndToJson):
-    input: Input
-    outputs: Outputs = []
-
-
-@define
-class SampleWithVariations(Sample, AugmentedSample):
+class SimpleAugmentedSample(Sample, AugmentedSample):
     """AugmentedSample which explicitly stores all variations."""
 
     variations: List[Variation] = []
@@ -49,8 +43,8 @@ class SampleWithVariations(Sample, AugmentedSample):
         return self.outputs
 
     @classmethod
-    def from_sample(cls, s: Sample, variations: List[Variation] = []) -> "SampleWithVariations":
-        return SampleWithVariations(s.input, s.outputs, variations)
+    def from_sample(cls, s: Sample, variations: List[Variation] = []) -> "SimpleAugmentedSample":
+        return SimpleAugmentedSample(s.input, s.outputs, variations)
 
 
 @define
@@ -86,7 +80,7 @@ class Dataset:
 
 @define
 class AugmentedDataset:
-    samples: List[SampleWithVariations]
+    samples: List[SimpleAugmentedSample]
 
     @classmethod
     def from_default(cls, name: str = "doublebind-heilman") -> "AugmentedDataset":
@@ -103,7 +97,7 @@ class AugmentedDataset:
             data = [json.loads(line) for line in f]
             samples = []
             for d in data:
-                samples.append(SampleWithVariations.from_json_dict(d))
+                samples.append(SimpleAugmentedSample.from_json_dict(d))
         return AugmentedDataset(samples)
 
     def save_to_jsonl(self, path: str):
@@ -155,5 +149,5 @@ def generate_all_variations(augmenters: Iterable[Augmenter], ds: Dataset) -> Aug
             for v in variations:
                 new_variations += generate_variations(v, augmenter)
             variations = new_variations
-        augmented_samples.append(SampleWithVariations.from_sample(sample, variations))
+        augmented_samples.append(SimpleAugmentedSample.from_sample(sample, variations))
     return AugmentedDataset(augmented_samples)

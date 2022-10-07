@@ -19,10 +19,14 @@ from countergen.tools.utils import FromAndToJson
 Input = str  # The input to an NLP mode
 Outputs = List[str]  # The different acceptable outputs of the NLP, string label or number, but in string format
 
-Performance = float  # usually between zero & one (one is better)
 
-# Callable that returns the performance of a model given an input and expected outputs.
-ModelEvaluator = Callable[[Input, Outputs], Performance]
+@define
+class Sample(FromAndToJson):
+    """An input associated with its possible outputs."""
+
+    input: Input
+    outputs: Outputs = []
+
 
 Category = str  # The different kinds of data produced by augmenters.
 
@@ -87,6 +91,11 @@ class AugmentedSample(metaclass=abc.ABCMeta):
         """The variations of the original input, which still should procude one of the expected outputs."""
         ...
 
+
+Performance = float  # usually between zero & one (one is better)
+
+# Callable that returns the performance of a model given an input and expected outputs.
+ModelEvaluator = Callable[[Input, Outputs], Performance]
 
 SampleResults = Iterable[Tuple[Performance, Tuple[Category, ...]]]
 Results = Iterable[SampleResults]

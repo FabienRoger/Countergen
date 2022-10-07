@@ -28,7 +28,7 @@ Data Loading
 
 First, you need to load samples.
 
-.. autoclass:: countergen.Sample
+.. autoclass:: countergen.types.Sample
 
 This can be done by using on of the utils of the :py:class:`Dataset` class.
 

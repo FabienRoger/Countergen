@@ -1,6 +1,5 @@
 from countergen.augmentation.data_augmentation import (
-    Sample,
-    SampleWithVariations,
+    SimpleAugmentedSample,
     AugmentedDataset,
     Dataset,
     DEFAULT_DS_PATHS,
