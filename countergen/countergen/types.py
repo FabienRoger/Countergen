@@ -103,7 +103,7 @@ Results = Iterable[SampleResults]
 Aggregate = TypeVar("Aggregate")
 
 
-class StatsAggregator(Generic[Aggregate], metaclass=abc.ABCMeta):
+class Aggregator(Generic[Aggregate], metaclass=abc.ABCMeta):
     """Objects that can aggregate, and optionally save, load and display the performances of models.
 
     The aggregate can be of any type."""

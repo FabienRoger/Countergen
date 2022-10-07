@@ -9,7 +9,7 @@ from countergen.types import (
     ModelEvaluator,
     Performance,
     Results,
-    StatsAggregator,
+    Aggregator,
 )
 from countergen.tools.utils import maybe_tqdm
 from countergen.tools.math_utils import mean
@@ -34,7 +34,7 @@ def compute_performances(samples: Iterable[AugmentedSample], model: ModelEvaluat
 def evaluate(
     samples: Iterable[AugmentedSample],
     model: ModelEvaluator,
-    aggregator: StatsAggregator[T] = PerformanceStatsPerCategory(),
+    aggregator: Aggregator[T] = PerformanceStatsPerCategory(),
 ) -> T:
     """Return the aggregate of the performance of each variation in each sample."""
     return aggregator(compute_performances(samples, model))
@@ -43,7 +43,7 @@ def evaluate(
 def evaluate_and_print(
     samples: Iterable[AugmentedSample],
     model: ModelEvaluator,
-    aggregator: StatsAggregator[T] = PerformanceStatsPerCategory(),
+    aggregator: Aggregator[T] = PerformanceStatsPerCategory(),
 ):
     aggregator.save_aggregation(evaluate(samples, model, aggregator))
 
@@ -52,7 +52,7 @@ def evaluate_and_save(
     samples: Iterable[AugmentedSample],
     model: ModelEvaluator,
     path: str,
-    aggregator: StatsAggregator[T] = PerformanceStatsPerCategory(),
+    aggregator: Aggregator[T] = PerformanceStatsPerCategory(),
     also_print: bool = True,
 ):
     with Path(path).open("w", encoding="utf-8") as f:

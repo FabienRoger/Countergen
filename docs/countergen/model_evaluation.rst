@@ -8,7 +8,7 @@ To make sense of the performances of the model on every sample, you need to aggr
 
 This operation is performed by an object that inherit from the following abstract class.
 
-.. autoclass:: countergen.types.StatsAggregator
+.. autoclass:: countergen.types.Aggregator
 
 ``countergen`` provides a few useful defaults, and the most useful ones are probably the following:
 
@@ -27,7 +27,7 @@ Once you have your model evaluator, your augmented samples, and you have chosen 
 
 .. autofunction:: countergen.evaluate
 
-You can print or save the results using the :py:meth:`StatsAggregator.save_aggregation` or by calling on of the following:
+You can print or save the results using the :py:meth:`Aggregator.save_aggregation` or by calling on of the following:
 
 .. autofunction:: countergen.evaluate_and_print
 

@@ -12,7 +12,7 @@ The ``countergen`` module is agnostic towards what the model is or does. All it 
 
     Callable that returns the performance of a model given an input and expected outputs.
 
-The performance is usually a float between zero and one, where one is better, but you can use whichever output you want as long as it is supported by the :py:data:`StatsAggregator` you are using.
+The performance is usually a float between zero and one, where one is better, but you can use whichever output you want as long as it is supported by the :py:data:`Aggregator` you are using.
 
 It usually is created by plugging a model, which outputs a prediction, into an evaluator, which measures how well the prediction matches the expected outputs.
 

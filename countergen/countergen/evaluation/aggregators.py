@@ -5,13 +5,13 @@ import numpy as np
 from attrs import define
 
 from countergen.tools.plot_utils import plot_mutli_bars
-from countergen.types import AugmentedSample, Category, Input, Performance, Results, StatsAggregator, Outputs
+from countergen.types import AugmentedSample, Category, Input, Performance, Results, Aggregator, Outputs
 from countergen.tools.math_utils import geometric_mean, mean
 from countergen.tools.utils import FromAndToJson
 
 
 @define
-class AveragePerformancePerCategory(StatsAggregator):
+class AveragePerformancePerCategory(Aggregator):
     """Compute the average performance for each category."""
 
     use_geometric_mean: bool = False
@@ -66,7 +66,7 @@ class Stats(FromAndToJson):
 
 
 @define
-class PerformanceStatsPerCategory(StatsAggregator):
+class PerformanceStatsPerCategory(Aggregator):
     """Compute performance mean and the 2 sigma uncertainty over mean for each category."""
 
     def __call__(self, performances: Results) -> Mapping[Category, Stats]:
@@ -105,7 +105,7 @@ class PerformanceStatsPerCategory(StatsAggregator):
 
 
 @define
-class DifferenceStats(StatsAggregator):
+class DifferenceStats(Aggregator):
     """Compute performance mean and the 2 sigma uncertainty (relative) difference of the performance in each samples.
 
     Return a positive mean if category1 has higher performance that category2, and a negative one otherwise.
@@ -145,7 +145,7 @@ OutlierData = Tuple[Input, Outputs, Tuple[Category, ...], Performance]
 
 
 @define
-class OutliersAggregator(StatsAggregator):
+class OutliersAggregator(Aggregator):
     """Return the variations with the biggest (relative) performance gap."""
 
     aug_samples: Iterable[AugmentedSample]  #: Contains data about the inputs used
