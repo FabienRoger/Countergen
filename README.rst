@@ -10,3 +10,23 @@ This project is split in two parts:
 * ``countergentorch`` is a Python module which adds methods to easily evaluate PyTorch text generation models as well as text classifiers. It provides tools to analyze model activation and quickly edit model to reduce bias.
 
 Read the docs here: https://fabienroger.github.io/Countergen/
+
+How ``countergen`` helps you evaluate model bias
+----------------------------------------------
+
+.. image:: docs/evaluation_workflow.png
+  :width: 600
+  :align: center
+  :alt: Evaluation worflow
+
+|
+
+How ``countergentorch`` helps you edit models
+----------------------------------------------
+
+.. image:: docs/edition_workflow.png
+  :width: 600
+  :align: center
+  :alt: Edition worflow
+
+|
