@@ -15,10 +15,19 @@ from torchmetrics import HingeLoss
 from tqdm import tqdm  # type: ignore
 
 
-def inlp(ds: ActivationsDataset, n_dim: int = 8, n_training_iters: int = 400) -> torch.Tensor:
+def inlp(
+    ds: ActivationsDataset,
+    n_dim: int = 8,
+    n_training_iters: int = 400,
+    weight_decay: float = 0,
+    learning_rate: float = 1e-4,
+) -> torch.Tensor:
     """Compute directions using INLP.
 
     INLP by Ravfogel, 2020: see https://aclanthology.org/2020.acl-main.647/"""
+
+    adam_kwargs = {"lr": learning_rate, "weight_decay": weight_decay}
+
     working_ds = ds
 
     tot_n_dims = ds.x_data.shape[-1]
@@ -28,7 +37,7 @@ def inlp(ds: ActivationsDataset, n_dim: int = 8, n_training_iters: int = 400) ->
     g = maybe_tqdm(range(n_dim), countergen.config.verbose >= 1)
     for i in g:
         model = get_bottlenecked_linear(tot_n_dims, output_dims)
-        last_epoch_perf = fit_model(model, ds, n_training_iters, loss_fn=HingeLoss())
+        last_epoch_perf = fit_model(model, ds, n_training_iters, loss_fn=HingeLoss(), adam_kwargs=adam_kwargs)
 
         dir = model[0].weight.detach()[0]
 
