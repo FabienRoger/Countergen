@@ -10,4 +10,4 @@ if __name__ == "__main__":
     # python -m countergen augment countergen\data\datasets\hate-test.jsonl countergen\data\augdatasets\hate-test.jsonl gender
     # python -m countergen evaluate countergen\data\augdatasets\doublebind.jsonl
     # python -m countergen evaluate countergen\data\augdatasets\doublebind.jsonl --model-name text-davinci-001
-    # python -m countergen augment countergen\data\datasets\doublebind-heilman.jsonl countergen\data\augdatasets\doublebind-heilman.jsonl paraphrase gender
+    # python -m countergen augment countergen\data\datasets\doublebind-positive.jsonl countergen\data\augdatasets\doublebind-positive.jsonl paraphrase gender

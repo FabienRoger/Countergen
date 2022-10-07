@@ -17,7 +17,8 @@ You can use one of the available default datasets. Possible names are the keys o
 
 Some defaults that you might find interesting:
 
-* "doublebind-heilman-paraphrased" is composed of the double bind experiment questions (by Heilman), augmented through paraphrasing using Instruct GPT (and manually reviewed), with positive competence-related adjectives. Variations are done along the original axis of variation: male vs female.
+* "doublebind-positive-paraphrased" is composed of the double bind experiment questions (by Heilman), augmented through paraphrasing using Instruct GPT (and manually reviewed), with positive competence-related adjectives. Variations are done along the original axis of variation: male vs female.
+* "doublebind-negative-paraphrased" the same as above, but with negative competence-related adjectives.
 * "hate-aug-muslim" is composed of comments labeled "hate" or "noHate". Instruct GPT was used to write variations of this comment where the comment was rewritten to be about Muslims or not about Muslims (this is a variation of LLMD).
 
 B. Loading your data and augmenting it
