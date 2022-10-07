@@ -52,7 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="model_loading.html">Model Loading</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Model Evaluation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#aggregator-selection">Aggregator Selection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#countergen.types.StatsAggregator"><code class="docutils literal notranslate"><span class="pre">StatsAggregator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#countergen.types.Aggregator"><code class="docutils literal notranslate"><span class="pre">Aggregator</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.PerformanceStatsPerCategory"><code class="docutils literal notranslate"><span class="pre">PerformanceStatsPerCategory</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.DifferenceStats"><code class="docutils literal notranslate"><span class="pre">DifferenceStats</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.OutliersAggregator"><code class="docutils literal notranslate"><span class="pre">OutliersAggregator</span></code></a></li>
@@ -109,8 +109,8 @@
 <p>To make sense of the performances of the model on every sample, you need to aggregate them.</p>
 <p>This operation is performed by an object that inherit from the following abstract class.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="countergen.types.StatsAggregator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.types.</span></span><span class="sig-name descname"><span class="pre">StatsAggregator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.types.StatsAggregator" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="countergen.types.Aggregator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.types.</span></span><span class="sig-name descname"><span class="pre">Aggregator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.types.Aggregator" title="Permalink to this definition"></a></dt>
 <dd><p>Objects that can aggregate, and optionally save, load and display the performances of models.</p>
 <p>The aggregate can be of any type.</p>
 </dd></dl>
@@ -155,7 +155,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="usage.html#countergen.types.AugmentedSample" title="countergen.types.AugmentedSample"><em>AugmentedSample</em></a><em>]</em>) – </p></li>
 <li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – </p></li>
-<li><p><strong>aggregator</strong> (<a class="reference internal" href="#countergen.types.StatsAggregator" title="countergen.types.StatsAggregator"><em>StatsAggregator</em></a><em>[</em><em>T</em><em>]</em>) – </p></li>
+<li><p><strong>aggregator</strong> (<a class="reference internal" href="#countergen.types.Aggregator" title="countergen.types.Aggregator"><em>Aggregator</em></a><em>[</em><em>T</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -164,7 +164,7 @@
 </dl>
 </dd></dl>
 
-<p>You can print or save the results using the <code class="xref py py-meth docutils literal notranslate"><span class="pre">StatsAggregator.save_aggregation()</span></code> or by calling on of the following:</p>
+<p>You can print or save the results using the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Aggregator.save_aggregation()</span></code> or by calling on of the following:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="countergen.evaluate_and_print">
 <span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">evaluate_and_print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggregator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">PerformanceStatsPerCategory()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.evaluate_and_print" title="Permalink to this definition"></a></dt>
@@ -173,7 +173,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="usage.html#countergen.types.AugmentedSample" title="countergen.types.AugmentedSample"><em>AugmentedSample</em></a><em>]</em>) – </p></li>
 <li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – </p></li>
-<li><p><strong>aggregator</strong> (<a class="reference internal" href="#countergen.types.StatsAggregator" title="countergen.types.StatsAggregator"><em>StatsAggregator</em></a><em>[</em><em>T</em><em>]</em>) – </p></li>
+<li><p><strong>aggregator</strong> (<a class="reference internal" href="#countergen.types.Aggregator" title="countergen.types.Aggregator"><em>Aggregator</em></a><em>[</em><em>T</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -188,7 +188,7 @@
 <li><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="usage.html#countergen.types.AugmentedSample" title="countergen.types.AugmentedSample"><em>AugmentedSample</em></a><em>]</em>) – </p></li>
 <li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – </p></li>
 <li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
-<li><p><strong>aggregator</strong> (<a class="reference internal" href="#countergen.types.StatsAggregator" title="countergen.types.StatsAggregator"><em>StatsAggregator</em></a><em>[</em><em>T</em><em>]</em>) – </p></li>
+<li><p><strong>aggregator</strong> (<a class="reference internal" href="#countergen.types.Aggregator" title="countergen.types.Aggregator"><em>Aggregator</em></a><em>[</em><em>T</em><em>]</em>) – </p></li>
 <li><p><strong>also_print</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p></li>
 </ul>
 </dd>

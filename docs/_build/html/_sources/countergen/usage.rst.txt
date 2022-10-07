@@ -42,7 +42,7 @@ Third, you pass your list of :py:class:`AugmentedSample` and your :py:data:`Mode
 .. autofunction:: countergen.evaluate
    :noindex:
 
-By default, it will return the average performance on each kind of data. You can specify other ways to aggregate the performance on each variation by passing another :py:class:`StatsAggregator`.
+By default, it will return the average performance on each kind of data. You can specify other ways to aggregate the performance on each variation by passing another :py:class:`Aggregator`.
 
 Alternatively, if you just want to print or save the results, directly :py:func:`evaluate_and_print` or :py:func:`evaluate_and_save`
 
