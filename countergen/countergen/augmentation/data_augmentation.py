@@ -26,6 +26,8 @@ DEFAULT_DS_PATHS: Mapping[str, str] = {
 DEFAULT_AUGMENTED_DS_PATHS: Mapping[str, str] = {
     "doublebind-positive-paraphrased": f"{MODULE_PATH}/data/augdatasets/doublebind-positive-paraphrased.jsonl",
     "doublebind-negative-paraphrased": f"{MODULE_PATH}/data/augdatasets/doublebind-negative-paraphrased.jsonl",
+    "male-stereotypes": f"{MODULE_PATH}/data/augdatasets/male-stereotypes.jsonl",
+    "female-stereotypes": f"{MODULE_PATH}/data/augdatasets/female-stereotypes.jsonl",
     "tiny-test-aug-gender": f"{MODULE_PATH}/data/augdatasets/tiny-test.jsonl",
     "twitter-sentiment-aug-gender": f"{MODULE_PATH}/data/augdatasets/twitter-sentiment.jsonl",
     "hate-aug-muslim": f"{MODULE_PATH}/data/augdatasets/hate-test-muslims.jsonl",
