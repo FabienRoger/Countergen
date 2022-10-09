@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Finding the Relevant Directions &mdash; Countergen 0.1 documentation</title>
+  <title>Finding the Relevant Directions &mdash; CounterGen 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Countergen
+            <a href="../index.html" class="icon icon-home"> CounterGen
           </a>
               <div class="version">
                 0.1.0
@@ -72,7 +72,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Countergen</a>
+          <a href="../index.html">CounterGen</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -96,7 +96,7 @@
 <p>The three methods we provide to find these directions take <code class="xref py py-class docutils literal notranslate"><span class="pre">ActivationsDataset</span></code> as inputs, but any PyTorch dataset which <code class="docutils literal notranslate"><span class="pre">x_data</span></code> and <code class="docutils literal notranslate"><span class="pre">y_data</span></code> of the appropriate types and shapes (see <a class="reference internal" href="internal_bias.html#activationsdataset"><span class="std std-ref">ActivationsDataset</span></a>) will work.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="countergentorch.inlp">
-<span class="sig-prename descclassname"><span class="pre">countergentorch.</span></span><span class="sig-name descname"><span class="pre">inlp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_training_iters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergentorch.inlp" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">countergentorch.</span></span><span class="sig-name descname"><span class="pre">inlp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_training_iters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_decay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergentorch.inlp" title="Permalink to this definition"></a></dt>
 <dd><p>Compute directions using INLP.</p>
 <p>INLP by Ravfogel, 2020: see <a class="reference external" href="https://aclanthology.org/2020.acl-main.647/">https://aclanthology.org/2020.acl-main.647/</a></p>
 <dl class="field-list simple">
@@ -105,6 +105,8 @@
 <li><p><strong>ds</strong> (<em>ActivationsDataset</em>) – </p></li>
 <li><p><strong>n_dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
 <li><p><strong>n_training_iters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>weight_decay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – </p></li>
+<li><p><strong>learning_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>

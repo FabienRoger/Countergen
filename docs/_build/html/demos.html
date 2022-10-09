@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Demo &mdash; Countergen 0.1 documentation</title>
+  <title>Demos &mdash; CounterGen 0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Usage" href="countergen/usage.html" />
-    <link rel="prev" title="Welcome to Countergen’s documentation!" href="index.html" /> 
+    <link rel="prev" title="Welcome to CounterGen’s documentation!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -29,7 +29,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Countergen
+            <a href="index.html" class="icon icon-home"> CounterGen
           </a>
               <div class="version">
                 0.1.0
@@ -43,7 +43,16 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Demo</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Demos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#minimal-examples">Minimal examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#model-evaluation">Model evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-augmentation">Data augmentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-editing">Model editing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#colab-notebook">Colab notebook</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergen</span></p>
 <ul>
@@ -67,7 +76,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Countergen</a>
+          <a href="index.html">CounterGen</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -75,7 +84,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Demo</li>
+      <li>Demos</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/demos.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -85,17 +94,62 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="demo">
-<h1>Demo<a class="headerlink" href="#demo" title="Permalink to this heading"></a></h1>
-<p>Here is a demo of the library:</p>
+  <section id="demos">
+<h1>Demos<a class="headerlink" href="#demos" title="Permalink to this heading"></a></h1>
+<section id="minimal-examples">
+<h2>Minimal examples<a class="headerlink" href="#minimal-examples" title="Permalink to this heading"></a></h2>
+<section id="model-evaluation">
+<h3>Model evaluation<a class="headerlink" href="#model-evaluation" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">countergen</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">augmented_ds</span> <span class="o">=</span> <span class="n">countergen</span><span class="o">.</span><span class="n">AugmentedDataset</span><span class="o">.</span><span class="n">from_default</span><span class="p">(</span><span class="s2">&quot;male-stereotypes&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">api_model</span> <span class="o">=</span> <span class="n">countergen</span><span class="o">.</span><span class="n">api_to_generative_model</span><span class="p">(</span><span class="s2">&quot;text-davinci-001&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_evaluator</span> <span class="o">=</span> <span class="n">countergen</span><span class="o">.</span><span class="n">get_generative_model_evaluator</span><span class="p">(</span><span class="n">api_model</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">countergen</span><span class="o">.</span><span class="n">evaluate_and_print</span><span class="p">(</span><span class="n">augmented_ds</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span> <span class="n">model_evaluator</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>(For the example above, you need your OPENAI_API_KEY environment variable to be a valid OpenAI API key)</em></p>
+</section>
+<section id="data-augmentation">
+<h3>Data augmentation<a class="headerlink" href="#data-augmentation" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">countergen</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ds</span> <span class="o">=</span> <span class="n">countergen</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_jsonl</span><span class="p">(</span><span class="s2">&quot;my_data.jsonl&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">augmenters</span> <span class="o">=</span> <span class="p">[</span><span class="n">countergen</span><span class="o">.</span><span class="n">SimpleAugmenter</span><span class="o">.</span><span class="n">from_default</span><span class="p">(</span><span class="s2">&quot;gender&quot;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">augmented_ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">augment</span><span class="p">(</span><span class="n">augmenters</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">augmented_ds</span><span class="o">.</span><span class="n">save_to_jsonl</span><span class="p">(</span><span class="s2">&quot;my_data_augmented.jsonl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="model-editing">
+<h3>Model editing<a class="headerlink" href="#model-editing" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">countergen</span> <span class="k">as</span> <span class="nn">cg</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">countergentorch</span> <span class="k">as</span> <span class="nn">cgt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">GPT2LMHeadModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">augmented_ds</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">AugmentedDataset</span><span class="o">.</span><span class="n">from_default</span><span class="p">(</span><span class="s2">&quot;male-stereotypes&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">GPT2LMHeadModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">layers</span> <span class="o">=</span> <span class="n">cgt</span><span class="o">.</span><span class="n">get_mlp_modules</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">activation_ds</span> <span class="o">=</span> <span class="n">cgt</span><span class="o">.</span><span class="n">ActivationsDataset</span><span class="o">.</span><span class="n">from_augmented_samples</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="n">augmented_ds</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">layers</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># INLP is an algorithm to find important directions in a dataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dirs</span> <span class="o">=</span> <span class="n">cgt</span><span class="o">.</span><span class="n">inlp</span><span class="p">(</span><span class="n">activation_ds</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">configs</span> <span class="o">=</span> <span class="n">cgt</span><span class="o">.</span><span class="n">get_edit_configs</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">has_leftover</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_model</span> <span class="o">=</span> <span class="n">cgt</span><span class="o">.</span><span class="n">edit_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="n">configs</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="colab-notebook">
+<h2>Colab notebook<a class="headerlink" href="#colab-notebook" title="Permalink to this heading"></a></h2>
+<p>Here is a demo of the library in a Colab notebook:</p>
 <p><a class="reference external" href="https://colab.research.google.com/drive/1J6zahRfPfqSyXlA1hm_KQCQlkcd3KVPc">https://colab.research.google.com/drive/1J6zahRfPfqSyXlA1hm_KQCQlkcd3KVPc</a></p>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Countergen’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to CounterGen’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="countergen/usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

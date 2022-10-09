@@ -4,7 +4,7 @@ Usage
 Installation
 ------------
 
-To use Countergen, first install it using pip:
+To use CounterGen, first install it using pip:
 
 .. code-block:: console
 
