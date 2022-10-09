@@ -1,4 +1,4 @@
-from typing import Dict, Iterable, List, Mapping
+from typing import Dict, Iterable, List, Mapping, Union
 
 import torch
 from attrs import define
@@ -18,11 +18,21 @@ class ActivationsDataset(torch.utils.data.Dataset):
     y_data: torch.Tensor  #: 1D long tensor of shape (samples,) where one number is one category
 
     @classmethod
-    def from_augmented_samples(cls, samples: Iterable[AugmentedSample], model: nn.Module, modules: Iterable[nn.Module]):
+    def from_augmented_samples(
+        cls,
+        samples: Iterable[AugmentedSample],
+        model: nn.Module,
+        modules: Union[Iterable[nn.Module], Dict[str, nn.Module]],
+    ):
         """Compute the activations of the model on the variations of the samples at the output of the given modules.
 
-        The modules are assumed to have outputs of the same shape"""
-        activations_dict = get_corresponding_activations(samples, model, modules)
+        The modules are assumed to have outputs of the same shape.
+
+        If modules is a dictionary, take the values of the dictionary."""
+
+        modules_ = modules.values() if isinstance(modules, dict) else modules
+
+        activations_dict = get_corresponding_activations(samples, model, modules_)
         return ActivationsDataset.from_activations_dict(activations_dict)
 
     @classmethod

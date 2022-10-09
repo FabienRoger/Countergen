@@ -11,3 +11,5 @@ if __name__ == "__main__":
     # python -m countergen evaluate countergen\data\augdatasets\doublebind.jsonl
     # python -m countergen evaluate countergen\data\augdatasets\doublebind.jsonl --model-name text-davinci-001
     # python -m countergen augment countergen\data\datasets\doublebind-positive.jsonl countergen\data\augdatasets\doublebind-positive.jsonl paraphrase gender
+    # python -m countergen augment countergen\data\datasets\male-stereotypes.jsonl countergen\data\augdatasets\male-stereotypes.jsonl gender
+    # python -m countergen augment countergen\data\datasets\female-stereotypes.jsonl countergen\data\augdatasets\female-stereotypes.jsonl gender
