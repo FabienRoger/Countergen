@@ -2,7 +2,7 @@
 
 # -- Project information
 
-project = "Countergen"
+project = "CounterGen"
 copyright = "2022, SaferAI"
 author = "SaferAI"
 

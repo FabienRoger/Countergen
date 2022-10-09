@@ -1,7 +1,7 @@
-Welcome to Countergen's documentation!
+Welcome to CounterGen's documentation!
 ======================================
 
-**Countergen** is a framework for generating counterfactual datasets,
+**CounterGen** is a framework for generating counterfactual datasets,
 evaluating NLP models on the variations and editing models to reduce unwanted bias.
 It offers simple ways to generate counterfactual datasets using state-of-the-art techniques,
 while offering simple ways to add your own data, data augmentation techniques, models, and evaluation metrics.
