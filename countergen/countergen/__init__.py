@@ -13,5 +13,18 @@ from countergen.evaluation import aggregators
 from countergen.evaluation.evaluation import evaluate, evaluate_and_print, evaluate_and_save, compute_performances
 from countergen.evaluation.generative_models import api_to_generative_model, get_generative_model_evaluator
 from countergen.tools.cli import run
+from countergen.types import (
+    Input,
+    Outputs,
+    Sample,
+    Variation,
+    AugmentedSample,
+    Results,
+    Augmenter,
+    ModelEvaluator,
+    Category,
+    Performance,
+    Aggregator,
+)
 import countergen.types
 import countergen.config
