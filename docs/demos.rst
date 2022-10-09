@@ -38,7 +38,7 @@ Model editing
 >>> )
 >>> # INLP is an algorithm to find important directions in a dataset
 >>> dirs = cgt.inlp(activation_ds)
->>> configs = cgt.get_edit_configs(layers, dirs, has_leftover=False)
+>>> configs = cgt.get_edit_configs(layers, dirs)
 >>> new_model = cgt.edit_model(model, configs=configs)
 
 Colab notebook
