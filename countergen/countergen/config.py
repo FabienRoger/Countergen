@@ -1,8 +1,10 @@
 import os
+import random
 from pathlib import Path
-from countergen.tools.api_utils import ApiConfig
 
 from dotenv import load_dotenv
+
+from countergen.tools.api_utils import ApiConfig
 
 load_dotenv()
 
@@ -16,3 +18,6 @@ apiconfig = ApiConfig(
     key=os.environ.get("OPENAI_API_KEY", None),
     base_url=os.environ.get("OPENAI_API_BASE_URL", DEFAULT_API_BASE_URL),
 )
+
+def seed(s: int):
+    random.seed(s)
