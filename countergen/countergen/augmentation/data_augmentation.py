@@ -16,6 +16,8 @@ DEFAULT_DS_PATHS: Mapping[str, str] = {
     "doublebind-negative": f"{MODULE_PATH}/data/datasets/doublebind-negative.jsonl",
     "doublebind-positive-1token": f"{MODULE_PATH}/data/datasets/doublebind-positive-1token.jsonl",
     "doublebind-positive": f"{MODULE_PATH}/data/datasets/doublebind-positive.jsonl",
+    "doublebind-likable": f"{MODULE_PATH}/data/datasets/doublebind-likable.jsonl",
+    "doublebind-unlikable": f"{MODULE_PATH}/data/datasets/doublebind-unlikable.jsonl",
     "male-stereotypes": f"{MODULE_PATH}/data/datasets/male-stereotypes.jsonl",
     "female-stereotypes": f"{MODULE_PATH}/data/datasets/female-stereotypes.jsonl",
     "tiny-test": f"{MODULE_PATH}/data/datasets/tiny-test.jsonl",
