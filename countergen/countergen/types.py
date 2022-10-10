@@ -11,6 +11,7 @@ from typing import (
     TypeVar,
     List,
     Tuple,
+    Union,
 )
 
 from attrs import define
@@ -92,13 +93,16 @@ class AugmentedSample(metaclass=abc.ABCMeta):
         ...
 
 
-Performance = float  # usually between zero & one (one is better)
+# The performance over outputs, or the performance on every output
+# usually between zero & one (one is better)
+Performance = Union[float, List[float]]
+
+VariationResult = Tuple[Performance, Tuple[Category, ...]]
+SampleResults = Sequence[VariationResult]
+Results = Sequence[SampleResults]
 
 # Callable that returns the performance of a model given an input and expected outputs.
 ModelEvaluator = Callable[[Input, Outputs], Performance]
-
-SampleResults = Iterable[Tuple[Performance, Tuple[Category, ...]]]
-Results = Iterable[SampleResults]
 
 Aggregate = TypeVar("Aggregate")
 

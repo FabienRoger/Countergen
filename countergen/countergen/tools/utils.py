@@ -1,6 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Callable, Dict, Iterable, Mapping, Optional, Sequence, Tuple, TypeVar
+from typing import Any, Callable, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple, TypeVar, Union
 
 import cattrs
 import countergen.config
@@ -50,3 +50,17 @@ class FromAndToJson:
 
     def to_json_dict(self) -> Mapping[str, Any]:
         return cattrs.unstructure(self, self.__class__)
+
+
+def unwrap_float(x: Union[float, Any], err_msg="Value should be a float!") -> float:
+    if not isinstance(x, float):
+        raise ValueError(err_msg)
+    return x
+
+
+def unwrap_list_of_floats(x: Union[List[float], Any], err_msg="Value should be a list of floats!") -> List[float]:
+    if not isinstance(x, list):
+        raise ValueError(err_msg)
+    if not all(isinstance(y, float) for y in x):
+        raise ValueError(err_msg)
+    return x

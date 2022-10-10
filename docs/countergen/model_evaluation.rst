@@ -20,6 +20,16 @@ This operation is performed by an object that inherit from the following abstrac
 
 .. autoclass:: countergen.aggregators.AveragePerformancePerCategory
 
+If you want to create your own aggregator, here is the type of data you will aggregate over:
+
+>>> # Performance is either the performance over outputs, or the performance on every output
+>>> # (An aggregator can handle only one of these and raise a ValueError in the other case)
+>>> # usually between zero & one (one is better)
+>>> Performance = Union[float, List[float]]
+>>> VariationResult = Tuple[Performance, Tuple[Category, ...]]
+>>> SampleResults = Sequence[VariationResult]
+>>> Results = Sequence[SampleResults] # Input to the aggregator ``__call__`` function
+
 Model Evaluation
 ---------------------------------
 

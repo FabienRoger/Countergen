@@ -7,7 +7,7 @@ from attrs import define
 from countergen.tools.plot_utils import plot_mutli_bars
 from countergen.types import AugmentedSample, Category, Input, Performance, Results, Aggregator, Outputs
 from countergen.tools.math_utils import geometric_mean, mean
-from countergen.tools.utils import FromAndToJson
+from countergen.tools.utils import FromAndToJson, unwrap_float
 
 
 @define
@@ -17,15 +17,19 @@ class AveragePerformancePerCategory(Aggregator):
     use_geometric_mean: bool = False
 
     def __call__(self, performances: Results) -> Mapping[Category, float]:
-        performances_per_category: DefaultDict[Category, List[float]] = defaultdict(lambda: [])
+        performances_by_category: DefaultDict[Category, List[float]] = defaultdict(lambda: [])
         for sample_perfs in performances:
             for perf, categories in sample_perfs:
                 for c in categories:
-                    performances_per_category[c].append(perf)
+                    if isinstance(perf, float):
+                        performances_by_category[c].append(perf)
+                    else:
+                        for p in perf:
+                            performances_by_category[c].append(p)
 
         mean_ = geometric_mean if self.use_geometric_mean else mean
-        avg_performances_per_category = {c: mean_(perfs) for c, perfs in performances_per_category.items()}
-        return avg_performances_per_category
+        avg_performances_by_category = {c: mean_(perfs) for c, perfs in performances_by_category.items()}
+        return avg_performances_by_category
 
     def save_aggregation(self, aggregate: Mapping[Category, float], file: Optional[TextIO] = None):
         print("Average performance per category:", file=file)
@@ -70,13 +74,17 @@ class PerformanceStatsPerCategory(Aggregator):
     """Compute performance mean and the 2 sigma uncertainty over mean for each category."""
 
     def __call__(self, performances: Results) -> Mapping[Category, Stats]:
-        performances_per_category: DefaultDict[Category, List[Performance]] = defaultdict(lambda: [])
+        performances_by_category: DefaultDict[Category, List[float]] = defaultdict(lambda: [])
         for sample_perfs in performances:
             for perf, categories in sample_perfs:
                 for c in categories:
-                    performances_per_category[c].append(perf)
+                    if isinstance(perf, float):
+                        performances_by_category[c].append(perf)
+                    else:
+                        for p in perf:
+                            performances_by_category[c].append(p)
 
-        aggregate = {c: Stats.from_seq(perfs) for c, perfs in performances_per_category.items()}
+        aggregate = {c: Stats.from_seq(perfs) for c, perfs in performances_by_category.items()}
         return aggregate
 
     def save_aggregation(self, aggregate: Mapping[Category, Stats], file: Optional[TextIO] = None):
@@ -110,7 +118,9 @@ class DifferenceStats(Aggregator):
 
     Return a positive mean if category1 has higher performance that category2, and a negative one otherwise.
 
-    If a sample has mutliple variations of the same category, compute the mean performance of the category."""
+    If a sample has mutliple variations of the same category, compute the mean performance of the category.
+
+    Excepts performance to be a float."""
 
     category1: Category
     category2: Category
@@ -119,8 +129,8 @@ class DifferenceStats(Aggregator):
     def __call__(self, performances: Results) -> Stats:
         differences = []
         for sample_perfs in performances:
-            cat1_perfs = [perf for perf, categories in sample_perfs if self.category1 in categories]
-            cat2_perfs = [perf for perf, categories in sample_perfs if self.category2 in categories]
+            cat1_perfs = [unwrap_float(perf) for perf, categories in sample_perfs if self.category1 in categories]
+            cat2_perfs = [unwrap_float(perf) for perf, categories in sample_perfs if self.category2 in categories]
             if cat1_perfs and cat2_perfs:
                 diff = mean(cat1_perfs) - mean(cat2_perfs)
                 if self.relative_difference:
@@ -136,7 +146,7 @@ class DifferenceStats(Aggregator):
         )
         print(f"{aggregate}", file=file)
 
-    def load_aggregation(self, file: TextIO) -> float:
+    def load_aggregation(self, file: TextIO) -> Stats:
         lines = file.readlines()
         return Stats.from_str(lines[1])
 
@@ -146,7 +156,9 @@ OutlierData = Tuple[Input, Outputs, Tuple[Category, ...], Performance]
 
 @define
 class OutliersAggregator(Aggregator):
-    """Return the variations with the biggest (relative) performance gap."""
+    """Return the variations with the biggest (relative) performance gap.
+
+    Excepts performance to be a float."""
 
     aug_samples: Iterable[AugmentedSample]  #: Contains data about the inputs used
     top_k: int = 5
@@ -163,7 +175,7 @@ class OutliersAggregator(Aggregator):
                     [v.text for v in aug_sample.get_variations()],
                     [aug_sample.outputs for _ in range(len(aug_sample.get_variations()))],
                     [cats for _, cats in variations_perf],
-                    [perf for perf, _ in variations_perf],
+                    [unwrap_float(perf) for perf, _ in variations_perf],
                 )
             )
             sorted_outliers = sorted(outliers_data, key=lambda t: t[3])
