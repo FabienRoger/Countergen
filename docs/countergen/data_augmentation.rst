@@ -12,6 +12,7 @@ Create an instance of :py:class:`AugmentedDataset` by choosing a default dataset
 
 .. autoclass:: countergen.AugmentedDataset
    :members: samples, from_default
+   :noindex:
 
 You can use one of the available default datasets. Possible names are the keys of :py:class:`DEFAULT_AUGMENTED_DS_PATHS`.
 
@@ -51,7 +52,12 @@ Then, you will create variations of your data belonging to different categories.
 
 For instance, for an :py:class:`Augmenter`: that can convert to categories "male" and "female", applying the ``transform`` function to "She left the store" with a target category of "male" should output "He left the store", and if the target category is "female", it should return the sentence unchanged.
 
-You can use your :py:class:`Augmenter`: by calling the :py:meth:`Dataset.augment`: method, or by calling directly :py:func:`generate_all_variations`.
+You can use your :py:class:`Augmenter`: by calling the :py:meth:`Dataset.augment`: method, which will give your an :py:class:`AugmentedDataset`:
+
+.. autoclass:: countergen.types.AugmentedDataset
+   :members:
+
+You can also call :py:func:`generate_all_variations` directly.
 
 .. autofunction:: countergen.generate_all_variations
 
