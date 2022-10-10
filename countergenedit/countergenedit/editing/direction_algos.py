@@ -6,9 +6,9 @@ from typing import Any, Dict, List, Optional
 import numpy as np
 import torch
 import countergen.config
-from countergentorch.editing.activation_ds import ActivationsDataset
-from countergentorch.editing.models import fit_model, get_bottlenecked_linear, get_bottlenecked_mlp
-from countergentorch.tools.math_utils import project, orthonormalize
+from countergenedit.editing.activation_ds import ActivationsDataset
+from countergenedit.editing.models import fit_model, get_bottlenecked_linear, get_bottlenecked_mlp
+from countergenedit.tools.math_utils import project, orthonormalize
 from countergen.tools.utils import maybe_tqdm
 from torch.optim import SGD
 from torchmetrics import HingeLoss

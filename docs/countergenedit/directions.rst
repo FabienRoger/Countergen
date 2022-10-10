@@ -7,11 +7,11 @@ Using an :py:class:`ActivationsDataset` generated the previous section, you can 
 
 The three methods we provide to find these directions take :py:class:`ActivationsDataset` as inputs, but any PyTorch dataset which ``x_data`` and ``y_data`` of the appropriate types and shapes (see :ref:`ActivationsDataset<ActivationsDataset>`) will work.
 
-.. autofunction:: countergentorch.inlp
+.. autofunction:: countergenedit.inlp
 
-.. autofunction:: countergentorch.rlace
+.. autofunction:: countergenedit.rlace
 
-.. autofunction:: countergentorch.bottlenecked_mlp_span
+.. autofunction:: countergenedit.bottlenecked_mlp_span
 
 :py:func:`bottlenecked_mlp_span` is the fastest method, and :py:func:`rlace` is slow, :py:func:`rlace` is usually better at finding the few directions which matter the most.
 

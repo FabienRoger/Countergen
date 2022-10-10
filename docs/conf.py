@@ -37,7 +37,7 @@ epub_show_urls = "footnote"
 
 # -- autoapi
 # autoapi_type = "python"
-# autoapi_dirs = ["../countergen/", "../countergentorch/"]
+# autoapi_dirs = ["../countergen/", "../countergenedit/"]
 autodoc_typehints = "description"
 
 # Fix default arg expansion https://stackoverflow.com/questions/29257961/sphinx-documentation-how-to-disable-default-argument-expansion

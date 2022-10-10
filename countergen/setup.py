@@ -15,7 +15,7 @@ REQUIREMENTS = (HERE / "requirements.txt").read_text().splitlines()
 setup(
     name="countergen",
     version=VERSION,
-    description="A counterfactual dataset generator to evaluate language model.",
+    description="A counterfactual dataset generator to evaluate language models.",
     long_description=README,
     long_description_content_type="text/markdown",
     author="SaferAI",
@@ -25,7 +25,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
     ],
-    url="https://github.com/FabienRoger/Counterfactual-Dataset-Generator",
+    url="https://github.com/FabienRoger/Countergen",
     python_requires=">=3.7",
     include_package_data=True,
     install_requires=REQUIREMENTS,

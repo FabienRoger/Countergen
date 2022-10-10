@@ -4,8 +4,8 @@ CounterGen
 **CounterGen** is a framework for generating counterfactual datasets, evaluating NLP models, and editing models to reduce bias.
 It provides powerful defaults, while offering simple ways to use your own data, data augmentation techniques, models, and evaluation metrics.
 
-* ``countergen`` is a lightweight Python module which helps you generate counterfactual datasets and evaluate bias of models available locally or through an API. The generated data can be used to finetune the model on mostly debiased data, or can be injected into ``countergentorch`` to edit the model directly.
-* ``countergentorch`` is a Python module which adds methods to easily evaluate PyTorch text generation models as well as text classifiers. It provides tools to analyze model activation and edit model to reduce bias.
+* ``countergen`` is a lightweight Python module which helps you generate counterfactual datasets and evaluate bias of models available locally or through an API. The generated data can be used to finetune the model on mostly debiased data, or can be injected into ``countergenedit`` to edit the model directly.
+* ``countergenedit`` is a Python module which adds methods to easily evaluate PyTorch text generation models as well as text classifiers. It provides tools to analyze model activation and edit model to reduce bias.
 
 Read the docs here: https://fabienroger.github.io/Countergen/
 
@@ -38,18 +38,18 @@ Model editing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 >>> import countergen as cg
->>> import countergentorch as cgt
+>>> import countergenedit as cge
 >>> from transformers import GPT2LMHeadModel
 >>> augmented_ds = cg.AugmentedDataset.from_default("male-stereotypes")
 >>> model = GPT2LMHeadModel.from_pretrained("gpt2")
->>> layers = cgt.get_mlp_modules(model, [2, 3])
->>> activation_ds = cgt.ActivationsDataset.from_augmented_samples(
+>>> layers = cge.get_mlp_modules(model, [2, 3])
+>>> activation_ds = cge.ActivationsDataset.from_augmented_samples(
 >>>   augmented_ds.samples, model, layers
 >>> )
 >>> # INLP is an algorithm to find important directions in a dataset
->>> dirs = cgt.inlp(activation_ds)
->>> configs = cgt.get_edit_configs(layers, dirs)
->>> new_model = cgt.edit_model(model, configs=configs)
+>>> dirs = cge.inlp(activation_ds)
+>>> configs = cge.get_edit_configs(layers, dirs)
+>>> new_model = cge.edit_model(model, configs=configs)
 
 How ``countergen`` helps you evaluate model bias
 ----------------------------------------------
@@ -61,7 +61,7 @@ How ``countergen`` helps you evaluate model bias
 
 |
 
-How ``countergentorch`` helps you edit models
+How ``countergenedit`` helps you edit models
 ----------------------------------------------
 
 .. image:: docs/edition_workflow.png

@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 """
 To upload the package, run
 python setup.py sdist
-twine upload --repository-url https://upload.pypi.org/legacy/ dist/countergentorch-VERSION.tar.gz
+twine upload --repository-url https://upload.pypi.org/legacy/ dist/countergenedit-VERSION.tar.gz
 """
 
 HERE = pathlib.Path(__file__).parent
@@ -13,7 +13,7 @@ VERSION = (HERE / "VERSION").read_text()
 REQUIREMENTS = (HERE / "requirements.txt").read_text().splitlines()
 
 setup(
-    name="countergentorch",
+    name="countergenedit",
     version=VERSION,
     description="Package providing pytorch model evaluators compatible with countergen, and editing capabilities.",
     long_description=README,
@@ -25,7 +25,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
     ],
-    url="https://github.com/FabienRoger/CounterGenTorch",
+    url="https://github.com/FabienRoger/Countergen",
     python_requires=">=3.7",
     include_package_data=True,
     install_requires=REQUIREMENTS,

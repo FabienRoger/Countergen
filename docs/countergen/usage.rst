@@ -46,4 +46,4 @@ By default, it will return the average performance on each kind of data. You can
 
 Alternatively, if you just want to print or save the results, directly :py:func:`evaluate_and_print` or :py:func:`evaluate_and_save`
 
-And that's it! ``countergen`` and ``countergentorch`` provide powerful ways to generate variations, load models easily, and edit them to decrease performance gaps between different categories. Click on *Next* to know more.
+And that's it! ``countergen`` and ``countergenedit`` provide powerful ways to generate variations, load models easily, and edit them to decrease performance gaps between different categories. Click on *Next* to know more.

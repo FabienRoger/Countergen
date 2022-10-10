@@ -1,6 +1,6 @@
 import copy
 from typing import Dict, Iterable, List
-from countergentorch.tools.math_utils import project
+from countergenedit.tools.math_utils import project
 from transformers import GPT2Model
 from torch import nn
 import torch

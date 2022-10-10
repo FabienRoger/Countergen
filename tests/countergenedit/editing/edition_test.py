@@ -1,5 +1,5 @@
 #%%
-from countergentorch import edit_model, get_edit_configs
+from countergenedit import edit_model, get_edit_configs
 import torch
 from torch import nn
 

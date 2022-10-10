@@ -7,7 +7,7 @@ Then, you quickly measure the activations and turn them into a PyTorch dataset u
 
 .. _ActivationsDataset:
 
-.. autoclass:: countergentorch.ActivationsDataset
+.. autoclass:: countergenedit.ActivationsDataset
    :members: x_data, y_data, from_augmented_samples
    :noindex:
    :undoc-members:
@@ -18,4 +18,4 @@ Multiclass classification dataset are not yet supported.
 
 If you want something more precise, you can build the dataset yourself by using the following function
 
-.. autofunction:: countergentorch.editing.activation_utils.get_activations
+.. autofunction:: countergenedit.editing.activation_utils.get_activations

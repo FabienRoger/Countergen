@@ -3,11 +3,11 @@ from typing import Dict, Iterable, List, Mapping, Union
 import torch
 from attrs import define
 from torch import nn
-from countergentorch.editing.activation_utils import get_corresponding_activations
+from countergenedit.editing.activation_utils import get_corresponding_activations
 
 from countergen.types import AugmentedSample, Category
 
-from countergentorch.tools.math_utils import project
+from countergenedit.tools.math_utils import project
 
 
 @define

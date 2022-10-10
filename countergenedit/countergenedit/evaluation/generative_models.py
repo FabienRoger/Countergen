@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Callable, Sequence, List, Optional, Tuple
 
 import torch
 from countergen.tools.math_utils import perplexity
-from countergentorch.tools.utils import concat_dicts, get_device, get_gpt_tokenizer, remove_last_tok
+from countergenedit.tools.utils import concat_dicts, get_device, get_gpt_tokenizer, remove_last_tok
 from countergen.types import Input, ModelEvaluator, Outputs, Performance
 from countergen import get_generative_model_evaluator
 from transformers import BatchEncoding, GPT2LMHeadModel, GPT2Tokenizer

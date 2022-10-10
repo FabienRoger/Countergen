@@ -28,18 +28,18 @@ Model editing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 >>> import countergen as cg
->>> import countergentorch as cgt
+>>> import countergenedit as cge
 >>> from transformers import GPT2LMHeadModel
 >>> augmented_ds = cg.AugmentedDataset.from_default("male-stereotypes")
 >>> model = GPT2LMHeadModel.from_pretrained("gpt2")
->>> layers = cgt.get_mlp_modules(model, [2, 3])
->>> activation_ds = cgt.ActivationsDataset.from_augmented_samples(
+>>> layers = cge.get_mlp_modules(model, [2, 3])
+>>> activation_ds = cge.ActivationsDataset.from_augmented_samples(
 >>>   augmented_ds.samples, model, layers
 >>> )
 >>> # INLP is an algorithm to find important directions in a dataset
->>> dirs = cgt.inlp(activation_ds)
->>> configs = cgt.get_edit_configs(layers, dirs)
->>> new_model = cgt.edit_model(model, configs=configs)
+>>> dirs = cge.inlp(activation_ds)
+>>> configs = cge.get_edit_configs(layers, dirs)
+>>> new_model = cge.edit_model(model, configs=configs)
 
 Colab notebook
 --------------------

@@ -3,7 +3,7 @@ from typing import Callable, Dict, Iterable, List, Mapping, Optional
 
 import torch
 from countergen.types import AugmentedSample, Category
-from countergentorch.tools.utils import get_gpt_tokenizer
+from countergenedit.tools.utils import get_gpt_tokenizer
 from torch import nn
 from transformers import BatchEncoding, GPT2LMHeadModel
 

@@ -1,4 +1,4 @@
-from countergentorch.tools.math_utils import project, orthonormalize
+from countergenedit.tools.math_utils import project, orthonormalize
 import torch
 
 

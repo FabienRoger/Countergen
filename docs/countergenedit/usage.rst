@@ -8,7 +8,7 @@ To use CounterGen, first install it using pip:
 
 .. code-block:: console
 
-   (.venv) $ pip install countergentorch
+   (.venv) $ pip install countergenedit
 
 Outline of the editing process
 ------------------------------------------------
