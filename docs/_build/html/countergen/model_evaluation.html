@@ -57,6 +57,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.PerformanceStatsPerCategory"><code class="docutils literal notranslate"><span class="pre">PerformanceStatsPerCategory</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.DifferenceStats"><code class="docutils literal notranslate"><span class="pre">DifferenceStats</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.OutliersAggregator"><code class="docutils literal notranslate"><span class="pre">OutliersAggregator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.BiasFromProbsAggregator"><code class="docutils literal notranslate"><span class="pre">BiasFromProbsAggregator</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#countergen.aggregators.AveragePerformancePerCategory"><code class="docutils literal notranslate"><span class="pre">AveragePerformancePerCategory</span></code></a></li>
 </ul>
 </li>
@@ -134,8 +135,16 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="countergen.aggregators.OutliersAggregator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.aggregators.</span></span><span class="sig-name descname"><span class="pre">OutliersAggregator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aug_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_relative_performance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.aggregators.OutliersAggregator" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.aggregators.</span></span><span class="sig-name descname"><span class="pre">OutliersAggregator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aug_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">perf_per_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_relative_performance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.aggregators.OutliersAggregator" title="Permalink to this definition"></a></dt>
 <dd><p>Return the variations with the biggest (relative) performance gap.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="countergen.aggregators.BiasFromProbsAggregator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.aggregators.</span></span><span class="sig-name descname"><span class="pre">BiasFromProbsAggregator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.aggregators.BiasFromProbsAggregator" title="Permalink to this definition"></a></dt>
+<dd><p>Return average of log the biggest relative performance gap per sample accross all outputs and variations.</p>
+<p>Metric from BigBench’s “Social Bias from Sentence Probability” experiment benchmark
+<a class="reference external" href="https://github.com/google/BIG-bench/tree/main/bigbench/benchmark_tasks/bias_from_probabilities">https://github.com/google/BIG-bench/tree/main/bigbench/benchmark_tasks/bias_from_probabilities</a></p>
 </dd></dl>
 
 <dl class="py class">

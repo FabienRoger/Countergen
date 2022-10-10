@@ -18,6 +18,8 @@ This operation is performed by an object that inherit from the following abstrac
 
 .. autoclass:: countergen.aggregators.OutliersAggregator
 
+.. autoclass:: countergen.aggregators.BiasFromProbsAggregator
+
 .. autoclass:: countergen.aggregators.AveragePerformancePerCategory
 
 If you want to create your own aggregator, here is the type of data you will aggregate over:
