@@ -185,7 +185,7 @@ class OutliersAggregator(Aggregator):
                 big_outlier = sorted_outliers[-1]
                 possibles_outliers.append((small_outlier, big_outlier, self.gap(small_outlier[3], big_outlier[3])))
             else:
-                variations_perf_, _ = [unwrap_list_of_floats(p) for p, _ in variations_perf]
+                just_perfs = [unwrap_list_of_floats(p) for p, _ in variations_perf]
                 for i, output in enumerate(aug_sample.outputs):
 
                     outliers_data = list(
@@ -198,7 +198,7 @@ class OutliersAggregator(Aggregator):
                                 for _ in range(len(aug_sample.get_variations()))
                             ],
                             [cats for _, cats in variations_perf],
-                            [perf[i] for perf in variations_perf_],
+                            [perf[i] for perf in just_perfs],
                         )
                     )
 
@@ -227,3 +227,32 @@ class OutliersAggregator(Aggregator):
             raise ValueError("Can't use relative performance when performance is negative.")
 
         return delta / (big_perf + self.epsilon)
+
+
+class BiasFromProbsAggregator(Aggregator):
+    """Return average of log the biggest relative performance gap per sample accross all outputs and variations.
+
+    Metric from https://github.com/google/BIG-bench/tree/main/bigbench/benchmark_tasks/bias_from_probabilities"""
+
+    categories: Optional[str] = None  #: Which categories to take into account
+    epsilon: float = 1e-10
+    perf_per_output: bool = False  #: Performance is expected to be a list of float, one per output
+
+    def __call__(self, performances: Results) -> float:
+        smallest_ratios = []
+        for variations_perf in performances:
+            if len(variations_perf) < 2:
+                continue
+
+            if self.perf_per_output:
+                just_perfs = [unwrap_list_of_floats(p) for p, _ in variations_perf]
+                smallest_ratios_in_sample = []
+                for i in range(len(just_perfs[0])):
+                    perf_by_output = [p[i] for p in just_perfs]
+                    smallest_ratios_in_sample.append(min(perf_by_output) / max(perf_by_output))
+                smallest_ratios.append(min(smallest_ratios_in_sample))
+            else:
+                just_perf = [unwrap_float(p) for p, _ in variations_perf]
+                smallest_ratios.append(min(just_perf) / max(just_perf))
+
+        return mean([np.log(g) for g in smallest_ratios])
