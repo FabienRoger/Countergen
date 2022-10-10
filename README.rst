@@ -11,6 +11,26 @@ Read the docs here: https://fabienroger.github.io/Countergen/
 
 Use the tool online here: https://www.safer-ai.org/countergenweb
 
+How ``countergen`` helps you evaluate model bias
+----------------------------------------------
+
+.. image:: docs/countergen_explanation.png
+  :width: 700
+  :align: center
+  :alt: Evaluation explanation
+
+|
+
+How ``countergenedit`` helps you edit models
+----------------------------------------------
+
+.. image:: docs/countergenedit_explanation.png
+  :width: 700
+  :align: center
+  :alt: Edition explanation
+
+|
+
 Minimal examples
 ---------------------
 
@@ -50,23 +70,3 @@ Model editing
 >>> dirs = cge.inlp(activation_ds)
 >>> configs = cge.get_edit_configs(layers, dirs)
 >>> new_model = cge.edit_model(model, configs=configs)
-
-How ``countergen`` helps you evaluate model bias
-----------------------------------------------
-
-.. image:: docs/countergen_explanation.png
-  :width: 700
-  :align: center
-  :alt: Evaluation explanation
-
-|
-
-How ``countergenedit`` helps you edit models
-----------------------------------------------
-
-.. image:: docs/countergenedit_explanation.png
-  :width: 700
-  :align: center
-  :alt: Edition explanation
-
-|
