@@ -27,6 +27,7 @@ Contents
 
 .. toctree::
    demos
+   citations
 
 .. toctree::
    :maxdepth: 2
