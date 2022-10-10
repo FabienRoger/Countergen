@@ -232,7 +232,8 @@ class OutliersAggregator(Aggregator):
 class BiasFromProbsAggregator(Aggregator):
     """Return average of log the biggest relative performance gap per sample accross all outputs and variations.
 
-    Metric from https://github.com/google/BIG-bench/tree/main/bigbench/benchmark_tasks/bias_from_probabilities"""
+    Metric from BigBench's "Social Bias from Sentence Probability" experiment benchmark
+    https://github.com/google/BIG-bench/tree/main/bigbench/benchmark_tasks/bias_from_probabilities"""
 
     categories: Optional[str] = None  #: Which categories to take into account
     epsilon: float = 1e-10
