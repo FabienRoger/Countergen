@@ -1,5 +1,5 @@
-Usage
-=====
+countergen Usage
+====================
 
 .. _installation:
 
