@@ -39,7 +39,7 @@ Note: instead of declaring global API configurations, you can also pass a :py:cl
 Create ModelEvaluator from a local model
 ------------------------------------------
 
-See ``countergentorch`` which contains utilities to build :py:data:`ModelEvaluator` from PyTorch generative and classification models.
+See ``countergenedit`` which contains utilities to build :py:data:`ModelEvaluator` from PyTorch generative and classification models.
 
 Examples of ModelEvaluator
 --------------------------

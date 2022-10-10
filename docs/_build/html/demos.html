@@ -61,13 +61,13 @@
 <li class="toctree-l1"><a class="reference internal" href="countergen/model_loading.html">Model Loading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergen/model_evaluation.html">Model Evaluation</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">countergentorch</span></p>
+<p class="caption" role="heading"><span class="caption-text">countergenedit</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="countergentorch/usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="countergentorch/model_loading.html">PyTorch Model Loading</a></li>
-<li class="toctree-l1"><a class="reference internal" href="countergentorch/internal_bias.html">Measuring Internal Bias</a></li>
-<li class="toctree-l1"><a class="reference internal" href="countergentorch/directions.html">Finding the Relevant Directions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="countergentorch/editing.html">Editing the Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergenedit/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergenedit/model_loading.html">PyTorch Model Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergenedit/internal_bias.html">Measuring Internal Bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergenedit/directions.html">Finding the Relevant Directions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergenedit/editing.html">Editing the Model</a></li>
 </ul>
 
         </div>
@@ -122,18 +122,18 @@
 <section id="model-editing">
 <h3>Model editing<a class="headerlink" href="#model-editing" title="Permalink to this heading"></a></h3>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">countergen</span> <span class="k">as</span> <span class="nn">cg</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">countergentorch</span> <span class="k">as</span> <span class="nn">cgt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">countergenedit</span> <span class="k">as</span> <span class="nn">cge</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">GPT2LMHeadModel</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">augmented_ds</span> <span class="o">=</span> <span class="n">cg</span><span class="o">.</span><span class="n">AugmentedDataset</span><span class="o">.</span><span class="n">from_default</span><span class="p">(</span><span class="s2">&quot;male-stereotypes&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">GPT2LMHeadModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">layers</span> <span class="o">=</span> <span class="n">cgt</span><span class="o">.</span><span class="n">get_mlp_modules</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">activation_ds</span> <span class="o">=</span> <span class="n">cgt</span><span class="o">.</span><span class="n">ActivationsDataset</span><span class="o">.</span><span class="n">from_augmented_samples</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">layers</span> <span class="o">=</span> <span class="n">cge</span><span class="o">.</span><span class="n">get_mlp_modules</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">activation_ds</span> <span class="o">=</span> <span class="n">cge</span><span class="o">.</span><span class="n">ActivationsDataset</span><span class="o">.</span><span class="n">from_augmented_samples</span><span class="p">(</span>
 <span class="gp">&gt;&gt;&gt; </span>  <span class="n">augmented_ds</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">layers</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># INLP is an algorithm to find important directions in a dataset</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dirs</span> <span class="o">=</span> <span class="n">cgt</span><span class="o">.</span><span class="n">inlp</span><span class="p">(</span><span class="n">activation_ds</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">configs</span> <span class="o">=</span> <span class="n">cgt</span><span class="o">.</span><span class="n">get_edit_configs</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">has_leftover</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">new_model</span> <span class="o">=</span> <span class="n">cgt</span><span class="o">.</span><span class="n">edit_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="n">configs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dirs</span> <span class="o">=</span> <span class="n">cge</span><span class="o">.</span><span class="n">inlp</span><span class="p">(</span><span class="n">activation_ds</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">configs</span> <span class="o">=</span> <span class="n">cge</span><span class="o">.</span><span class="n">get_edit_configs</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">dirs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_model</span> <span class="o">=</span> <span class="n">cge</span><span class="o">.</span><span class="n">edit_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="n">configs</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
