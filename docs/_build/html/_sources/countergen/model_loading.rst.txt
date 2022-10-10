@@ -8,7 +8,7 @@ What is a ModelEvaluator
 
 The ``countergen`` module is agnostic towards what the model is or does. All it needs is a :py:data:`ModelEvaluator`
 
-.. data:: countergen.types.ModelEvaluator
+.. data:: countergen.ModelEvaluator
 
     Callable that returns the performance of a model given an input and expected outputs.
 

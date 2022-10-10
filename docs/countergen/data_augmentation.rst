@@ -35,7 +35,7 @@ Data Loading
 
 First, you need to load samples.
 
-.. autoclass:: countergen.types.Sample
+.. autoclass:: countergen.Sample
 
 This can be done by using on of the utils of the :py:class:`Dataset` class.
 
@@ -47,14 +47,14 @@ Data Augmentation : The Augmenter class
 
 Then, you will create variations of your data belonging to different categories. The object which allows you to do that is an :py:class:`Augmenter`: it can transform inputs to any of its target categories.
 
-.. autoclass:: countergen.types.Augmenter
+.. autoclass:: countergen.Augmenter
    :members:
 
 For instance, for an :py:class:`Augmenter`: that can convert to categories "male" and "female", applying the ``transform`` function to "She left the store" with a target category of "male" should output "He left the store", and if the target category is "female", it should return the sentence unchanged.
 
 You can use your :py:class:`Augmenter`: by calling the :py:meth:`Dataset.augment`: method, which will give your an :py:class:`AugmentedDataset`:
 
-.. autoclass:: countergen.types.AugmentedDataset
+.. autoclass:: countergen.AugmentedDataset
    :members:
 
 You can also call :py:func:`generate_all_variations` directly.

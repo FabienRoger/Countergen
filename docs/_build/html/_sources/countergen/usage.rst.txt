@@ -19,6 +19,7 @@ Diagram of How Evaluation Works
   :width: 700
   :align: center
   :alt: Evaluation worflow
+
 |
 
 Abstract Workflow
@@ -28,6 +29,7 @@ Abstract Workflow
   :width: 600
   :align: center
   :alt: Evaluation worflow
+
 |
 
 Outline of the evaluation process
@@ -38,12 +40,12 @@ Data Augmentation
 
 First, you produce a list of :py:class:`AugmentedSample`, either by loading an existing one, or using tools the library provides to build you it from raw data, or by creating your own from scratch.
 
-.. autoclass:: countergen.types.AugmentedSample
+.. autoclass:: countergen.AugmentedSample
    :members: input, outputs, get_variations
 
 Where a :py:class:`Variation` is defined as follows.
 
-.. autoclass:: countergen.types.Variation
+.. autoclass:: countergen.Variation
    :members: text, categories
    :member-order: bysource
 

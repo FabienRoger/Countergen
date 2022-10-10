@@ -8,7 +8,7 @@ To make sense of the performances of the model on every sample, you need to aggr
 
 This operation is performed by an object that inherit from the following abstract class.
 
-.. autoclass:: countergen.types.Aggregator
+.. autoclass:: countergen.Aggregator
 
 ``countergen`` provides a few useful defaults, and the most useful ones are probably the following:
 

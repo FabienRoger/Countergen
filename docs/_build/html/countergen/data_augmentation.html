@@ -50,21 +50,16 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Data Loading and Augmentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#a-loading-default-augmented-datasets">A. Loading default augmented datasets</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#countergen.AugmentedDataset"><code class="docutils literal notranslate"><span class="pre">AugmentedDataset</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#countergen.AugmentedDataset.from_default"><code class="docutils literal notranslate"><span class="pre">AugmentedDataset.from_default()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#a-loading-default-augmented-datasets">A. Loading default augmented datasets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#b-loading-your-data-and-augmenting-it">B. Loading your data and augmenting it</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#data-loading">Data Loading</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#countergen.types.Sample"><code class="docutils literal notranslate"><span class="pre">Sample</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#countergen.Sample"><code class="docutils literal notranslate"><span class="pre">Sample</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#countergen.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#data-augmentation-the-augmenter-class">Data Augmentation : The Augmenter class</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#countergen.types.Augmenter"><code class="docutils literal notranslate"><span class="pre">Augmenter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#countergen.Augmenter"><code class="docutils literal notranslate"><span class="pre">Augmenter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#countergen.AugmentedDataset"><code class="docutils literal notranslate"><span class="pre">AugmentedDataset</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#countergen.generate_all_variations"><code class="docutils literal notranslate"><span class="pre">generate_all_variations()</span></code></a></li>
 </ul>
 </li>
@@ -125,16 +120,16 @@
 <h2>A. Loading default augmented datasets<a class="headerlink" href="#a-loading-default-augmented-datasets" title="Permalink to this heading"></a></h2>
 <p>Create an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">AugmentedDataset</span></code> by choosing a default dataset (using the <code class="docutils literal notranslate"><span class="pre">AugmentedDataset.from_default</span></code> class method).</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="countergen.AugmentedDataset">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">AugmentedDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.AugmentedDataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">AugmentedDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><em>SimpleAugmentedSample</em><em>]</em>) – </p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="countergen.AugmentedDataset.from_default">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.AugmentedDataset.from_default" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Load one of the defaults datasets from “DEFAULT_AUGMENTED_DS_PATHS”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -154,7 +149,8 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">female-stereotypes</span></code> and <code class="docutils literal notranslate"><span class="pre">male-stereotypes</span></code>, which are stereotypes from the <a class="reference external" href="https://stereoset.mit.edu/">StereoSet</a>, filtered for the ones whose outputs are gender neutral.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">doublebind-likable-paraphrased</span></code> is composed of data from the “Double bind experiment” <a class="reference external" href="https://www.researchgate.net/publication/6575591_Why_Are_Women_Penalized_for_Success_at_Male_Tasks_The_Implied_Communality_Deficit">(Heilman, 2007)</a> which found that female managers were perceived as less likable than their male counterparts. It is augmented through paraphrasing using Instruct GPT (and manually reviewed), with positive prosocial adjectives. Variations are done along the original axis of variation: male vs female. Exact data is from <a class="reference external" href="https://arxiv.org/abs/1903.10561">May (2019)</a>, which measures this kind of bias in Language models.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">doublebind-unlikable-paraphrased</span></code> the same as above, but with negative antisocial adjectives.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">bias-from-probs</span></code> is the dataset of variations by BigBench’s <a class="reference external" href="https://github.com/google/BIG-bench/tree/main/bigbench/benchmark_tasks/bias_from_probabilities">Social Bias from Sentence Probability</a>. The output associated with each output aren’t in a particular direction (bias towards or against minorities), but is rather made to emphasize that sometimes, the output of the model will be very different from one variation to the next.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bias-from-probs</span></code> is the dataset of variations by BigBench’s <a class="reference external" href="https://github.com/google/BIG-bench/tree/main/bigbench/benchmark_tasks/bias_from_probabilities">Social Bias from Sentence Probability</a>. The output associated with each output aren’t in a particular direction (bias towards or against minorities), but is rather made to emphasize that sometimes, the output of the model will be very different from one variation to the next. It doesn’t have clear cut categories and is made for evaluation only.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">simple-gender</span></code> is a simple dataset with a of 1-token variations per sample, making it ideal to find gender-related directions in activation space.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">hate-aug-muslim</span></code> is composed of comments labeled “hate” or “noHate”. Instruct GPT was used to write variations of this comment where the comment was rewritten to be about Muslims or not about Muslims (this is a variation of LLMD). Data is from <a class="reference external" href="https://arxiv.org/abs/1809.04444">De Gibert (2018)</a>.</p></li>
 </ul>
 <p>You can also use one of the defaults datasets and augment them.</p>
@@ -165,8 +161,8 @@
 <h3>Data Loading<a class="headerlink" href="#data-loading" title="Permalink to this heading"></a></h3>
 <p>First, you need to load samples.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="countergen.types.Sample">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.types.</span></span><span class="sig-name descname"><span class="pre">Sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.types.Sample" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="countergen.Sample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">Sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.Sample" title="Permalink to this definition"></a></dt>
 <dd><p>An input associated with its possible outputs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -184,9 +180,23 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.Dataset" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference internal" href="#countergen.types.Sample" title="countergen.types.Sample"><em>Sample</em></a><em>]</em>) – </p>
+<dd class="field-odd"><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference internal" href="#countergen.Sample" title="countergen.types.Sample"><em>Sample</em></a><em>]</em>) – </p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="countergen.Dataset.augment">
+<span class="sig-name descname"><span class="pre">augment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">converters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.Dataset.augment" title="Permalink to this definition"></a></dt>
+<dd><p>Use the augmenters to generate variations of this dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>converters</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="#countergen.Augmenter" title="countergen.types.Augmenter"><em>Augmenter</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#countergen.AugmentedDataset" title="countergen.augmentation.data_augmentation.AugmentedDataset"><em>AugmentedDataset</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="countergen.Dataset.from_default">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.Dataset.from_default" title="Permalink to this definition"></a></dt>
@@ -225,19 +235,19 @@ where you have at least one accepted output per input.</p>
 <h3>Data Augmentation : The Augmenter class<a class="headerlink" href="#data-augmentation-the-augmenter-class" title="Permalink to this heading"></a></h3>
 <p>Then, you will create variations of your data belonging to different categories. The object which allows you to do that is an <code class="xref py py-class docutils literal notranslate"><span class="pre">Augmenter</span></code>: it can transform inputs to any of its target categories.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="countergen.types.Augmenter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.types.</span></span><span class="sig-name descname"><span class="pre">Augmenter</span></span><a class="headerlink" href="#countergen.types.Augmenter" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="countergen.Augmenter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">Augmenter</span></span><a class="headerlink" href="#countergen.Augmenter" title="Permalink to this definition"></a></dt>
 <dd><p>Objects that can transform an input to another input from a target category.</p>
 <p>Also include objects which can do paraphrase.</p>
 <dl class="py property">
-<dt class="sig sig-object py" id="countergen.types.Augmenter.categories">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">categories</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#countergen.types.Augmenter.categories" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="countergen.Augmenter.categories">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">categories</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#countergen.Augmenter.categories" title="Permalink to this definition"></a></dt>
 <dd><p>Categories the augmenter can output.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="countergen.types.Augmenter.transform">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.types.Augmenter.transform" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="countergen.Augmenter.transform">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.Augmenter.transform" title="Permalink to this definition"></a></dt>
 <dd><p>Transform the input to make it a member of the target category.</p>
 <p>Return the input unchanged if the input is already a member of the target category or if
 the transformation is not applicable.</p>
@@ -257,7 +267,43 @@ the transformation is not applicable.</p>
 </dd></dl>
 
 <p>For instance, for an <code class="xref py py-class docutils literal notranslate"><span class="pre">Augmenter</span></code>: that can convert to categories “male” and “female”, applying the <code class="docutils literal notranslate"><span class="pre">transform</span></code> function to “She left the store” with a target category of “male” should output “He left the store”, and if the target category is “female”, it should return the sentence unchanged.</p>
-<p>You can use your <code class="xref py py-class docutils literal notranslate"><span class="pre">Augmenter</span></code>: by calling the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.augment()</span></code>: method, or by calling directly <code class="xref py py-func docutils literal notranslate"><span class="pre">generate_all_variations()</span></code>.</p>
+<p>You can use your <code class="xref py py-class docutils literal notranslate"><span class="pre">Augmenter</span></code>: by calling the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.augment()</span></code>: method, which will give your an <code class="xref py py-class docutils literal notranslate"><span class="pre">AugmentedDataset</span></code>:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="countergen.AugmentedDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">AugmentedDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.AugmentedDataset" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><em>SimpleAugmentedSample</em><em>]</em>) – </p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="countergen.AugmentedDataset.from_default">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.AugmentedDataset.from_default" title="Permalink to this definition"></a></dt>
+<dd><p>Load one of the defaults datasets from “DEFAULT_AUGMENTED_DS_PATHS”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#countergen.AugmentedDataset" title="countergen.augmentation.data_augmentation.AugmentedDataset"><em>AugmentedDataset</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="countergen.AugmentedDataset.to_unbiased_dataset">
+<span class="sig-name descname"><span class="pre">to_unbiased_dataset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#countergen.AugmentedDataset.to_unbiased_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Make each variation a new input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#countergen.Dataset" title="countergen.augmentation.data_augmentation.Dataset"><em>Dataset</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>You can also call <code class="xref py py-func docutils literal notranslate"><span class="pre">generate_all_variations()</span></code> directly.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="countergen.generate_all_variations">
 <span class="sig-prename descclassname"><span class="pre">countergen.</span></span><span class="sig-name descname"><span class="pre">generate_all_variations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">augmenters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergen.generate_all_variations" title="Permalink to this definition"></a></dt>
@@ -270,7 +316,7 @@ Return an number of variations that can be exponential in the number of augmente
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>augmenters</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="#countergen.types.Augmenter" title="countergen.types.Augmenter"><em>Augmenter</em></a><em>]</em>) – </p></li>
+<li><p><strong>augmenters</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="#countergen.Augmenter" title="countergen.types.Augmenter"><em>Augmenter</em></a><em>]</em>) – </p></li>
 <li><p><strong>ds</strong> (<a class="reference internal" href="#countergen.Dataset" title="countergen.augmentation.data_augmentation.Dataset"><em>Dataset</em></a>) – </p></li>
 </ul>
 </dd>
