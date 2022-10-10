@@ -46,14 +46,14 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergen</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="countergen/usage.html">countergen Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergen/usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergen/data_augmentation.html">Data Loading and Augmentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergen/model_loading.html">Model Loading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergen/model_evaluation.html">Model Evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergenedit</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="countergenedit/usage.html">countergenedit Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergenedit/usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergenedit/model_loading.html">PyTorch Model Loading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergenedit/internal_bias.html">Measuring Internal Bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergenedit/directions.html">Finding the Relevant Directions</a></li>
@@ -94,19 +94,7 @@ It provides powerful defaults, while offering simple ways to use your own data, 
 <li><p><code class="docutils literal notranslate"><span class="pre">countergen</span></code> is a lightweight Python module which helps you generate counterfactual datasets and evaluate model bias. It provides useful default datasets, lightweight augmentation techniques, and evaluation of models available through an API.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">countergenedit</span></code> is a Python module which adds methods to easily evaluate PyTorch text generation models as well as text classifiers. It provides tools to analyze model activation and quickly edit model to reduce bias.</p></li>
 </ul>
-<p>Check out the <a class="reference internal" href="countergen/usage.html"><span class="doc">countergen Usage</span></a> and the <a class="reference internal" href="countergenedit/usage.html"><span class="doc">countergenedit Usage</span></a> for more information about installation and usage of these modules.</p>
-<section id="workflow">
-<h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this heading"></a></h2>
-<p>Here is the global workflow to evaluate model bias use <code class="docutils literal notranslate"><span class="pre">countergen</span></code>:</p>
-<a class="reference internal image-reference" href="_images/evaluation_workflow.png"><img alt="Evaluation worflow" class="align-center" src="_images/evaluation_workflow.png" style="width: 600px;" /></a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>And here is how you can use <code class="docutils literal notranslate"><span class="pre">countergenedit</span></code> to edit models:</p>
-<a class="reference internal image-reference" href="_images/edition_workflow.png"><img alt="Edition worflow" class="align-center" src="_images/edition_workflow.png" style="width: 600px;" /></a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
+<p>Check out the <a class="reference internal" href="countergen/usage.html"><span class="doc">countergen usage</span></a> and the <a class="reference internal" href="countergenedit/usage.html"><span class="doc">countergenedit usage</span></a> for more information about installation and usage of these modules.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This project is under development. Please report issues in the appropriate section of the Github repository.</p>
@@ -115,7 +103,6 @@ It provides powerful defaults, while offering simple ways to use your own data, 
 <p class="admonition-title">Note</p>
 <p>This module only works for Python version 3.7 and above</p>
 </div>
-</section>
 <section id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
@@ -135,8 +122,10 @@ It provides powerful defaults, while offering simple ways to use your own data, 
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">countergen</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="countergen/usage.html">countergen Usage</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="countergen/usage.html">Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="countergen/usage.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergen/usage.html#diagram-of-how-evaluation-works">Diagram of How Evaluation Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="countergen/usage.html#abstract-workflow">Abstract Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="countergen/usage.html#outline-of-the-evaluation-process">Outline of the evaluation process</a></li>
 </ul>
 </li>
@@ -162,7 +151,7 @@ It provides powerful defaults, while offering simple ways to use your own data, 
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">countergenedit</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="countergenedit/usage.html">countergenedit Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countergenedit/usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergenedit/model_loading.html">PyTorch Model Loading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergenedit/internal_bias.html">Measuring Internal Bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="countergenedit/directions.html">Finding the Relevant Directions</a></li>

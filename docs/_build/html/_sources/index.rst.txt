@@ -11,29 +11,9 @@ This project is split in two parts:
 * ``countergen`` is a lightweight Python module which helps you generate counterfactual datasets and evaluate model bias. It provides useful default datasets, lightweight augmentation techniques, and evaluation of models available through an API.
 * ``countergenedit`` is a Python module which adds methods to easily evaluate PyTorch text generation models as well as text classifiers. It provides tools to analyze model activation and quickly edit model to reduce bias.
 
-Check out the :doc:`/countergen/usage` and the :doc:`/countergenedit/usage` for more information about installation and usage of these modules.
+Check out the :doc:`countergen usage </countergen/usage>` and the :doc:`countergenedit usage </countergenedit/usage>` for more information about installation and usage of these modules.
 
 
-Workflow
---------
-
-Here is the global workflow to evaluate model bias use ``countergen``:
-
-.. image:: evaluation_workflow.png
-  :width: 600
-  :align: center
-  :alt: Evaluation worflow
-
-|
-
-And here is how you can use ``countergenedit`` to edit models:
-
-.. image:: edition_workflow.png
-  :width: 600
-  :align: center
-  :alt: Edition worflow
-
-|
 
 .. note::
 
