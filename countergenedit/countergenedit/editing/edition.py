@@ -8,7 +8,9 @@ from attrs import define
 
 
 def get_edit_configs(named_modules: Dict[str, nn.Module], dirs: torch.Tensor, has_leftover: bool = False):
-    """Return the configs where the same projections along dirs is done at the output of each module."""
+    """Return the configs where the same projections along dirs is done at the output of each module.
+
+    The keys of the named_modules should be the name of the corresponding module in the original model."""
     return [ReplacementConfig(name, module, dirs, has_leftover) for name, module in named_modules.items()]
 
 
@@ -19,7 +21,7 @@ class ReplacementConfig:
     module_name: str  #: The name of the module in the original network you wish to replace
     old_module: nn.Module  #: The module object to replace
     dirs: torch.Tensor  #: A 2D Float Tensor of shape (n, hidden_dim) listing vectors along which to project
-    #: If True, the output of the module is expected to be (to_proj, sth...) rather than to_proj
+    #: If True, the output of the module is expected to be (to_proj, sth...) rather than to_proj.
     has_leftover: bool = False
 
 
