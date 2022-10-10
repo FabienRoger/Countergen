@@ -7,7 +7,7 @@ from attrs import define
 from countergen.tools.plot_utils import plot_mutli_bars
 from countergen.types import AugmentedSample, Category, Input, Performance, Results, Aggregator, Outputs
 from countergen.tools.math_utils import geometric_mean, mean
-from countergen.tools.utils import FromAndToJson, unwrap_float
+from countergen.tools.utils import FromAndToJson, unwrap_float, unwrap_list_of_floats
 
 
 @define
@@ -160,6 +160,7 @@ class OutliersAggregator(Aggregator):
 
     aug_samples: Iterable[AugmentedSample]  #: Contains data about the inputs used
     top_k: int = 5
+    perf_per_output: bool = False  #: Performance is expected to be a list of float, one per output
     use_relative_performance: bool = True
     epsilon: float = 1e-10
 
@@ -169,27 +170,42 @@ class OutliersAggregator(Aggregator):
             if len(variations_perf) < 2:
                 continue
 
-            outliers_data_pre_unroll = list(
-                zip(
-                    [v.text for v in aug_sample.get_variations()],
-                    [aug_sample.outputs for _ in range(len(aug_sample.get_variations()))],
-                    [cats for _, cats in variations_perf],
-                    [perf for perf, _ in variations_perf],
+            if not self.perf_per_output:
+                outliers_data = list(
+                    zip(
+                        [v.text for v in aug_sample.get_variations()],
+                        [aug_sample.outputs for _ in range(len(aug_sample.get_variations()))],
+                        [cats for _, cats in variations_perf],
+                        [unwrap_float(perf) for perf, _ in variations_perf],
+                    )
                 )
-            )
-            outliers_data = []
-            for text, outputs, cats, perf in outliers_data_pre_unroll:
-                if isinstance(perf, float):
-                    outliers_data.append((text, outputs, cats, perf))
-                else:  # perf is list of floats
-                    # Associate each perf with its output
-                    for output, p in zip(outputs, perf):
-                        outliers_data.append((text, [output], cats, p))
 
-            sorted_outliers = sorted(outliers_data, key=lambda t: t[3])
-            small_outlier = sorted_outliers[0]
-            big_outlier = sorted_outliers[-1]
-            possibles_outliers.append((small_outlier, big_outlier, self.gap(small_outlier[3], big_outlier[3])))
+                sorted_outliers = sorted(outliers_data, key=lambda t: t[3])
+                small_outlier = sorted_outliers[0]
+                big_outlier = sorted_outliers[-1]
+                possibles_outliers.append((small_outlier, big_outlier, self.gap(small_outlier[3], big_outlier[3])))
+            else:
+                variations_perf_, _ = [unwrap_list_of_floats(p) for p, _ in variations_perf]
+                for i, output in enumerate(aug_sample.outputs):
+
+                    outliers_data = list(
+                        zip(
+                            [v.text for v in aug_sample.get_variations()],
+                            [
+                                [
+                                    output,
+                                ]
+                                for _ in range(len(aug_sample.get_variations()))
+                            ],
+                            [cats for _, cats in variations_perf],
+                            [perf[i] for perf in variations_perf_],
+                        )
+                    )
+
+                    sorted_outliers = sorted(outliers_data, key=lambda t: t[3])
+                    small_outlier = sorted_outliers[0]
+                    big_outlier = sorted_outliers[-1]
+                    possibles_outliers.append((small_outlier, big_outlier, self.gap(small_outlier[3], big_outlier[3])))
 
         best_outliers = sorted(possibles_outliers, key=lambda t: t[2], reverse=True)
         return [(small, big) for small, big, _ in best_outliers][: self.top_k]
@@ -210,4 +226,4 @@ class OutliersAggregator(Aggregator):
         if small_perf < 0:
             raise ValueError("Can't use relative performance when performance is negative.")
 
-        return delta / (big_perf + self.epsilon) if self.use_relative_performance else delta
+        return delta / (big_perf + self.epsilon)
