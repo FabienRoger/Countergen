@@ -17,9 +17,12 @@ You can use one of the available default datasets. Possible names are the keys o
 
 Some defaults that you might find interesting:
 
-* "doublebind-positive-paraphrased" is composed of the double bind experiment questions (by Heilman), augmented through paraphrasing using Instruct GPT (and manually reviewed), with positive competence-related adjectives. Variations are done along the original axis of variation: male vs female.
-* "doublebind-negative-paraphrased" the same as above, but with negative competence-related adjectives.
-* "hate-aug-muslim" is composed of comments labeled "hate" or "noHate". Instruct GPT was used to write variations of this comment where the comment was rewritten to be about Muslims or not about Muslims (this is a variation of LLMD).
+* ``female-stereotypes`` and ``male-stereotypes``, which are stereotypes from the `StereoSet <https://stereoset.mit.edu/>`_, filtered for the ones which "outputs" are gender neutrals.
+* ``doublebind-likable-paraphrased`` is composed of data from the "Double bind experiment" `(Heilman, 2007) <https://www.researchgate.net/publication/6575591_Why_Are_Women_Penalized_for_Success_at_Male_Tasks_The_Implied_Communality_Deficit>`_ which found that female managers were perceived as less likable than their male counterparts. It is augmented through paraphrasing using Instruct GPT (and manually reviewed), with positive prosocial adjectives. Variations are done along the original axis of variation: male vs female. Exact data is from `May (2019) <https://arxiv.org/abs/1903.10561>`_, which measures this kind of bias in Language models.
+* ``doublebind-unlikable-paraphrased`` the same as above, but with negative antisocial adjectives.
+* ``hate-aug-muslim`` is composed of comments labeled "hate" or "noHate". Instruct GPT was used to write variations of this comment where the comment was rewritten to be about Muslims or not about Muslims (this is a variation of LLMD). Data is from `De Gibert (2018) <https://arxiv.org/abs/1809.04444>`_.
+
+You can also use one of the defaults datasets and augment them.
 
 B. Loading your data and augmenting it
 -----------------------------------------
