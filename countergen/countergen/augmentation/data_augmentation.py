@@ -85,6 +85,7 @@ class Dataset:
         return Dataset(samples)
 
     def augment(self, converters: Iterable[Augmenter]) -> "AugmentedDataset":
+        """Use the augmenters to generate variations of this dataset."""
         return generate_all_variations(converters, self)
 
 
@@ -115,6 +116,16 @@ class AugmentedDataset:
             for sample in self.samples:
                 json.dump(sample.to_json_dict(), f)
                 f.write("\n")
+
+    def to_unbiased_dataset(self) -> Dataset:
+        """Make each variation a new input."""
+        new_samples: List[Sample] = []
+
+        for aug_sample in self.samples:
+            for variation in aug_sample.get_variations():
+                new_samples.append(Sample(input=variation.text, outputs=aug_sample.outputs))
+
+        return Dataset(new_samples)
 
 
 def generate_variations(variation: Variation, augmenter: Augmenter) -> List[Variation]:
