@@ -46,14 +46,14 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergen</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../countergen/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergen/usage.html">countergen Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../countergen/data_augmentation.html">Data Loading and Augmentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../countergen/model_loading.html">Model Loading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../countergen/model_evaluation.html">Model Evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergenedit</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">countergenedit Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_loading.html">PyTorch Model Loading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="internal_bias.html">Measuring Internal Bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="directions.html">Finding the Relevant Directions</a></li>
@@ -134,16 +134,18 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="countergenedit.ReplacementConfig.has_leftover">
 <span class="sig-name descname"><span class="pre">has_leftover</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></em><a class="headerlink" href="#countergenedit.ReplacementConfig.has_leftover" title="Permalink to this definition"></a></dt>
-<dd><p>If True, the output of the module is expected to be (to_proj, sth…) rather than to_proj</p>
+<dd><p>If True, the output of the module is expected to be (to_proj, sth…) rather than to_proj.</p>
 </dd></dl>
 
 </dd></dl>
 
+<p>Note: <code class="docutils literal notranslate"><span class="pre">has_leftover</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code> in most networks, but if you are using a Transformer from the Huggingface Transformer module, and using <code class="xref py py-func docutils literal notranslate"><span class="pre">get_res_modules()</span></code>, you should set it to true, as the GPTBlocks have outputs of the form <code class="docutils literal notranslate"><span class="pre">(y,</span> <span class="pre">attention_mask)</span></code></p>
 <p>To generate it in the simple context where you apply the same projection to every module, generate this config using the following:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="countergenedit.get_edit_configs">
 <span class="sig-prename descclassname"><span class="pre">countergenedit.</span></span><span class="sig-name descname"><span class="pre">get_edit_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">named_modules</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dirs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_leftover</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergenedit.get_edit_configs" title="Permalink to this definition"></a></dt>
 <dd><p>Return the configs where the same projections along dirs is done at the output of each module.</p>
+<p>The keys of the named_modules should be the name of the corresponding module in the original model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

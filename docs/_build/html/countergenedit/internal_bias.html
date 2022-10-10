@@ -47,17 +47,25 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergen</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../countergen/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergen/usage.html">countergen Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../countergen/data_augmentation.html">Data Loading and Augmentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../countergen/model_loading.html">Model Loading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../countergen/model_evaluation.html">Model Evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">countergenedit</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">countergenedit Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_loading.html">PyTorch Model Loading</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Measuring Internal Bias</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#countergenedit.editing.activation_utils.get_activations"><code class="docutils literal notranslate"><span class="pre">get_activations()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-activationsdataset">The ActivationsDataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#countergenedit.editing.activation_utils.get_activations"><code class="docutils literal notranslate"><span class="pre">get_activations()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#which-modules-should-i-select-how">Which modules should I select? How?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#countergenedit.get_res_modules"><code class="docutils literal notranslate"><span class="pre">get_res_modules()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#countergenedit.get_mlp_modules"><code class="docutils literal notranslate"><span class="pre">get_mlp_modules()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="directions.html">Finding the Relevant Directions</a></li>
@@ -90,6 +98,8 @@
              
   <section id="measuring-internal-bias">
 <h1>Measuring Internal Bias<a class="headerlink" href="#measuring-internal-bias" title="Permalink to this heading"></a></h1>
+<section id="the-activationsdataset">
+<h2>The ActivationsDataset<a class="headerlink" href="#the-activationsdataset" title="Permalink to this heading"></a></h2>
 <p>To measure how the internal activations of your model vary across categories, you first need to generate your <code class="xref py py-class docutils literal notranslate"><span class="pre">AugmentedSample</span></code> (see <a class="reference internal" href="../countergen/data_augmentation.html#data-augmentation"><span class="std std-ref">Data Augmentation</span></a>).</p>
 <p>Then, you quickly measure the activations and turn them into a PyTorch dataset using the following class:</p>
 <span class="target" id="activationsdataset"></span><dl class="py class">
@@ -148,6 +158,44 @@
 </dl>
 </dd></dl>
 
+</section>
+<section id="which-modules-should-i-select-how">
+<h2>Which modules should I select? How?<a class="headerlink" href="#which-modules-should-i-select-how" title="Permalink to this heading"></a></h2>
+<p>In Transformers, measuring the output of layers in the middle of the network, and doing the editing (i.e. the projection) in the residual stream usually works best. If you are using a Huggingface GPT model, you can use this function to select these layers:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="countergenedit.get_res_modules">
+<span class="sig-prename descclassname"><span class="pre">countergenedit.</span></span><span class="sig-name descname"><span class="pre">get_res_modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_numbers</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergenedit.get_res_modules" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>GPT2LMHeadModel</em>) – </p></li>
+<li><p><strong>layer_numbers</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, <em>Module</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>You can also select the output of MLPs, which will not affect the residual stream directly. If you do so, it is advised to edit multiple layers at once. If you are using a Huggingface GPT model, you can use this function to select MLP layers:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="countergenedit.get_mlp_modules">
+<span class="sig-prename descclassname"><span class="pre">countergenedit.</span></span><span class="sig-name descname"><span class="pre">get_mlp_modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_numbers</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergenedit.get_mlp_modules" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>GPT2LMHeadModel</em>) – </p></li>
+<li><p><strong>layer_numbers</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, <em>Module</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 </section>
 
 

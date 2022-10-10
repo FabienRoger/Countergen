@@ -9,6 +9,8 @@ This modification in the network are described by a configuration object:
    :members:
    :member-order: bysource
 
+Note: ``has_leftover`` is ``False`` in most networks, but if you are using a Transformer from the Huggingface Transformer module, and using :py:func:`get_res_modules`, you should set it to true, as the GPTBlocks have outputs of the form ``(y, attention_mask)``
+
 To generate it in the simple context where you apply the same projection to every module, generate this config using the following:
 
 .. autofunction:: countergenedit.get_edit_configs
