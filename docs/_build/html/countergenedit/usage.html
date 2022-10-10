@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usage &mdash; CounterGen 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PyTorch Model Loading" href="model_loading.html" />
+    <link rel="prev" title="Model Evaluation" href="../countergen/model_evaluation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> CounterGen
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../demos.html">Demos</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">countergen</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../countergen/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergen/data_augmentation.html">Data Loading and Augmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergen/model_loading.html">Model Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergen/model_evaluation.html">Model Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">countergenedit</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#outline-of-the-editing-process">Outline of the editing process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pytorch-model-loading">PyTorch Model Loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#measuring-internal-bias">Measuring Internal Bias</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#finding-the-relevant-directions">Finding the Relevant Directions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#editing-the-model">Editing the Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model_loading.html">PyTorch Model Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internal_bias.html">Measuring Internal Bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="directions.html">Finding the Relevant Directions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editing.html">Editing the Model</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CounterGen</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/countergenedit/usage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h1>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<p>To use CounterGen, first install it using pip:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(.venv)</span> <span class="gp">$ </span>pip install countergenedit
+</pre></div>
+</div>
+</section>
+<section id="outline-of-the-editing-process">
+<h2>Outline of the editing process<a class="headerlink" href="#outline-of-the-editing-process" title="Permalink to this heading"></a></h2>
+<section id="pytorch-model-loading">
+<h3>PyTorch Model Loading<a class="headerlink" href="#pytorch-model-loading" title="Permalink to this heading"></a></h3>
+<p>To be able to edit the models, you need to have the model stored locally because the most common APIs don’t allow users to have access to internal activations and don’t let you edit the weights.</p>
+<p>This library provides tools to evalute and edit PyTorch models. First, load your PyTorch module. Then, you will be able to evalute it by turning it into a <code class="xref py py-data docutils literal notranslate"><span class="pre">ModelEvaluator</span></code> using one of the following:</p>
+<ul class="simple">
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">pt_to_generative_model()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">get_generative_model_evaluator()</span></code> to evalute generative models</p></li>
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">get_classification_model_evaluator()</span></code> to evalute classification models</p></li>
+</ul>
+</section>
+<section id="measuring-internal-bias">
+<h3>Measuring Internal Bias<a class="headerlink" href="#measuring-internal-bias" title="Permalink to this heading"></a></h3>
+<p>Then, to know where to do the editing, you need to know what’s different in the inner workings of the model between different categories.</p>
+<p>Once you have generated variations of your data using <code class="docutils literal notranslate"><span class="pre">countergen</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ActivationsDataset</span></code> provides some utilities to measure the inner activations of the model, and gives you a PyTorch dataset of (activations, category) pairs. You can also do that manually using other utilities if you want a more fine grained measurements.</p>
+</section>
+<section id="finding-the-relevant-directions">
+<h3>Finding the Relevant Directions<a class="headerlink" href="#finding-the-relevant-directions" title="Permalink to this heading"></a></h3>
+<p>Based on those measurements, you want to extract the relevant places where the model stores differences between the categories.</p>
+<p>A natural way to do so is to find “features”: linear combinations of neurons which have been found to often capture the human understandable concepts we care about. We provide three methods to allow you to find the directions most relevant to the concept that’s different between one category and another, which all have some advantages and disadvantages:</p>
+<ul class="simple">
+<li><p>INLP by Ravfogel, 2020: see <a class="reference external" href="https://aclanthology.org/2020.acl-main.647/">https://aclanthology.org/2020.acl-main.647/</a></p></li>
+<li><p>RLACE by Ravfogel, 2022: see <a class="reference external" href="https://arxiv.org/pdf/2201.12091.pdf">https://arxiv.org/pdf/2201.12091.pdf</a></p></li>
+<li><p>Span of an MLP classifier.</p></li>
+</ul>
+<p>More details about each methods can be found in the <a class="reference internal" href="directions.html#finding-the-relevant-directions"><span class="std std-ref">relevant section</span></a>:.</p>
+</section>
+<section id="editing-the-model">
+<h3>Editing the Model<a class="headerlink" href="#editing-the-model" title="Permalink to this heading"></a></h3>
+<p>Once you have compute the relevant directions, you can easily produce a modification configuration using <code class="xref py py-func docutils literal notranslate"><span class="pre">get_edit_configs()</span></code> and edit the model using <code class="xref py py-func docutils literal notranslate"><span class="pre">edit_model()</span></code>, which will give you a new model that projects activations during the forward pass to remove most of the distinction your model makes between the differents categories of data you want your model to treat as equals.</p>
+<p>And that’s it! Now you can evaluate your model again by using <code class="docutils literal notranslate"><span class="pre">countergen</span></code>, and export your model as you would export any PyTorch model.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../countergen/model_evaluation.html" class="btn btn-neutral float-left" title="Model Evaluation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model_loading.html" class="btn btn-neutral float-right" title="PyTorch Model Loading" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, SaferAI.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

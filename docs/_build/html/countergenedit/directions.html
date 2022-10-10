@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finding the Relevant Directions &mdash; CounterGen 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Editing the Model" href="editing.html" />
+    <link rel="prev" title="Measuring Internal Bias" href="internal_bias.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> CounterGen
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../demos.html">Demos</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">countergen</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../countergen/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergen/data_augmentation.html">Data Loading and Augmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergen/model_loading.html">Model Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../countergen/model_evaluation.html">Model Evaluation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">countergenedit</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_loading.html">PyTorch Model Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internal_bias.html">Measuring Internal Bias</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Finding the Relevant Directions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#countergenedit.inlp"><code class="docutils literal notranslate"><span class="pre">inlp()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#countergenedit.rlace"><code class="docutils literal notranslate"><span class="pre">rlace()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#countergenedit.bottlenecked_mlp_span"><code class="docutils literal notranslate"><span class="pre">bottlenecked_mlp_span()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="editing.html">Editing the Model</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CounterGen</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Finding the Relevant Directions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/countergenedit/directions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="finding-the-relevant-directions">
+<span id="id1"></span><h1>Finding the Relevant Directions<a class="headerlink" href="#finding-the-relevant-directions" title="Permalink to this heading"></a></h1>
+<p>Using an <code class="xref py py-class docutils literal notranslate"><span class="pre">ActivationsDataset</span></code> generated the previous section, you can find along which vectors the difference between variations from one category or the other are most meaningful.</p>
+<p>The three methods we provide to find these directions take <code class="xref py py-class docutils literal notranslate"><span class="pre">ActivationsDataset</span></code> as inputs, but any PyTorch dataset which <code class="docutils literal notranslate"><span class="pre">x_data</span></code> and <code class="docutils literal notranslate"><span class="pre">y_data</span></code> of the appropriate types and shapes (see <a class="reference internal" href="internal_bias.html#activationsdataset"><span class="std std-ref">ActivationsDataset</span></a>) will work.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="countergenedit.inlp">
+<span class="sig-prename descclassname"><span class="pre">countergenedit.</span></span><span class="sig-name descname"><span class="pre">inlp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_training_iters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_decay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergenedit.inlp" title="Permalink to this definition"></a></dt>
+<dd><p>Compute directions using INLP.</p>
+<p>INLP by Ravfogel, 2020: see <a class="reference external" href="https://aclanthology.org/2020.acl-main.647/">https://aclanthology.org/2020.acl-main.647/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ds</strong> (<em>ActivationsDataset</em>) – </p></li>
+<li><p><strong>n_dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>n_training_iters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>weight_decay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – </p></li>
+<li><p><strong>learning_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="countergenedit.rlace">
+<span class="sig-prename descclassname"><span class="pre">countergenedit.</span></span><span class="sig-name descname"><span class="pre">rlace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dev_ds=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_dim=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device='cpu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_iters=75000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_iters_adv=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_iters_clf=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon=0.0015</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size=128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evalaute_every=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer_class=&lt;class</span> <span class="pre">'torch.optim.sgd.SGD'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer_params_P={'lr':</span> <span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'weight_decay':</span> <span class="pre">0.0001}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer_params_predictor={'lr':</span> <span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'weight_decay':</span> <span class="pre">0.0001}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_clf_params={'alpha':</span> <span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'iters_no_change':</span> <span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'loss':</span> <span class="pre">'log'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'max_iter':</span> <span class="pre">25000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'tol':</span> <span class="pre">0.0001}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_clfs_in_eval=3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergenedit.rlace" title="Permalink to this definition"></a></dt>
+<dd><p>Compute directions using RLACE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ds</strong> (<em>ActivationsDataset</em>) – An activation dataset containing the training data</p></li>
+<li><p><strong>dev_ds</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><em>ActivationsDataset</em><em>]</em>) – An activation dataset containing the validation data. If None, use training data.</p></li>
+<li><p><strong>n_dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Number of dimensions to neutralize from the input.</p></li>
+<li><p><strong>device</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>out_iters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Number of batches to run</p></li>
+<li><p><strong>in_iters_adv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – number of iterations for adversary’s optimization</p></li>
+<li><p><strong>in_iters_clf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – number of iterations from the predictor’s optimization</p></li>
+<li><p><strong>epsilon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – stopping criterion. Stops if abs(acc - majority) &lt; epsilon.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>evalaute_every</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – After how many batches to evaluate the current adversary.</p></li>
+<li><p><strong>optimizer_class</strong> – SGD/Adam etc.</p></li>
+<li><p><strong>optimizer_params_P</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><em>Any</em></a><em>]</em>) – P’s optimizer’s params (as a dict)</p></li>
+<li><p><strong>optimizer_params_predictor</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><em>Any</em></a><em>]</em>) – theta’s optimizer’s params (as a dict)</p></li>
+<li><p><strong>eval_clf_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><em>Any</em></a><em>]</em>) – the evaluation classifier params (as a dict)</p></li>
+<li><p><strong>num_clfs_in_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the number of classifier trained for evaluation (change to 1 for large dataset / high dimensionality)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><em>Tensor</em></p>
+</dd>
+</dl>
+<p>RLACE by Ravfogel, 2022: see <a class="reference external" href="https://arxiv.org/pdf/2201.12091.pdf">https://arxiv.org/pdf/2201.12091.pdf</a></p>
+<p>Adapted from <a class="reference external" href="https://github.com/shauli-ravfogel/rlace-icml/blob/2d9b6d03f65416172b4a2ca7f6da10e374002e5f/rlace.py">https://github.com/shauli-ravfogel/rlace-icml/blob/2d9b6d03f65416172b4a2ca7f6da10e374002e5f/rlace.py</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="countergenedit.bottlenecked_mlp_span">
+<span class="sig-prename descclassname"><span class="pre">countergenedit.</span></span><span class="sig-name descname"><span class="pre">bottlenecked_mlp_span</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_training_iters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#countergenedit.bottlenecked_mlp_span" title="Permalink to this definition"></a></dt>
+<dd><p>Compute directions using the directions used by a bottlenecked MLP.</p>
+<p>The MLP is composed as follows:
+A linear layer d -&gt; n_dim
+A linear layer n_dim -&gt; 64
+An ReLU
+A linear layer -&gt; # categories</p>
+<p>The first linear layer tells us which dimensions in the activations matter the most.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ds</strong> (<em>ActivationsDataset</em>) – </p></li>
+<li><p><strong>n_dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>n_training_iters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">bottlenecked_mlp_span()</span></code> is the fastest method, and <code class="xref py py-func docutils literal notranslate"><span class="pre">rlace()</span></code> is slow, <code class="xref py py-func docutils literal notranslate"><span class="pre">rlace()</span></code> is usually better at finding the few directions which matter the most.</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">inlp()</span></code> is somewhat in between: it can be very fast if you only want to remove a small number of dimensions, but in contrast to the other two methods, its cost grows linearly with the number of dimensions removed.</p>
+<p>Because <code class="xref py py-func docutils literal notranslate"><span class="pre">inlp()</span></code> is iterative, you can just take the first k directions the function gives you and it will work, whereas this is not true for the other two methods.</p>
+<p>There is not support yet for automatically deciding which layers of the network are responsible for those differences.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="internal_bias.html" class="btn btn-neutral float-left" title="Measuring Internal Bias" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="editing.html" class="btn btn-neutral float-right" title="Editing the Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, SaferAI.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
