@@ -70,3 +70,5 @@ Model editing
 >>> dirs = cge.inlp(activation_ds)
 >>> configs = cge.get_edit_configs(layers, dirs)
 >>> new_model = cge.edit_model(model, configs=configs)
+
+.. include:: docs/citations.rst
