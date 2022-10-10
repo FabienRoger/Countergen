@@ -1,4 +1,4 @@
-countergenedit Usage
+Usage
 ====================
 
 Installation
@@ -9,6 +9,24 @@ To use CounterGen, first install it using pip:
 .. code-block:: console
 
    (.venv) $ pip install countergenedit
+
+Diagram of How Editing Works
+-----------------------------
+
+.. image:: ../countergenedit_explanation.png
+  :width: 700
+  :align: center
+  :alt: Evaluation worflow
+|
+
+Abstract Workflow
+-------------------
+
+.. image:: ../edition_workflow.png
+  :width: 600
+  :align: center
+  :alt: Evaluation worflow
+|
 
 Outline of the editing process
 ------------------------------------------------
