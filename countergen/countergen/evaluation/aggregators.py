@@ -23,7 +23,7 @@ class AveragePerformancePerCategory(Aggregator):
                 for c in categories:
                     if isinstance(perf, float):
                         performances_by_category[c].append(perf)
-                    else:
+                    else:  # perf is list of floats
                         for p in perf:
                             performances_by_category[c].append(p)
 
@@ -80,7 +80,7 @@ class PerformanceStatsPerCategory(Aggregator):
                 for c in categories:
                     if isinstance(perf, float):
                         performances_by_category[c].append(perf)
-                    else:
+                    else:  # perf is list of floats
                         for p in perf:
                             performances_by_category[c].append(p)
 
@@ -156,9 +156,7 @@ OutlierData = Tuple[Input, Outputs, Tuple[Category, ...], Performance]
 
 @define
 class OutliersAggregator(Aggregator):
-    """Return the variations with the biggest (relative) performance gap.
-
-    Excepts performance to be a float."""
+    """Return the variations with the biggest (relative) performance gap."""
 
     aug_samples: Iterable[AugmentedSample]  #: Contains data about the inputs used
     top_k: int = 5
@@ -170,14 +168,24 @@ class OutliersAggregator(Aggregator):
         for aug_sample, variations_perf in zip(self.aug_samples, performances):
             if len(variations_perf) < 2:
                 continue
-            outliers_data = list(
+
+            outliers_data_pre_unroll = list(
                 zip(
                     [v.text for v in aug_sample.get_variations()],
                     [aug_sample.outputs for _ in range(len(aug_sample.get_variations()))],
                     [cats for _, cats in variations_perf],
-                    [unwrap_float(perf) for perf, _ in variations_perf],
+                    [perf for perf, _ in variations_perf],
                 )
             )
+            outliers_data = []
+            for text, outputs, cats, perf in outliers_data_pre_unroll:
+                if isinstance(perf, float):
+                    outliers_data.append((text, outputs, cats, perf))
+                else:  # perf is list of floats
+                    # Associate each perf with its output
+                    for output, p in zip(outputs, perf):
+                        outliers_data.append((text, [output], cats, p))
+
             sorted_outliers = sorted(outliers_data, key=lambda t: t[3])
             small_outlier = sorted_outliers[0]
             big_outlier = sorted_outliers[-1]
