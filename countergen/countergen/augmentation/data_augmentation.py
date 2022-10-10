@@ -35,6 +35,7 @@ DEFAULT_AUGMENTED_DS_PATHS: Mapping[str, str] = {
     "tiny-test-aug-gender": f"{MODULE_PATH}/data/augdatasets/tiny-test.jsonl",
     "twitter-sentiment-aug-gender": f"{MODULE_PATH}/data/augdatasets/twitter-sentiment.jsonl",
     "hate-aug-muslim": f"{MODULE_PATH}/data/augdatasets/hate-test-muslims.jsonl",
+    "bias-from-probs": f"{MODULE_PATH}/data/augdatasets/bias-from-probs.jsonl",
 }
 
 
