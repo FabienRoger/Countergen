@@ -54,19 +54,19 @@ Model editing
 How ``countergen`` helps you evaluate model bias
 ----------------------------------------------
 
-.. image:: docs/evaluation_workflow.png
-  :width: 600
+.. image:: docs/countergen_explanation.png
+  :width: 700
   :align: center
-  :alt: Evaluation worflow
+  :alt: Evaluation explanation
 
 |
 
 How ``countergenedit`` helps you edit models
 ----------------------------------------------
 
-.. image:: docs/edition_workflow.png
-  :width: 600
+.. image:: docs/countergenedit_explanation.png
+  :width: 700
   :align: center
-  :alt: Edition worflow
+  :alt: Edition explanation
 
 |
