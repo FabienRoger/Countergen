@@ -25,9 +25,8 @@ class ReplacementConfig:
     has_leftover: bool = False
 
 
-def edit_model(model: nn.Module, configs: Iterable[ReplacementConfig]) -> nn.Module:
-    """Return a new module where the replacements described in the config have been done."""
-    model = copy.deepcopy(model)
+def edit_model_inplace(model: nn.Module, configs: Iterable[ReplacementConfig]):
+    """Apply the replacements described in the config."""
     for config in configs:
         new_module = ProjectionWrapper(config.old_module, config.dirs, config.has_leftover)
 
@@ -38,6 +37,11 @@ def edit_model(model: nn.Module, configs: Iterable[ReplacementConfig]) -> nn.Mod
             setattr(parent, name, new_module)
         else:  # ModuleList case, if it's the member of a list
             parent[int(name)] = new_module  # type: ignore
+
+def edit_model(model: nn.Module, configs: Iterable[ReplacementConfig]) -> nn.Module:
+    """Return a new module where the replacements described in the config have been done."""
+    model = copy.deepcopy(model)
+    edit_model_inplace(model, configs)
     return model
 
 
@@ -65,3 +69,14 @@ class ProjectionWrapper(nn.Module):
         hidden_states = project(hidden_states, self.dirs)
 
         return (hidden_states, *leftover) if self.has_leftover else hidden_states
+
+def recover_model_inplace(model: nn.Module, configs):
+    """Cancel the replacements described by the config."""
+    for config in configs:
+        *parent_path, name = config.module_name.split(".")
+        parent_name = ".".join(parent_path)
+        parent = model.get_submodule(parent_name)
+        if hasattr(parent, name):  # Regular case, if it's a regular attribute
+            setattr(parent, name, config.old_module)
+        else:  # ModuleList case, if it's the member of a list
+            parent[int(name)] = config.old_module  # type: ignore
