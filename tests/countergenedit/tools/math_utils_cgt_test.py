@@ -53,8 +53,9 @@ def test_project_simple():
 def test_orthonormalize_return_orthonormal_on_rdm():
     """Orthonormalize should return orthonormal vectors."""
 
-    for h_dim in range(1, 5):
-        n = min(h_dim, 3)
+    # Note: this orthonormalize function is only made to work when n is much smaller than h_dim.
+    # and might fail when n is close to h_dim due to floating point errors.
+    for h_dim, n in [(10, 3), (10, 4), (20, 5)]:
         dirs = torch.rand(n, h_dim)
         ortho_dims = orthonormalize(dirs)
         inner_product = torch.einsum("m k, n k -> m n", ortho_dims, ortho_dims)
@@ -64,8 +65,7 @@ def test_orthonormalize_return_orthonormal_on_rdm():
 def test_orthonormalize_return_same_span():
     """Orthonormalize should return vectors spanning the same subspace."""
 
-    for h_dim in range(1, 5):
-        n = min(h_dim, 3)
+    for h_dim, n in [(10, 3), (10, 4), (20, 5)]:
         dirs = torch.rand(n, h_dim)
         ortho_dims = orthonormalize(dirs)
 

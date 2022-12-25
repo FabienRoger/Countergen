@@ -1,5 +1,5 @@
 import copy
-from typing import Dict, Iterable, List
+from typing import Callable, Dict, Iterable, List
 from countergenedit.tools.math_utils import project
 from transformers import GPT2Model
 from torch import nn
@@ -26,8 +26,19 @@ class ReplacementConfig:
 
 
 def edit_model(model: nn.Module, configs: Iterable[ReplacementConfig]) -> nn.Module:
-    """Return a new module where the replacements described in the config have been done."""
+    """Return a new model where the replacements described in the config have been done."""
     model = copy.deepcopy(model)
+    edit_model_inplace(model, configs)
+    return model
+
+
+RecoverHandle = Callable[[], None]
+
+
+def edit_model_inplace(model: nn.Module, configs: Iterable[ReplacementConfig]) -> RecoverHandle:
+    """Modify the model using the replacements described in the config.
+
+    Return a handle you can call to recover the original model."""
     for config in configs:
         new_module = ProjectionWrapper(config.old_module, config.dirs, config.has_leftover)
 
@@ -38,7 +49,19 @@ def edit_model(model: nn.Module, configs: Iterable[ReplacementConfig]) -> nn.Mod
             setattr(parent, name, new_module)
         else:  # ModuleList case, if it's the member of a list
             parent[int(name)] = new_module  # type: ignore
-    return model
+    return lambda: recover_model_inplace(model, configs)
+
+
+def recover_model_inplace(model: nn.Module, configs: Iterable[ReplacementConfig]):
+    """Undo the modifications described in the config."""
+    for config in configs:
+        *parent_path, name = config.module_name.split(".")
+        parent_name = ".".join(parent_path)
+        parent = model.get_submodule(parent_name)
+        if hasattr(parent, name):  # Regular case, if it's a regular attribute
+            setattr(parent, name, config.old_module)
+        else:  # ModuleList case, if it's the member of a list
+            parent[int(name)] = config.old_module  # type: ignore
 
 
 class ProjectionWrapper(nn.Module):
