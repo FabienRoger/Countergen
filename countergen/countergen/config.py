@@ -19,5 +19,6 @@ apiconfig = ApiConfig(
     base_url=os.environ.get("OPENAI_API_BASE_URL", DEFAULT_API_BASE_URL),
 )
 
+
 def seed(s: int):
     random.seed(s)

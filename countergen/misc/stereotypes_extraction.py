@@ -38,7 +38,7 @@ print(len(gender_stereotypes))
 lines_written = 0
 with open(save_path, "w", encoding="utf-8") as outfile:
     for inp, outs in gender_stereotypes:
-        json_dict = {"input": inp, "outputs": [" "+ o for o in outs]}
+        json_dict = {"input": inp, "outputs": [" " + o for o in outs]}
         json.dump(json_dict, outfile)
         outfile.write("\n")
         lines_written += 1

@@ -9,7 +9,7 @@ def test_geometric_mean_basic():
     assert geometric_mean([3]) == approx(3)
     assert geometric_mean([1, 100]) == approx(10)
     assert geometric_mean([1, 3, 9]) == approx(3)
-    assert geometric_mean([1, 1/3, 1/9]) == approx(1/3)
+    assert geometric_mean([1, 1 / 3, 1 / 9]) == approx(1 / 3)
 
 
 def test_geometric_mean_all_same():

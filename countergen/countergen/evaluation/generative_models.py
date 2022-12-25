@@ -23,7 +23,7 @@ def api_to_generative_model(
     and returns the log probabilities of each tokens of each expected output.
 
     The GenerativeModel costs ~ len(input) * (sum of len(ouput)) tokens per call.
-    
+
     If the api call fails, it will retry max_attempts times, or forever if max_attempts is None."""
 
     def gen_model(inp: Input, out: Outputs) -> List[List[float]]:
@@ -31,7 +31,7 @@ def api_to_generative_model(
 
         correct_log_probs_list = []
         for o in out:
-            
+
             completion: Optional[dict] = None
             attemps = 0
             while completion is None:

@@ -11,9 +11,10 @@ def project(dir: torch.Tensor, dirs: torch.Tensor) -> torch.Tensor:
 
     return new_dir
 
+
 def orthonormalize(dirs: torch.Tensor) -> torch.Tensor:
     """Apply the Gram-Schmidt algorithm to make dirs orthonormal
-    
+
     Assumes that the number of dimensions and dirs is > 0."""
     n, _ = dirs.shape
 
@@ -21,5 +22,5 @@ def orthonormalize(dirs: torch.Tensor) -> torch.Tensor:
     for i in range(1, n):
         dirs[i] = project(dirs[i], dirs[:i])
         dirs[i] /= torch.linalg.norm(dirs[i])
-    
+
     return dirs
