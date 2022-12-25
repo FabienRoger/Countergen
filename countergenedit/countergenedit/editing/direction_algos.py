@@ -41,7 +41,13 @@ def inlp(
     g = maybe_tqdm(range(n_dim), countergen.config.verbose >= 1)
     for i in g:
         model = get_bottlenecked_linear(tot_n_dims, output_dims)
-        last_epoch_perf = fit_model(model, ds, n_training_iters, loss_fn=HingeLoss(), adam_kwargs=adam_kwargs)
+        last_epoch_perf = fit_model(
+            model,
+            ds,
+            n_training_iters,
+            loss_fn=HingeLoss(task="multiclass", num_classes=output_dims),
+            adam_kwargs=adam_kwargs,
+        )
 
         dir = model[0].weight.detach()[0]
 
@@ -80,7 +86,7 @@ def bottlenecked_mlp_span(ds: ActivationsDataset, n_dim: int = 8, n_training_ite
         model,
         ds,
         n_training_iters,
-        loss_fn=HingeLoss(),
+        loss_fn=HingeLoss(task="multiclass", num_classes=output_dims),
         print_pbar=countergen.config.verbose >= 1,
     )
 
