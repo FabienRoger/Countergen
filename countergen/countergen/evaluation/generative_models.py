@@ -15,29 +15,40 @@ GenerativeModel = Callable[[Input, Outputs], Sequence[Sequence[LogProbs]]]
 
 
 def api_to_generative_model(
-    openai_engine: str = "text-ada-001", apiconfig: Optional[ApiConfig] = None
+    openai_engine: str = "text-ada-001", apiconfig: Optional[ApiConfig] = None, max_attempts: Optional[int] = 5
 ) -> GenerativeModel:
     """Make a GenerativeModel that uses the openai api.
 
     The resulting GenerativeModel takes as input an input text and possibles outputes,
     and returns the log probabilities of each tokens of each expected output.
 
-    The GenerativeModel costs ~ len(input) * (sum of len(ouput)) tokens per call."""
+    The GenerativeModel costs ~ len(input) * (sum of len(ouput)) tokens per call.
+    
+    If the api call fails, it will retry max_attempts times, or forever if max_attempts is None."""
 
     def gen_model(inp: Input, out: Outputs) -> List[List[float]]:
         apiconfig_ = apiconfig or countergen.config.apiconfig
 
         correct_log_probs_list = []
         for o in out:
-            completion = openai.Completion.create(
-                engine=openai_engine,
-                prompt=inp + o,
-                max_tokens=1,
-                stream=False,
-                echo=True,
-                logprobs=5,
-                **apiconfig_.get_config(),
-            )["choices"][0]
+            
+            completion: Optional[dict] = None
+            attemps = 0
+            while completion is None:
+                try:
+                    completion = openai.Completion.create(
+                        engine=openai_engine,
+                        prompt=inp + o,
+                        max_tokens=1,
+                        stream=False,
+                        echo=True,
+                        logprobs=5,
+                        **apiconfig_.get_config(),
+                    )["choices"][0]
+                except Exception as e:
+                    attemps += 1
+                    if max_attempts is not None and attemps >= max_attempts:
+                        raise e
 
             token_logprobs = completion["logprobs"]["token_logprobs"]
             token_offsets = completion["logprobs"]["text_offset"]
