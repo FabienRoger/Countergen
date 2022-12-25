@@ -29,7 +29,7 @@ Paraphrase: {"""
 @define
 class LlmParaphraser(Paraphraser):
     prompt_template: str = DEFAULT_TEMPLATE
-    engine: str = "text-davinci-002"
+    engine: str = "text-davinci-003"
     apiconfig: Optional[ApiConfig] = None
 
     def transform(self, inp: Input, to: Category = "") -> Input:

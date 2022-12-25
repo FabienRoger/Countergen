@@ -15,7 +15,7 @@ GenerativeModel = Callable[[Input, Outputs], Sequence[Sequence[LogProbs]]]
 
 
 def api_to_generative_model(
-    openai_engine: str = "text-ada-001", apiconfig: Optional[ApiConfig] = None, max_attempts: Optional[int] = 5
+    openai_engine: str = "ada", apiconfig: Optional[ApiConfig] = None, max_attempts: Optional[int] = 5
 ) -> GenerativeModel:
     """Make a GenerativeModel that uses the openai api.
 

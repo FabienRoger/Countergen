@@ -72,7 +72,7 @@ def _evaluate(
     Example use:
     - countergen evaluate LOAD_PATH SAVE_PATH
       (use ada and save the results)
-    - countergen evaluate LOAD_PATH  --model-name text-davinci-001
+    - countergen evaluate LOAD_PATH  --model-name davinci
       (use GPT-3 and print the results)
     """
 

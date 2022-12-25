@@ -39,7 +39,7 @@ Model evaluation
 
 >>> import countergen
 >>> augmented_ds = countergen.AugmentedDataset.from_default("male-stereotypes")
->>> api_model = countergen.api_to_generative_model("text-davinci-001")
+>>> api_model = countergen.api_to_generative_model("davinci") # Evaluate GPT-3
 >>> model_evaluator = countergen.get_generative_model_evaluator(api_model)
 >>> countergen.evaluate_and_print(augmented_ds.samples, model_evaluator)
 

@@ -46,7 +46,7 @@ class LlmdAugmenter(Augmenter):
 
     categories_instructions: Dict[Category, str]
     prompt_template: str = DEFAULT_PROMPT
-    engine: str = "text-davinci-002"
+    engine: str = "text-davinci-003"
     apiconfig: Optional[ApiConfig] = None
 
     @classmethod
