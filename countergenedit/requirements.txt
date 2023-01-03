@@ -4,4 +4,4 @@ torch>=1.11
 tqdm>=4
 transformers>=4
 torchmetrics>=0.9
-countergen==1.0.0
+countergen==1.1.0
