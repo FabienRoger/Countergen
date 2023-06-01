@@ -9,8 +9,6 @@ It provides powerful defaults, while offering simple ways to use your own data, 
 
 Read the docs here: https://fabienroger.github.io/Countergen/
 
-Use the tool online here: https://www.safer-ai.org/countergenweb
-
 How ``countergen`` helps you evaluate model bias
 ----------------------------------------------
 
